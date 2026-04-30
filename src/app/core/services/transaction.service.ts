@@ -46,5 +46,8 @@ export class TransactionService {
     });
   }
 
+  updateAll(transactions: Transaction[]) {
+    this.update(transactions);
+  }
 
 }

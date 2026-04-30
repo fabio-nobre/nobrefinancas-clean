@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
         {{ erro }}
       </div>
 
-      <form (submit)="adicionar()" class="flex gap-2">
+      <form (submit)="editandoId ? salvarEdicao() : adicionar()">
 
         <input
           [(ngModel)]="descricao"
@@ -49,7 +49,15 @@ import { CommonModule } from '@angular/common';
         <button
           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Adicionar
+          {{ editandoId ? 'Salvar' : 'Adicionar' }}
+        </button>
+        <button
+          *ngIf="editandoId"
+          type="button"
+          (click)="cancelarEdicao()"
+          class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+        >
+          Cancelar
         </button>
 
       </form>
@@ -81,6 +89,13 @@ import { CommonModule } from '@angular/common';
               remover
             </button>
 
+            <button
+              (click)="editar(t)"
+              class="text-xs text-blue-500 hover:text-blue-700"
+            >
+            editar
+          </button>
+
           </div>
 
         </div>
@@ -101,6 +116,8 @@ export class TransactionsComponent implements OnInit {
   categoria = 'Alimentação';
 
   erro = '';
+
+  editandoId: string | null = null;
 
   constructor(private service: TransactionService) { }
 
@@ -142,5 +159,43 @@ export class TransactionsComponent implements OnInit {
 
   remover(id: string) {
     this.service.remove(id);
+  }
+
+  editar(t: Transaction) {
+    this.editandoId = t.id;
+
+    this.descricao = t.descricao;
+    this.valor = Math.abs(t.valor);
+    this.tipo = t.valor < 0 ? 'Despesa' : 'Renda';
+    this.categoria = t.categoria;
+  }
+
+  salvarEdicao() {
+
+    if (!this.editandoId) return;
+
+    const atualizadas = this.transactions.map(t => {
+      if (t.id === this.editandoId) {
+        return {
+          ...t,
+          descricao: this.descricao,
+          valor: this.tipo === 'Despesa'
+            ? -Math.abs(this.valor)
+            : Math.abs(this.valor),
+          categoria: this.categoria
+        };
+      }
+      return t;
+    });
+
+    this.service.updateAll(atualizadas);
+
+    this.cancelarEdicao();
+  }
+
+  cancelarEdicao() {
+    this.editandoId = null;
+    this.descricao = '';
+    this.valor = 0;
   }
 }
