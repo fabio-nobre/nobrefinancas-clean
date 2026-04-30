@@ -30,14 +30,29 @@ import { CommonModule } from '@angular/common';
 
       </form>
 
-      <div *ngFor="let t of transactions" class="flex justify-between bg-white p-2 rounded shadow">
+      <div class="space-y-2">
 
-        <span>{{ t.descricao }}</span>
-        <span>R$ {{ t.valor }}</span>
+        <div *ngFor="let t of transactions"
+            class="flex justify-between items-center bg-white p-3 rounded-xl shadow">
 
-        <button (click)="remover(t.id)" class="text-red-500">
-          X
-        </button>
+          <div>
+            <p class="font-semibold">{{ t.descricao }}</p>
+            <p class="text-xs text-gray-400">{{ t.categoria }}</p>
+          </div>
+
+          <div class="text-right">
+            <p [class.text-green-600]="t.valor > 0"
+              [class.text-red-600]="t.valor < 0">
+
+              R$ {{ t.valor }}
+            </p>
+
+            <button (click)="remover(t.id)" class="text-xs text-red-400">
+              remover
+            </button>
+          </div>
+
+        </div>
 
       </div>
 

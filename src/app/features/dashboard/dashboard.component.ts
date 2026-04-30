@@ -13,25 +13,25 @@ import { TransactionService } from '../../core/services/transaction.service';
 
       <h1 class="text-xl font-bold">Dashboard</h1>
 
-      <div class="grid grid-cols-3 gap-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
-        <div class="bg-white p-4 rounded-xl shadow">
+        <div class="bg-white p-5 rounded-2xl shadow">
           <p class="text-gray-500">Saldo</p>
-          <h2 class="text-xl font-bold">
+          <h2 class="text-2xl font-bold text-blue-600">
             R$ {{ saldo }}
           </h2>
         </div>
 
-        <div class="bg-green-100 p-4 rounded-xl">
+        <div class="bg-green-100 p-5 rounded-2xl">
           <p>Entradas</p>
-          <h2 class="font-bold text-green-700">
+          <h2 class="text-xl font-bold text-green-700">
             R$ {{ entradas }}
           </h2>
         </div>
 
-        <div class="bg-red-100 p-4 rounded-xl">
+        <div class="bg-red-100 p-5 rounded-2xl">
           <p>Saídas</p>
-          <h2 class="font-bold text-red-700">
+          <h2 class="text-xl font-bold text-red-700">
             R$ {{ saidas }}
           </h2>
         </div>
