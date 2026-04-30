@@ -6,7 +6,7 @@ import { DashboardService } from '../../core/services/dashboard.service';
   selector: 'app-dashboard',
   standalone: true,
   template: `
-    <div class="p-6 space-y-4">
+    <div class="p-6 space-y-6">
 
       <h1 class="text-xl font-bold">Dashboard</h1>
 
