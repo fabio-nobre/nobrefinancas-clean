@@ -55,11 +55,9 @@ export class TransactionsComponent implements OnInit {
   constructor(private service: TransactionService) { }
 
   ngOnInit() {
-    this.load();
-  }
-
-  load() {
-    this.transactions = this.service.getAll();
+    this.service.transactions$.subscribe(data => {
+      this.transactions = data;
+    });
   }
 
   adicionar() {
@@ -77,11 +75,9 @@ export class TransactionsComponent implements OnInit {
     this.descricao = '';
     this.valor = 0;
 
-    this.load();
   }
 
   remover(id: string) {
     this.service.remove(id);
-    this.load();
   }
 }

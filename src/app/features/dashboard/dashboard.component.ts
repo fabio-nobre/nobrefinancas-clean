@@ -72,18 +72,18 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // const data = this.mock.getTransactions();
-    const data = this.transactionsService.getAll();
+    this.transactionsService.transactions$.subscribe(data => {
 
-    console.log('🔥 DATA:', data);
+      console.log('🔥 REACTIVE DATA:', data);
 
-    this.saldo = this.dashboard.calcularSaldo(data);
-    this.entradas = this.dashboard.calcularEntradas(data);
-    this.saidas = this.dashboard.calcularSaidas(data);
+      this.saldo = this.dashboard.calcularSaldo(data);
+      this.entradas = this.dashboard.calcularEntradas(data);
+      this.saidas = this.dashboard.calcularSaidas(data);
 
-    const grafico = this.dashboard.getGastosPorCategoria(data);
+      const grafico = this.dashboard.getGastosPorCategoria(data);
 
-    this.labels = grafico.labels;
-    this.valores = grafico.valores;
+      this.labels = grafico.labels;
+      this.valores = grafico.valores;
+    });
   }
 }
