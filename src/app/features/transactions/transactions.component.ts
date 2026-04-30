@@ -54,10 +54,10 @@ import { CommonModule } from '@angular/common';
 
       </form>
 
-      <div class="space-y-2">
+      <div class="space-y-3">
 
         <div *ngFor="let t of transactions"
-            class="flex justify-between items-center bg-white p-3 rounded-xl shadow">
+            class="flex justify-between items-center bg-white p-4 rounded-xl shadow">
 
           <div>
             <p class="font-semibold">{{ t.descricao }}</p>
@@ -65,15 +65,22 @@ import { CommonModule } from '@angular/common';
           </div>
 
           <div class="text-right">
-            <p [class.text-green-600]="t.valor > 0"
-              [class.text-red-600]="t.valor < 0">
 
+            <p
+              [class.text-green-600]="t.valor > 0"
+              [class.text-red-600]="t.valor < 0"
+              class="font-bold"
+            >
               R$ {{ t.valor }}
             </p>
 
-            <button (click)="remover(t.id)" class="text-xs text-red-400">
+            <button
+              (click)="remover(t.id)"
+              class="text-xs text-red-400 hover:text-red-600"
+            >
               remover
             </button>
+
           </div>
 
         </div>

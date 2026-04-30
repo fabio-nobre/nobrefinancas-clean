@@ -9,10 +9,11 @@ import { TransactionService } from '../../core/services/transaction.service';
   standalone: true,
   imports: [ChartComponent],
   template: `
-    <div class="p-6 space-y-6">
+    <div class="space-y-6">
 
-      <h1 class="text-xl font-bold">Dashboard</h1>
+      <h1 class="text-2xl font-bold">Dashboard</h1>
 
+      <!-- CARDS -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
         <div class="bg-white p-5 rounded-2xl shadow">
@@ -38,19 +39,20 @@ import { TransactionService } from '../../core/services/transaction.service';
 
       </div>
 
-      <div class="bg-white p-4 rounded-xl shadow">
-        <h3 class="mb-2 font-semibold">Gastos por categoria</h3>
-        <!-- <div class="h-[300px] max-w-[400px] mx-auto">
+      <!-- GRÁFICO -->
+      <div class="bg-white p-5 rounded-2xl shadow">
+
+        <h3 class="font-semibold mb-4">
+          Gastos por categoria
+        </h3>
+
+        <div class="h-[300px] max-w-[400px] mx-auto">
           <app-chart
             [labels]="labels"
             [data]="valores"
           ></app-chart>
-        </div> -->
-        <div class="h-[300px] w-[300px] mx-auto">
-          <app-chart
-            [labels]="labels"
-            [data]="valores">
-          </app-chart>
+        </div>
+
       </div>
 
     </div>
