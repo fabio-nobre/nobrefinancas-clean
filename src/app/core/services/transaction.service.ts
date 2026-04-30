@@ -34,4 +34,17 @@ export class TransactionService {
     const list = this.transactionsSubject.value.filter(t => t.id !== id);
     this.update(list);
   }
+
+  filtrarPorMes(transactions: Transaction[], dataRef: Date): Transaction[] {
+
+    const mes = dataRef.getMonth();
+    const ano = dataRef.getFullYear();
+
+    return transactions.filter(t => {
+      const d = new Date(t.data);
+      return d.getMonth() === mes && d.getFullYear() === ano;
+    });
+  }
+
+
 }

@@ -3,15 +3,32 @@ import { MockDataService } from '../../core/services/mock-data.service';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { TransactionService } from '../../core/services/transaction.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ChartComponent],
+  imports: [ChartComponent, CommonModule],
   template: `
     <div class="space-y-6">
 
       <h1 class="text-2xl font-bold">Dashboard</h1>
+
+      <div class="flex items-center gap-2">
+
+        <button (click)="mesAnterior()" class="px-2 py-1 bg-gray-200 rounded">
+          ◀
+        </button>
+
+        <span class="font-semibold">
+          {{ dataAtual | date:'MMMM yyyy' }}
+        </span>
+
+        <button (click)="proximoMes()" class="px-2 py-1 bg-gray-200 rounded">
+          ▶
+        </button>
+
+      </div>
 
       <!-- CARDS -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -67,6 +84,8 @@ export class DashboardComponent implements OnInit {
   labels: string[] = [];
   valores: number[] = [];
 
+  dataAtual = new Date();
+
   constructor(
     // private mock: MockDataService,
     private transactionsService: TransactionService,
@@ -76,16 +95,51 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.transactionsService.transactions$.subscribe(data => {
 
-      console.log('🔥 REACTIVE DATA:', data);
+      const filtradas = this.transactionsService.filtrarPorMes(data, this.dataAtual);
 
-      this.saldo = this.dashboard.calcularSaldo(data);
-      this.entradas = this.dashboard.calcularEntradas(data);
-      this.saidas = this.dashboard.calcularSaidas(data);
+      this.saldo = this.dashboard.calcularSaldo(filtradas);
+      this.entradas = this.dashboard.calcularEntradas(filtradas);
+      this.saidas = this.dashboard.calcularSaidas(filtradas);
 
-      const grafico = this.dashboard.getGastosPorCategoria(data);
+      const grafico = this.dashboard.getGastosPorCategoria(filtradas);
 
       this.labels = grafico.labels;
       this.valores = grafico.valores;
     });
+  }
+
+  mesAnterior() {
+    this.dataAtual = new Date(
+      this.dataAtual.getFullYear(),
+      this.dataAtual.getMonth() - 1,
+      1
+    );
+
+    this.recalcular();
+  }
+
+  proximoMes() {
+    this.dataAtual = new Date(
+      this.dataAtual.getFullYear(),
+      this.dataAtual.getMonth() + 1,
+      1
+    );
+
+    this.recalcular();
+  }
+
+  recalcular() {
+    const data = this.transactionsService.getAll();
+
+    const filtradas = this.transactionsService.filtrarPorMes(data, this.dataAtual);
+
+    this.saldo = this.dashboard.calcularSaldo(filtradas);
+    this.entradas = this.dashboard.calcularEntradas(filtradas);
+    this.saidas = this.dashboard.calcularSaidas(filtradas);
+
+    const grafico = this.dashboard.getGastosPorCategoria(filtradas);
+
+    this.labels = grafico.labels;
+    this.valores = grafico.valores;
   }
 }
