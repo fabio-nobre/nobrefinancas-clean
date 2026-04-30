@@ -13,12 +13,25 @@ import { CommonModule } from '@angular/common';
 
       <h1 class="text-xl font-bold">Transações</h1>
 
+      <div *ngIf="erro" class="text-red-500 text-sm">
+        {{ erro }}
+      </div>
+
       <form (submit)="adicionar()" class="flex gap-2">
 
-        <input [(ngModel)]="descricao" name="descricao" placeholder="Descrição" class="border p-2" />
-
-        <input [(ngModel)]="valor" name="valor" type="number" placeholder="Valor" class="border p-2" />
-
+        <input
+          [(ngModel)]="descricao"
+          name="descricao"
+          placeholder="Descrição"
+          class="border p-2 w-full"
+        />
+        <input
+          [(ngModel)]="valor"
+          name="valor"
+          type="number"
+          placeholder="Valor"
+          class="border p-2 w-full"
+        />
         <select [(ngModel)]="tipo" name="tipo" class="border p-2">
           <option value="Renda">Renda</option>
           <option value="Despesa">Despesa</option>
@@ -33,7 +46,9 @@ import { CommonModule } from '@angular/common';
 
         </select>
 
-        <button class="bg-blue-500 text-white px-4">
+        <button
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
           Adicionar
         </button>
 
@@ -78,6 +93,8 @@ export class TransactionsComponent implements OnInit {
   tipo = 'Despesa';
   categoria = 'Alimentação';
 
+  erro = '';
+
   constructor(private service: TransactionService) { }
 
   ngOnInit() {
@@ -88,10 +105,24 @@ export class TransactionsComponent implements OnInit {
 
   adicionar() {
 
+    this.erro = '';
+
+    if (!this.descricao.trim()) {
+      this.erro = 'Informe uma descrição';
+      return;
+    }
+
+    if (!this.valor || this.valor <= 0) {
+      this.erro = 'Informe um valor válido';
+      return;
+    }
+
     const nova: Transaction = {
       id: Date.now().toString(),
       descricao: this.descricao,
-      valor: this.tipo === 'Despesa' ? -Math.abs(this.valor) : Math.abs(this.valor),
+      valor: this.tipo === 'Despesa'
+        ? -Math.abs(this.valor)
+        : Math.abs(this.valor),
       data: new Date(),
       categoria: this.categoria
     };
@@ -100,7 +131,6 @@ export class TransactionsComponent implements OnInit {
 
     this.descricao = '';
     this.valor = 0;
-
   }
 
   remover(id: string) {
