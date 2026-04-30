@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MockDataService } from '../../core/services/mock-data.service';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ChartComponent } from '../../shared/components/chart/chart.component';
+import { TransactionService } from '../../core/services/transaction.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -65,12 +66,14 @@ export class DashboardComponent implements OnInit {
   valores: number[] = [];
 
   constructor(
-    private mock: MockDataService,
+    // private mock: MockDataService,
+    private transactionsService: TransactionService,
     private dashboard: DashboardService
   ) { }
 
   ngOnInit() {
-    const data = this.mock.getTransactions();
+    // const data = this.mock.getTransactions();
+    const data = this.transactionsService.getAll();
 
     console.log('🔥 DATA:', data);
 
