@@ -20,4 +20,20 @@ export class DashboardService {
       .reduce((acc, t) => acc + t.valor, 0);
   }
 
+  getGastosPorCategoria(transactions: Transaction[]) {
+
+    const mapa: Record<string, number> = {};
+
+    transactions.forEach(t => {
+      if (t.valor < 0) {
+        mapa[t.categoria] = (mapa[t.categoria] || 0) + Math.abs(t.valor);
+      }
+    });
+
+    return {
+      labels: Object.keys(mapa),
+      valores: Object.values(mapa)
+    };
+  }
+
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MockDataService } from '../../core/services/mock-data.service';
 import { DashboardService } from '../../core/services/dashboard.service';
+import { ChartComponent } from '../../shared/components/chart/chart.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
+  imports: [ChartComponent],
   template: `
     <div class="p-6 space-y-6">
 
@@ -35,6 +37,21 @@ import { DashboardService } from '../../core/services/dashboard.service';
 
       </div>
 
+      <div class="bg-white p-4 rounded-xl shadow">
+        <h3 class="mb-2 font-semibold">Gastos por categoria</h3>
+        <!-- <div class="h-[300px] max-w-[400px] mx-auto">
+          <app-chart
+            [labels]="labels"
+            [data]="valores"
+          ></app-chart>
+        </div> -->
+        <div class="h-[300px] w-[300px] mx-auto">
+          <app-chart
+            [labels]="labels"
+            [data]="valores">
+          </app-chart>
+      </div>
+
     </div>
   `
 })
@@ -43,6 +60,9 @@ export class DashboardComponent implements OnInit {
   saldo = 0;
   entradas = 0;
   saidas = 0;
+
+  labels: string[] = [];
+  valores: number[] = [];
 
   constructor(
     private mock: MockDataService,
@@ -57,5 +77,10 @@ export class DashboardComponent implements OnInit {
     this.saldo = this.dashboard.calcularSaldo(data);
     this.entradas = this.dashboard.calcularEntradas(data);
     this.saidas = this.dashboard.calcularSaidas(data);
+
+    const grafico = this.dashboard.getGastosPorCategoria(data);
+
+    this.labels = grafico.labels;
+    this.valores = grafico.valores;
   }
 }
