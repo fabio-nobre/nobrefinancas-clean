@@ -14,6 +14,20 @@ import { CommonModule } from '@angular/common';
 
       <h1 class="text-2xl font-bold">Dashboard</h1>
 
+      <div
+        class="p-3 rounded-xl text-sm font-semibold"
+        [class.bg-green-100]="status === 'positivo'"
+        [class.text-green-700]="status === 'positivo'"
+        [class.bg-red-100]="status === 'negativo'"
+        [class.text-red-700]="status === 'negativo'"
+        [class.bg-gray-100]="status === 'neutro'"
+        [class.text-gray-700]="status === 'neutro'"
+      >
+        {{ status === 'positivo' ? 'Situação positiva 👍' :
+          status === 'negativo' ? 'Atenção aos gastos ⚠️' :
+          'Equilibrado' }}
+      </div>
+
       <div class="flex items-center gap-2">
 
         <button (click)="mesAnterior()" class="px-2 py-1 bg-gray-200 rounded">
@@ -36,7 +50,7 @@ import { CommonModule } from '@angular/common';
         <div class="bg-white p-5 rounded-2xl shadow">
           <p class="text-gray-500">Saldo</p>
           <h2 class="text-2xl font-bold text-blue-600">
-            R$ {{ saldo }}
+            R$ {{ saldo | number:'1.2-2' }}
           </h2>
         </div>
 
@@ -86,6 +100,8 @@ export class DashboardComponent implements OnInit {
 
   dataAtual = new Date();
 
+  status: 'positivo' | 'negativo' | 'neutro' = 'neutro';
+
   constructor(
     // private mock: MockDataService,
     private transactionsService: TransactionService,
@@ -134,6 +150,14 @@ export class DashboardComponent implements OnInit {
     const filtradas = this.transactionsService.filtrarPorMes(data, this.dataAtual);
 
     this.saldo = this.dashboard.calcularSaldo(filtradas);
+    if (this.saldo > 0) {
+      this.status = 'positivo';
+    } else if (this.saldo < 0) {
+      this.status = 'negativo';
+    } else {
+      this.status = 'neutro';
+    }
+
     this.entradas = this.dashboard.calcularEntradas(filtradas);
     this.saidas = this.dashboard.calcularSaidas(filtradas);
 
