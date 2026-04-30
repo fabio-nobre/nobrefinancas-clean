@@ -19,9 +19,18 @@ import { CommonModule } from '@angular/common';
 
         <input [(ngModel)]="valor" name="valor" type="number" placeholder="Valor" class="border p-2" />
 
-        <select [(ngModel)]="categoria" name="categoria" class="border p-2">
+        <select [(ngModel)]="tipo" name="tipo" class="border p-2">
           <option value="Renda">Renda</option>
           <option value="Despesa">Despesa</option>
+        </select>
+
+        <select [(ngModel)]="categoria" name="categoria" class="border p-2">
+
+          <option value="Alimentação">Alimentação</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Moradia">Moradia</option>
+          <option value="Lazer">Lazer</option>
+
         </select>
 
         <button class="bg-blue-500 text-white px-4">
@@ -65,7 +74,9 @@ export class TransactionsComponent implements OnInit {
 
   descricao = '';
   valor = 0;
-  categoria = 'Despesa';
+
+  tipo = 'Despesa';
+  categoria = 'Alimentação';
 
   constructor(private service: TransactionService) { }
 
@@ -80,7 +91,7 @@ export class TransactionsComponent implements OnInit {
     const nova: Transaction = {
       id: Date.now().toString(),
       descricao: this.descricao,
-      valor: this.categoria === 'Despesa' ? -Math.abs(this.valor) : Math.abs(this.valor),
+      valor: this.tipo === 'Despesa' ? -Math.abs(this.valor) : Math.abs(this.valor),
       data: new Date(),
       categoria: this.categoria
     };
