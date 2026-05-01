@@ -33,6 +33,13 @@ import { FormsModule } from '@angular/forms';
         {{ insight }}
       </div>
 
+      <div
+        *ngIf="categoriaInsight"
+        class="bg-purple-50 text-purple-700 p-3 rounded-xl text-sm"
+      >
+        {{ categoriaInsight }}
+      </div>
+
       <!-- MÊS -->
       <div class="flex items-center gap-2">
         <button (click)="mesAnterior()" class="px-2 py-1 bg-gray-200 rounded">◀</button>
@@ -179,6 +186,7 @@ export class DashboardComponent implements OnInit {
   gastoTotal = 0;
 
   insight = '';
+  categoriaInsight = '';
 
   constructor(
     private transactionsService: TransactionService,
@@ -266,6 +274,57 @@ export class DashboardComponent implements OnInit {
         .reduce((acc, t) => acc + t.valor, 0)
     );
 
+    // 🔥 AGRUPAR
+    const atualCat = this.agruparPorCategoria(filtradas);
+    const anteriorCat = this.agruparPorCategoria(dadosAnterior);
+
+    // 🔥 ANALISAR
+    let maiorCategoria = '';
+    let maiorDiff = 0;
+
+    Object.keys(atualCat).forEach(cat => {
+
+      const atual = atualCat[cat] || 0;
+      const anterior = anteriorCat[cat] || 0;
+
+      if (anterior === 0 && atual > 0) {
+
+        // 🔥 categoria nova
+        if (atual > maiorDiff) {
+          maiorDiff = atual;
+          maiorCategoria = cat;
+        }
+
+      } else if (anterior > 0) {
+
+        const diff = ((atual - anterior) / anterior) * 100;
+
+        if (Math.abs(diff) > Math.abs(maiorDiff)) {
+          maiorDiff = diff;
+          maiorCategoria = cat;
+        }
+
+      }
+
+    });
+
+    // 🔥 GERAR TEXTO
+    if (maiorCategoria) {
+
+      if (typeof maiorDiff === 'number' && maiorDiff > 1000) {
+        this.categoriaInsight = `🆕 ${maiorCategoria} apareceu este mês`;
+      } else if (maiorDiff > 10) {
+        this.categoriaInsight = `📈 ${maiorCategoria} aumentou ${maiorDiff.toFixed(0)}%`;
+      } else if (maiorDiff < -10) {
+        this.categoriaInsight = `📉 ${maiorCategoria} caiu ${Math.abs(maiorDiff).toFixed(0)}%`;
+      } else {
+        this.categoriaInsight = `➡️ ${maiorCategoria} está estável`;
+      }
+
+    } else {
+      this.categoriaInsight = 'Sem variação relevante por categoria';
+    }
+
     this.atualizarStatus();
 
     localStorage.setItem('filtro_mes', this.dataAtual.toISOString());
@@ -303,5 +362,17 @@ export class DashboardComponent implements OnInit {
     if (this.saldo > 0) this.status = 'positivo';
     else if (this.saldo < 0) this.status = 'negativo';
     else this.status = 'neutro';
+  }
+
+  private agruparPorCategoria(transactions: any[]) {
+    const mapa: Record<string, number> = {};
+
+    transactions.forEach(t => {
+      if (t.valor < 0) {
+        mapa[t.categoria] = (mapa[t.categoria] || 0) + Math.abs(t.valor);
+      }
+    });
+
+    return mapa;
   }
 }
