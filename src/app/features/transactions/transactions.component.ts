@@ -97,7 +97,7 @@ import { CategoryService } from '../../core/services/category.service';
               [class.text-red-600]="t.valor < 0"
               class="font-bold"
             >
-              R$ {{ t.valor }}
+              {{ t.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
             </p>
 
             <button
