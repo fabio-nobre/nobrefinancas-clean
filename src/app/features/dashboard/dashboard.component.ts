@@ -169,6 +169,21 @@ import { FormsModule } from '@angular/forms';
         {{ alertaCategoria }}
       </div>
 
+      <div
+        style="
+          max-width: 500px;
+          background: #ecfeff;
+          color: #0e7490;
+          padding: 14px;
+          border-radius: 12px;
+          font-size: 14px;
+          line-height: 1.5;
+        "
+      >
+        🧠 <strong>Resumo do mês</strong><br>
+        {{ resumo }}
+      </div>
+
       <!-- GRÁFICO -->
       <div class="bg-white p-5 rounded-2xl shadow">
 
@@ -221,6 +236,8 @@ export class DashboardComponent implements OnInit {
   topValor = 0;
 
   alertaCategoria = '';
+
+  resumo = '';
 
   constructor(
     private transactionsService: TransactionService,
@@ -387,6 +404,37 @@ export class DashboardComponent implements OnInit {
     } else {
       this.categoriaInsight = 'Sem variação relevante por categoria';
     }
+
+    const mesNome = this.dataAtual.toLocaleDateString('pt-BR', {
+      month: 'long',
+      year: 'numeric'
+    });
+
+    let texto = `Em ${mesNome}, você gastou ${this.gastoTotal.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    })}.`;
+
+    // meta
+    if (this.metaMensal > 0) {
+      if (this.gastoTotal > this.metaMensal) {
+        texto += ' Você ultrapassou sua meta mensal.';
+      } else {
+        texto += ' Você ficou dentro da meta.';
+      }
+    }
+
+    // top categoria
+    if (this.topCategoria) {
+      texto += ` ${this.topCategoria} foi sua principal categoria de gasto.`;
+    }
+
+    // insight geral
+    if (this.insight) {
+      texto += ` ${this.insight.replace(/⚠️|✅|✔️/g, '')}`;
+    }
+
+    this.resumo = texto;
 
     this.atualizarStatus();
 
