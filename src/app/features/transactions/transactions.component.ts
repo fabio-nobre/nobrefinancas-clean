@@ -40,12 +40,9 @@ import { CategoryService } from '../../core/services/category.service';
         </select>
 
         <select [(ngModel)]="categoria" name="categoria" class="border p-2">
-
-          <option value="Alimentação">Alimentação</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Moradia">Moradia</option>
-          <option value="Lazer">Lazer</option>
-
+          <option *ngFor="let c of categorias" [value]="c.nome">
+            {{ c.nome }}
+          </option>
         </select>
 
         <div class="flex gap-2 mt-2">
