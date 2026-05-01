@@ -224,7 +224,11 @@ export class DashboardComponent implements OnInit {
       mesAnterior
     );
 
-    const gastoAtual = this.gastoTotal;
+    const gastoAtual = Math.abs(
+      filtradas
+        .filter(t => t.valor < 0)
+        .reduce((acc, t) => acc + t.valor, 0)
+    );
 
     const gastoAnterior = Math.abs(
       dadosAnterior
@@ -239,7 +243,7 @@ export class DashboardComponent implements OnInit {
       if (diff > 10) {
         this.insight = `⚠️ Você gastou ${diff.toFixed(0)}% a mais que o mês passado`;
       } else if (diff < -10) {
-        this.insight = `✅ Você economizou ${Math.abs(diff).toFixed(0)}% em relação ao mês passado`;
+        this.insight = `✅ Você economizou ${Math.abs(diff).toFixed(0)}%`;
       } else {
         this.insight = '✔️ Seus gastos estão estáveis';
       }

@@ -22,6 +22,12 @@ import { Category } from '../../core/models/category.model';
         (submit)="editandoId ? salvarEdicao() : adicionar()"
         class="flex flex-col gap-3 bg-white p-4 rounded-xl shadow"
       >
+        <input
+          type="date"
+          [(ngModel)]="data"
+          name="data"
+          class="border p-2 rounded"
+        />
 
         <!-- ERRO -->
         <div *ngIf="erro" class="text-red-500 text-sm">
@@ -178,6 +184,8 @@ export class TransactionsComponent implements OnInit {
 
   editandoId: string | null = null;
 
+  data: string = new Date().toISOString().substring(0, 10);
+
   constructor(
     private service: TransactionService,
     private categoryService: CategoryService
@@ -214,7 +222,7 @@ export class TransactionsComponent implements OnInit {
       valor: this.tipo === 'Despesa'
         ? -Math.abs(this.valor)
         : Math.abs(this.valor),
-      data: new Date(),
+      data: new Date(this.data),
       categoria: this.categoria
     };
 
@@ -276,5 +284,6 @@ export class TransactionsComponent implements OnInit {
     this.valor = 0;
     this.tipo = 'Despesa';
     this.categoria = this.categorias[0]?.nome || '';
+    this.data = new Date().toISOString().substring(0, 10);
   }
 }
