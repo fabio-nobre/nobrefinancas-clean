@@ -155,6 +155,20 @@ import { FormsModule } from '@angular/forms';
         💰 {{ topValor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
       </div>
 
+      <div
+        *ngIf="alertaCategoria"
+        style="
+          max-width: 400px;
+          background: #fee2e2;
+          color: #991b1b;
+          padding: 12px;
+          border-radius: 10px;
+          font-size: 14px;
+        "
+      >
+        {{ alertaCategoria }}
+      </div>
+
       <!-- GRÁFICO -->
       <div class="bg-white p-5 rounded-2xl shadow">
 
@@ -205,6 +219,8 @@ export class DashboardComponent implements OnInit {
 
   topCategoria = '';
   topValor = 0;
+
+  alertaCategoria = '';
 
   constructor(
     private transactionsService: TransactionService,
@@ -305,6 +321,22 @@ export class DashboardComponent implements OnInit {
     });
 
     this.topCategoria = categoriaTop;
+    const total = this.gastoTotal;
+
+    if (this.topCategoria && total > 0) {
+
+      const percentual = (this.topValor / total) * 100;
+
+      if (percentual > 70) {
+        this.alertaCategoria = `🚨 ${this.topCategoria} representa ${percentual.toFixed(0)}% dos seus gastos`;
+      } else if (percentual > 50) {
+        this.alertaCategoria = `⚠️ ${this.topCategoria} já consome ${percentual.toFixed(0)}% dos seus gastos`;
+      } else {
+        this.alertaCategoria = '';
+      }
+
+    }
+
     this.topValor = maior;
 
     const anteriorCat = this.agruparPorCategoria(dadosAnterior);
