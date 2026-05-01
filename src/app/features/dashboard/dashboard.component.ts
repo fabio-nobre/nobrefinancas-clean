@@ -49,6 +49,19 @@ import { FormsModule } from '@angular/forms';
         <button (click)="proximoMes()" class="px-2 py-1 bg-gray-200 rounded">▶</button>
       </div>
 
+      <button
+        (click)="exportarCSV()"
+        style="
+          background: #2563eb;
+          color: white;
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-size: 13px;
+        "
+      >
+        📥 Exportar CSV
+      </button>
+
       <!-- CARDS -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
@@ -485,5 +498,45 @@ export class DashboardComponent implements OnInit {
     });
 
     return mapa;
+  }
+
+  exportarCSV() {
+
+    const data = this.transactionsService.getAll();
+
+    const porMes = this.transactionsService.filtrarPorMes(
+      data,
+      this.dataAtual
+    );
+
+    const filtradas = this.dashboard.filtrarPorCategoria(
+      porMes,
+      this.categoriaSelecionada
+    );
+
+    // 🔥 cabeçalho
+    let csv = 'Data;Descrição;Categoria;Valor\n';
+
+    filtradas.forEach(t => {
+      const dataFormatada = new Date(t.data).toLocaleDateString('pt-BR');
+
+      csv += `${dataFormatada};${t.descricao};${t.categoria};${t.valor.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      })}\n`;
+    });
+
+    // 🔥 criar arquivo
+    const BOM = '\uFEFF';
+
+    const blob = new Blob([BOM + csv], {
+      type: 'text/csv;charset=utf-8;'
+    });
+
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `relatorio-${this.dataAtual.getMonth() + 1}-${this.dataAtual.getFullYear()}.csv`;
+
+    link.click();
   }
 }
