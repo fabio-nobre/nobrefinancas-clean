@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MockDataService } from '../../core/services/mock-data.service';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { TransactionService } from '../../core/services/transaction.service';
@@ -15,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 
       <h1 class="text-2xl font-bold">Dashboard</h1>
 
+      <!-- STATUS -->
       <div
         class="p-3 rounded-xl text-sm font-semibold"
         [class.bg-green-100]="status === 'positivo'"
@@ -25,24 +25,17 @@ import { FormsModule } from '@angular/forms';
         [class.text-gray-700]="status === 'neutro'"
       >
         {{ status === 'positivo' ? 'Situação positiva 👍' :
-          status === 'negativo' ? 'Atenção aos gastos ⚠️' :
-          'Equilibrado' }}
+           status === 'negativo' ? 'Atenção aos gastos ⚠️' :
+           'Equilibrado' }}
       </div>
 
+      <!-- MÊS -->
       <div class="flex items-center gap-2">
-
-        <button (click)="mesAnterior()" class="px-2 py-1 bg-gray-200 rounded">
-          ◀
-        </button>
-
+        <button (click)="mesAnterior()" class="px-2 py-1 bg-gray-200 rounded">◀</button>
         <span class="font-semibold">
           {{ dataAtual | date:'MMM yyyy':'':'pt-BR' }}
         </span>
-
-        <button (click)="proximoMes()" class="px-2 py-1 bg-gray-200 rounded">
-          ▶
-        </button>
-
+        <button (click)="proximoMes()" class="px-2 py-1 bg-gray-200 rounded">▶</button>
       </div>
 
       <!-- CARDS -->
@@ -51,28 +44,28 @@ import { FormsModule } from '@angular/forms';
         <div class="bg-white p-5 rounded-2xl shadow">
           <p class="text-gray-500">Saldo</p>
           <h2 class="text-2xl font-bold text-blue-600">
-            R$ {{ saldo | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+            {{ saldo | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
           </h2>
         </div>
 
         <div class="bg-green-100 p-5 rounded-2xl">
           <p>Entradas</p>
           <h2 class="text-xl font-bold text-green-700">
-            R$ {{ entradas| currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+            {{ entradas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
           </h2>
         </div>
 
         <div class="bg-red-100 p-5 rounded-2xl">
           <p>Saídas</p>
           <h2 class="text-xl font-bold text-red-700">
-            R$ {{ saidas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+            {{ saidas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
           </h2>
         </div>
 
       </div>
 
+      <!-- FILTRO -->
       <div class="flex gap-2 items-center">
-
         <label class="text-sm font-semibold">Categoria:</label>
 
         <select
@@ -80,17 +73,15 @@ import { FormsModule } from '@angular/forms';
           (change)="recalcular()"
           class="border p-2 rounded"
         >
-
           <option [ngValue]="null">Todas</option>
 
           <option *ngFor="let c of categorias" [value]="c">
             {{ c }}
           </option>
-
         </select>
-
       </div>
 
+      <!-- META -->
       <div class="bg-white p-5 rounded-2xl shadow space-y-3">
 
         <div class="flex justify-between items-center">
@@ -100,7 +91,6 @@ import { FormsModule } from '@angular/forms';
             type="number"
             [(ngModel)]="metaMensal"
             (change)="salvarMeta()"
-            placeholder="Definir meta"
             class="border p-2 rounded w-32"
           />
         </div>
@@ -112,16 +102,30 @@ import { FormsModule } from '@angular/forms';
         </div>
 
         <!-- BARRA -->
-        <div class="w-full bg-gray-200 rounded h-3 overflow-hidden">
+<!-- BARRA -->
+<div style="max-width: 400px; width: 100%; background: #e5e7eb; border-radius: 6px; height: 16px; overflow: hidden;">
 
-          <div
-            class="h-3 transition-all"
-            [style.width.%]="percentualMeta"
-            [class.bg-green-500]="percentualMeta < 70"
-            [class.bg-yellow-500]="percentualMeta >= 70 && percentualMeta < 100"
-            [class.bg-red-500]="percentualMeta >= 100"
-          ></div>
+  <div
+    [style.width.%]="percentualMeta > 100 ? 100 : percentualMeta"
+    [style.background]="
+      percentualMeta < 70 ? '#22c55e' :
+      percentualMeta < 100 ? '#eab308' :
+      '#ef4444'
+    "
+    style="height: 16px; transition: all 0.3s;"
+  ></div>
 
+</div>
+
+<!-- 🔥 AQUI -->
+<div style="font-size: 12px; color: #666;">
+  {{ percentualMeta | number:'1.0-0' }}%
+</div>
+
+        <div class="text-xs text-gray-600">
+          <span *ngIf="percentualMeta < 70">✔ Dentro do planejado</span>
+          <span *ngIf="percentualMeta >= 70 && percentualMeta < 100">⚠ Atenção ao limite</span>
+          <span *ngIf="percentualMeta >= 100">🚨 Meta ultrapassada</span>
         </div>
 
       </div>
@@ -134,10 +138,17 @@ import { FormsModule } from '@angular/forms';
         </h3>
 
         <div class="h-[300px] max-w-[400px] mx-auto">
+
+          <div *ngIf="labels.length === 0" class="text-center text-gray-400">
+            Sem dados
+          </div>
+
           <app-chart
+            *ngIf="labels.length > 0"
             [labels]="labels"
             [data]="valores"
           ></app-chart>
+
         </div>
 
       </div>
@@ -162,11 +173,9 @@ export class DashboardComponent implements OnInit {
   categorias: string[] = [];
 
   metaMensal = 0;
-
   gastoTotal = 0;
 
   constructor(
-    // private mock: MockDataService,
     private transactionsService: TransactionService,
     private dashboard: DashboardService
   ) { }
@@ -174,72 +183,22 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
 
     const mesSalvo = localStorage.getItem('filtro_mes');
-    if (mesSalvo) {
-      this.dataAtual = new Date(mesSalvo);
-    }
+    if (mesSalvo) this.dataAtual = new Date(mesSalvo);
 
     const categoriaSalva = localStorage.getItem('filtro_categoria');
-    if (categoriaSalva) {
-      this.categoriaSelecionada = categoriaSalva;
-    }
+    if (categoriaSalva) this.categoriaSelecionada = categoriaSalva;
 
     const metaSalva = localStorage.getItem('meta_mensal');
-    if (metaSalva) {
-      this.metaMensal = Number(metaSalva);
-    }
+    if (metaSalva) this.metaMensal = Number(metaSalva);
 
     this.transactionsService.transactions$.subscribe(data => {
-
-      // 🔹 filtro por mês
-      const porMes = this.transactionsService.filtrarPorMes(
-        data,
-        this.dataAtual
-      );
-
-      // 🔹 filtro por categoria
-      const filtradas = this.dashboard.filtrarPorCategoria(
-        porMes,
-        this.categoriaSelecionada
-      );
-
-      // 🔹 cálculos
-      this.saldo = this.dashboard.calcularSaldo(filtradas);
-      this.entradas = this.dashboard.calcularEntradas(filtradas);
-      this.saidas = this.dashboard.calcularSaidas(filtradas);
-
-      // 🔹 gráfico
-      const grafico = this.dashboard.getGastosPorCategoria(filtradas);
-
-      this.labels = grafico.labels;
-      this.valores = grafico.valores;
-
-      // 🔹 categorias disponíveis
       this.categorias = [...new Set(data.map(t => t.categoria))];
-
+      this.recalcular();
     });
   }
 
-  mesAnterior() {
-    this.dataAtual = new Date(
-      this.dataAtual.getFullYear(),
-      this.dataAtual.getMonth() - 1,
-      1
-    );
-
-    this.recalcular();
-  }
-
-  proximoMes() {
-    this.dataAtual = new Date(
-      this.dataAtual.getFullYear(),
-      this.dataAtual.getMonth() + 1,
-      1
-    );
-
-    this.recalcular();
-  }
-
   recalcular() {
+
     const data = this.transactionsService.getAll();
 
     const porMes = this.transactionsService.filtrarPorMes(data, this.dataAtual);
@@ -254,7 +213,6 @@ export class DashboardComponent implements OnInit {
     this.saidas = this.dashboard.calcularSaidas(filtradas);
 
     const grafico = this.dashboard.getGastosPorCategoria(filtradas);
-
     this.labels = grafico.labels;
     this.valores = grafico.valores;
 
@@ -264,8 +222,28 @@ export class DashboardComponent implements OnInit {
         .reduce((acc, t) => acc + t.valor, 0)
     );
 
+    this.atualizarStatus();
+
     localStorage.setItem('filtro_mes', this.dataAtual.toISOString());
     localStorage.setItem('filtro_categoria', this.categoriaSelecionada || '');
+  }
+
+  mesAnterior() {
+    this.dataAtual = new Date(
+      this.dataAtual.getFullYear(),
+      this.dataAtual.getMonth() - 1,
+      1
+    );
+    this.recalcular();
+  }
+
+  proximoMes() {
+    this.dataAtual = new Date(
+      this.dataAtual.getFullYear(),
+      this.dataAtual.getMonth() + 1,
+      1
+    );
+    this.recalcular();
   }
 
   salvarMeta() {
@@ -277,4 +255,9 @@ export class DashboardComponent implements OnInit {
     return (this.gastoTotal / this.metaMensal) * 100;
   }
 
+  private atualizarStatus() {
+    if (this.saldo > 0) this.status = 'positivo';
+    else if (this.saldo < 0) this.status = 'negativo';
+    else this.status = 'neutro';
+  }
 }
