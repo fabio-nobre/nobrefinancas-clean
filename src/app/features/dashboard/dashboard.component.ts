@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import { BehaviorSubject, combineLatest } from 'rxjs';
+
 import { TransactionService } from '../../core/services/transaction.service';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ChartComponent } from '../../shared/components/chart/chart.component';
@@ -20,6 +22,7 @@ import { TransactionModalComponent } from '../../shared/components/transaction-m
 })
 export class DashboardComponent implements OnInit {
 
+  // ====== DADOS EXIBIDOS ======
   saldo = 0;
   entradas = 0;
   saidas = 0;
@@ -32,12 +35,7 @@ export class DashboardComponent implements OnInit {
 
   dataAtual = new Date();
 
-  // modal
-  modalAberto = false;
-
-  // dark mode
-  darkMode = false;
-
+  // ====== META / INSIGHTS ======
   metaMensal = 0;
   gastoTotal = 0;
   percentualMeta = 0;
@@ -47,6 +45,14 @@ export class DashboardComponent implements OnInit {
 
   resumo = '';
 
+  // ====== CONTROLE REATIVO ======
+  private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
+  private categoriaSelecionada$ = new BehaviorSubject<string | null>(this.categoriaSelecionada);
+
+  // ====== UI ======
+  modalAberto = false;
+  darkMode = false;
+
   constructor(
     private transactionsService: TransactionService,
     private dashboard: DashboardService
@@ -54,20 +60,41 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
 
-    // dark mode persistência
+    // 🌙 dark mode persistência
     const saved = localStorage.getItem('darkMode');
     if (saved === 'true') {
       this.darkMode = true;
       document.body.classList.add('dark');
     }
 
-    this.transactionsService.transactions$.subscribe(data => {
+    // 🔥 REATIVIDADE TOTAL
+    combineLatest([
+      this.transactionsService.transactions$,
+      this.dataAtual$,
+      this.categoriaSelecionada$
+    ]).subscribe(([data, dataAtual, categoria]) => {
 
       console.log('DATA TOTAL:', data);
 
-      this.processarDados(data);
+      // filtro por mês
+      const porMes = this.transactionsService.filtrarPorMes(data, dataAtual);
 
-      // categorias seguras (sem undefined)
+      // filtro por categoria
+      const filtradas = categoria
+        ? porMes.filter(t => t.categoria === categoria)
+        : porMes;
+
+      // cards
+      this.saldo = this.dashboard.calcularSaldo(filtradas);
+      this.entradas = this.dashboard.calcularEntradas(filtradas);
+      this.saidas = this.dashboard.calcularSaidas(filtradas);
+
+      // gráfico
+      const grafico = this.dashboard.getGastosPorCategoria(filtradas);
+      this.labels = grafico.labels;
+      this.valores = grafico.valores;
+
+      // categorias (sem undefined)
       this.categorias = [
         ...new Set(
           data
@@ -76,57 +103,66 @@ export class DashboardComponent implements OnInit {
         )
       ];
 
+      // ===== META =====
       this.gastoTotal = Math.abs(this.saidas);
 
       this.percentualMeta = this.metaMensal
         ? (this.gastoTotal / this.metaMensal) * 100
         : 0;
 
-      // TOP CATEGORIA
+      // ===== TOP CATEGORIA =====
       const maior = this.labels.length
-        ? this.labels.map((l, i) => ({ l, v: this.valores[i] }))
+        ? this.labels
+          .map((l, i) => ({ l, v: this.valores[i] }))
           .sort((a, b) => b.v - a.v)[0]
         : null;
 
       this.topCategoria = maior?.l || '';
       this.topValor = maior?.v || 0;
 
-      // RESUMO
-      this.resumo = `Você gastou ${this.gastoTotal.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
-      })}. ${this.topCategoria} foi sua principal categoria.`;
+      // ===== RESUMO =====
+      this.resumo = filtradas.length
+        ? `Em ${dataAtual.toLocaleDateString('pt-BR', {
+          month: 'long',
+          year: 'numeric'
+        })}, você gastou ${this.gastoTotal.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL'
+        })}. ${this.topCategoria} foi sua principal categoria.`
+        : 'Sem dados neste mês';
 
     });
   }
 
-  // navegação mês
+  // ====== MÊS ======
   mesAnterior() {
-    this.dataAtual = new Date(
+    const nova = new Date(
       this.dataAtual.getFullYear(),
       this.dataAtual.getMonth() - 1,
       1
     );
 
-    this.processarDados(this.transactionsService.getAll());
+    this.dataAtual = nova;
+    this.dataAtual$.next(nova);
   }
 
   proximoMes() {
-    this.dataAtual = new Date(
+    const nova = new Date(
       this.dataAtual.getFullYear(),
       this.dataAtual.getMonth() + 1,
       1
     );
 
-    this.processarDados(this.transactionsService.getAll());
+    this.dataAtual = nova;
+    this.dataAtual$.next(nova);
   }
 
-  // filtro
+  // ====== FILTRO ======
   recalcular() {
-    this.processarDados(this.transactionsService.getAll());
+    this.categoriaSelecionada$.next(this.categoriaSelecionada);
   }
 
-  // modal
+  // ====== MODAL ======
   abrirModal() {
     this.modalAberto = true;
   }
@@ -135,7 +171,7 @@ export class DashboardComponent implements OnInit {
     this.modalAberto = false;
   }
 
-  // dark mode
+  // ====== DARK MODE ======
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
 
@@ -148,21 +184,4 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  private processarDados(data: any[]) {
-
-    const porMes = this.transactionsService.filtrarPorMes(data, this.dataAtual);
-
-    const filtradas = this.categoriaSelecionada
-      ? porMes.filter(t => t.categoria === this.categoriaSelecionada)
-      : porMes;
-
-    this.saldo = this.dashboard.calcularSaldo(filtradas);
-    this.entradas = this.dashboard.calcularEntradas(filtradas);
-    this.saidas = this.dashboard.calcularSaidas(filtradas);
-
-    const grafico = this.dashboard.getGastosPorCategoria(filtradas);
-
-    this.labels = grafico.labels;
-    this.valores = grafico.valores;
-  }
 }
