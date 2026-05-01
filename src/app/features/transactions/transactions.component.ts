@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { TransactionService } from '../../core/services/transaction.service';
 import { Transaction } from '../../core/models/transaction.model';
 import { CommonModule } from '@angular/common';
+import { Category } from '../../core/models/category.model';
+import { CategoryService } from '../../core/services/category.service';
 
 @Component({
   selector: 'app-transactions',
@@ -45,6 +47,25 @@ import { CommonModule } from '@angular/common';
           <option value="Lazer">Lazer</option>
 
         </select>
+
+        <div class="flex gap-2 mt-2">
+
+          <input
+            [(ngModel)]="novaCategoria"
+            name="novaCategoria"
+            placeholder="Nova categoria"
+            class="border p-2"
+          />
+
+          <button
+            type="button"
+            (click)="adicionarCategoria()"
+            class="bg-green-500 text-white px-3 rounded"
+          >
+            +
+          </button>
+
+        </div>
 
         <button
           class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -119,11 +140,19 @@ export class TransactionsComponent implements OnInit {
 
   editandoId: string | null = null;
 
-  constructor(private service: TransactionService) { }
+  categorias: Category[] = [];
+
+  constructor(
+    private service: TransactionService,
+    private categoryService: CategoryService
+  ) { }
 
   ngOnInit() {
     this.service.transactions$.subscribe(data => {
       this.transactions = data;
+    });
+    this.categoryService.categories$.subscribe(c => {
+      this.categorias = c;
     });
   }
 
@@ -197,5 +226,14 @@ export class TransactionsComponent implements OnInit {
     this.editandoId = null;
     this.descricao = '';
     this.valor = 0;
+  }
+
+  novaCategoria = '';
+
+  adicionarCategoria() {
+    if (!this.novaCategoria.trim()) return;
+
+    this.categoryService.add(this.novaCategoria);
+    this.novaCategoria = '';
   }
 }

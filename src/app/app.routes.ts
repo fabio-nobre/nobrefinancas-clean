@@ -8,7 +8,8 @@ export const routes: Routes = [
     path: '',
     component: ShellComponent,
     children: [
-      { path: '', component: DashboardComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: DashboardComponent },
       { path: 'transactions', component: TransactionsComponent }
     ]
   }
