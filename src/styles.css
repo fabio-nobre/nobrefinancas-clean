@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+/* 🌙 DARK MODE BASE */
+body.dark {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+/* cards */
+body.dark .card {
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+/* inputs */
+body.dark input,
+body.dark select {
+  background: #1e293b;
+  color: white;
+  border: 1px solid #334155;
+}
+
+/* botões */
+body.dark button {
+  opacity: 0.95;
+}
