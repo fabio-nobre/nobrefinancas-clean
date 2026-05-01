@@ -140,6 +140,21 @@ import { FormsModule } from '@angular/forms';
 
       </div>
 
+      <div
+        *ngIf="topCategoria"
+        style="
+          max-width: 400px;
+          background: #fef3c7;
+          color: #92400e;
+          padding: 12px;
+          border-radius: 10px;
+          font-size: 14px;
+        "
+      >
+        🥇 Maior gasto do mês: <strong>{{ topCategoria }}</strong><br>
+        💰 {{ topValor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+      </div>
+
       <!-- GRÁFICO -->
       <div class="bg-white p-5 rounded-2xl shadow">
 
@@ -187,6 +202,9 @@ export class DashboardComponent implements OnInit {
 
   insight = '';
   categoriaInsight = '';
+
+  topCategoria = '';
+  topValor = 0;
 
   constructor(
     private transactionsService: TransactionService,
@@ -276,6 +294,19 @@ export class DashboardComponent implements OnInit {
 
     // 🔥 AGRUPAR
     const atualCat = this.agruparPorCategoria(filtradas);
+    let maior = 0;
+    let categoriaTop = '';
+
+    Object.entries(atualCat).forEach(([cat, valor]) => {
+      if (valor > maior) {
+        maior = valor;
+        categoriaTop = cat;
+      }
+    });
+
+    this.topCategoria = categoriaTop;
+    this.topValor = maior;
+
     const anteriorCat = this.agruparPorCategoria(dadosAnterior);
 
     // 🔥 ANALISAR
