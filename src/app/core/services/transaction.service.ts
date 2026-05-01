@@ -26,8 +26,12 @@ export class TransactionService {
   }
 
   add(transaction: Transaction) {
+
     const list = [...this.transactionsSubject.value, transaction];
-    this.update(list);
+
+    localStorage.setItem(this.storageKey, JSON.stringify(list));
+
+    this.transactionsSubject.next(list);
   }
 
   remove(id: string) {

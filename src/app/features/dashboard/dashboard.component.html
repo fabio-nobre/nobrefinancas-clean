@@ -60,6 +60,56 @@
 
   </div>
 
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:16px;
+    margin-top:20px;
+  ">
+
+    <!-- 🎯 META -->
+    <div class="card" style="padding:16px;">
+
+      <h4>Meta mensal</h4>
+
+      <input type="number" [(ngModel)]="metaMensal" (input)="recalcular()" style="width:100%; margin:8px 0;" />
+
+      <div style="font-size:12px;">
+        {{ gastoTotal | currency:'BRL' }} de {{ metaMensal | currency:'BRL' }}
+      </div>
+
+      <!-- BARRA -->
+      <div style="
+        background:#e5e7eb;
+        height:10px;
+        border-radius:6px;
+        margin-top:6px;
+      ">
+        <div [style.width.%]="percentualMeta > 100 ? 100 : percentualMeta"
+          style="height:10px; background:#22c55e; border-radius:6px;">
+        </div>
+      </div>
+
+      <div style="font-size:11px; margin-top:4px;">
+        {{ percentualMeta | number:'1.0-0' }}%
+      </div>
+
+    </div>
+
+    <!-- 🥇 TOP CATEGORIA -->
+    <div *ngIf="topCategoria" class="card" style="padding:16px; background:#fef3c7;">
+      🥇 <strong>{{ topCategoria }}</strong><br>
+      {{ topValor | currency:'BRL' }}
+    </div>
+
+    <!-- 🧠 RESUMO -->
+    <div class="card" style="padding:16px; background:#ecfeff;">
+      <strong>Resumo do mês</strong><br>
+      {{ resumo }}
+    </div>
+
+  </div>
+
   <!-- FILTRO -->
   <div style="margin-top:20px;">
     <label>Categoria:</label>

@@ -38,6 +38,15 @@ export class DashboardComponent implements OnInit {
   // dark mode
   darkMode = false;
 
+  metaMensal = 0;
+  gastoTotal = 0;
+  percentualMeta = 0;
+
+  topCategoria = '';
+  topValor = 0;
+
+  resumo = '';
+
   constructor(
     private transactionsService: TransactionService,
     private dashboard: DashboardService
@@ -56,20 +65,7 @@ export class DashboardComponent implements OnInit {
 
       console.log('DATA TOTAL:', data);
 
-      const porMes = this.transactionsService.filtrarPorMes(data, this.dataAtual);
-
-      const filtradas = this.categoriaSelecionada
-        ? porMes.filter(t => t.categoria === this.categoriaSelecionada)
-        : porMes;
-
-      this.saldo = this.dashboard.calcularSaldo(filtradas);
-      this.entradas = this.dashboard.calcularEntradas(filtradas);
-      this.saidas = this.dashboard.calcularSaidas(filtradas);
-
-      const grafico = this.dashboard.getGastosPorCategoria(filtradas);
-
-      this.labels = grafico.labels;
-      this.valores = grafico.valores;
+      this.processarDados(data);
 
       // categorias seguras (sem undefined)
       this.categorias = [
@@ -79,6 +75,27 @@ export class DashboardComponent implements OnInit {
             .filter((c): c is string => !!c)
         )
       ];
+
+      this.gastoTotal = Math.abs(this.saidas);
+
+      this.percentualMeta = this.metaMensal
+        ? (this.gastoTotal / this.metaMensal) * 100
+        : 0;
+
+      // TOP CATEGORIA
+      const maior = this.labels.length
+        ? this.labels.map((l, i) => ({ l, v: this.valores[i] }))
+          .sort((a, b) => b.v - a.v)[0]
+        : null;
+
+      this.topCategoria = maior?.l || '';
+      this.topValor = maior?.v || 0;
+
+      // RESUMO
+      this.resumo = `Você gastou ${this.gastoTotal.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      })}. ${this.topCategoria} foi sua principal categoria.`;
 
     });
   }
@@ -90,6 +107,8 @@ export class DashboardComponent implements OnInit {
       this.dataAtual.getMonth() - 1,
       1
     );
+
+    this.processarDados(this.transactionsService.getAll());
   }
 
   proximoMes() {
@@ -98,11 +117,13 @@ export class DashboardComponent implements OnInit {
       this.dataAtual.getMonth() + 1,
       1
     );
+
+    this.processarDados(this.transactionsService.getAll());
   }
 
   // filtro
   recalcular() {
-    this.ngOnInit();
+    this.processarDados(this.transactionsService.getAll());
   }
 
   // modal
@@ -127,4 +148,21 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  private processarDados(data: any[]) {
+
+    const porMes = this.transactionsService.filtrarPorMes(data, this.dataAtual);
+
+    const filtradas = this.categoriaSelecionada
+      ? porMes.filter(t => t.categoria === this.categoriaSelecionada)
+      : porMes;
+
+    this.saldo = this.dashboard.calcularSaldo(filtradas);
+    this.entradas = this.dashboard.calcularEntradas(filtradas);
+    this.saidas = this.dashboard.calcularSaidas(filtradas);
+
+    const grafico = this.dashboard.getGastosPorCategoria(filtradas);
+
+    this.labels = grafico.labels;
+    this.valores = grafico.valores;
+  }
 }
