@@ -29,6 +29,10 @@ import { FormsModule } from '@angular/forms';
            'Equilibrado' }}
       </div>
 
+      <div class="bg-blue-50 text-blue-700 p-3 rounded-xl text-sm">
+        {{ insight }}
+      </div>
+
       <!-- MÊS -->
       <div class="flex items-center gap-2">
         <button (click)="mesAnterior()" class="px-2 py-1 bg-gray-200 rounded">◀</button>
@@ -102,25 +106,24 @@ import { FormsModule } from '@angular/forms';
         </div>
 
         <!-- BARRA -->
-<!-- BARRA -->
-<div style="max-width: 400px; width: 100%; background: #e5e7eb; border-radius: 6px; height: 16px; overflow: hidden;">
+        <div style="max-width: 400px; width: 100%; background: #e5e7eb; border-radius: 6px; height: 16px; overflow: hidden;">
 
-  <div
-    [style.width.%]="percentualMeta > 100 ? 100 : percentualMeta"
-    [style.background]="
-      percentualMeta < 70 ? '#22c55e' :
-      percentualMeta < 100 ? '#eab308' :
-      '#ef4444'
-    "
-    style="height: 16px; transition: all 0.3s;"
-  ></div>
+          <div
+            [style.width.%]="percentualMeta > 100 ? 100 : percentualMeta"
+            [style.background]="
+              percentualMeta < 70 ? '#22c55e' :
+              percentualMeta < 100 ? '#eab308' :
+              '#ef4444'
+            "
+            style="height: 16px; transition: all 0.3s;"
+          ></div>
 
-</div>
+        </div>
 
-<!-- 🔥 AQUI -->
-<div style="font-size: 12px; color: #666;">
-  {{ percentualMeta | number:'1.0-0' }}%
-</div>
+        <!-- 🔥 AQUI -->
+        <div style="font-size: 12px; color: #666;">
+          {{ percentualMeta | number:'1.0-0' }}%
+        </div>
 
         <div class="text-xs text-gray-600">
           <span *ngIf="percentualMeta < 70">✔ Dentro do planejado</span>
@@ -175,6 +178,8 @@ export class DashboardComponent implements OnInit {
   metaMensal = 0;
   gastoTotal = 0;
 
+  insight = '';
+
   constructor(
     private transactionsService: TransactionService,
     private dashboard: DashboardService
@@ -207,6 +212,41 @@ export class DashboardComponent implements OnInit {
       porMes,
       this.categoriaSelecionada
     );
+
+    const mesAnterior = new Date(
+      this.dataAtual.getFullYear(),
+      this.dataAtual.getMonth() - 1,
+      1
+    );
+
+    const dadosAnterior = this.transactionsService.filtrarPorMes(
+      data,
+      mesAnterior
+    );
+
+    const gastoAtual = this.gastoTotal;
+
+    const gastoAnterior = Math.abs(
+      dadosAnterior
+        .filter(t => t.valor < 0)
+        .reduce((acc, t) => acc + t.valor, 0)
+    );
+
+    if (gastoAnterior > 0) {
+
+      const diff = ((gastoAtual - gastoAnterior) / gastoAnterior) * 100;
+
+      if (diff > 10) {
+        this.insight = `⚠️ Você gastou ${diff.toFixed(0)}% a mais que o mês passado`;
+      } else if (diff < -10) {
+        this.insight = `✅ Você economizou ${Math.abs(diff).toFixed(0)}% em relação ao mês passado`;
+      } else {
+        this.insight = '✔️ Seus gastos estão estáveis';
+      }
+
+    } else {
+      this.insight = 'Sem dados do mês anterior';
+    }
 
     this.saldo = this.dashboard.calcularSaldo(filtradas);
     this.entradas = this.dashboard.calcularEntradas(filtradas);
