@@ -11,176 +11,177 @@ import { FormsModule } from '@angular/forms';
   imports: [ChartComponent, CommonModule, FormsModule],
   template: `
     <div style="
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px;
-    font-family: Arial, sans-serif;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px;
+      font-family: Inter, Arial, sans-serif;
     ">
-      <div class="space-y-6">
 
-        <div style="margin-bottom: 20px;">
-          <h1 style="font-size: 26px; font-weight: bold; margin-bottom: 5px;">
+      <!-- 🔥 HEADER -->
+      <div style="
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 20px;
+        align-items: center;
+      ">
+
+        <div style="text-align: center;">
+          <h1 style="font-size: 26px; font-weight: bold; margin-bottom: 4px;">
             Dashboard
           </h1>
-          <span style="color: #666; font-size: 14px;">
-            Visão geral financeira
+
+          <div style="font-size: 13px; color: #666;">
+            {{ status === 'positivo' ? 'Situação positiva 👍' :
+              status === 'negativo' ? 'Atenção aos gastos ⚠️' :
+              'Equilibrado' }}
+          </div>
+
+          <div style="font-size: 13px; color: #666;">
+            {{ insight }}
+          </div>
+
+          <div *ngIf="categoriaInsight" style="font-size: 13px; color: #7c3aed;">
+            {{ categoriaInsight }}
+          </div>
+        </div>
+
+        <!-- 📅 MÊS -->
+        <div style="display: flex; align-items: center; gap: 10px;">
+
+          <button (click)="mesAnterior()" style="
+            background: #e5e7eb;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+          ">◀</button>
+
+          <span style="font-weight: bold;">
+            {{ dataAtual | date:'MMM yyyy':'':'pt-BR' }}
           </span>
+
+          <button (click)="proximoMes()" style="
+            background: #e5e7eb;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+          ">▶</button>
+
         </div>
 
-        <div style="
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          margin-bottom: 20px;
-          align-items: center;
+        <!-- 📥 EXPORT -->
+        <button (click)="exportarCSV()" style="
+          background: #2563eb;
+          color: white;
+          padding: 10px 16px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+          font-size: 13px;
         ">
+          📥 Exportar CSV
+        </button>
 
-          <!-- 🔥 STATUS + INSIGHT -->
-          <div style="text-align: center;">
+      </div>
 
-            <div style="font-weight: bold; font-size: 14px;">
-              {{ status === 'positivo' ? 'Situação positiva 👍' :
-                status === 'negativo' ? 'Atenção aos gastos ⚠️' :
-                'Equilibrado' }}
-            </div>
+      <!-- 💳 CARDS -->
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+      ">
 
-            <div style="font-size: 13px; color: #666;">
-              {{ insight }}
-            </div>
+        <!-- Saldo -->
+        <div style="
+          background: white;
+          padding: 18px;
+          border-radius: 14px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        ">
+          <p style="color:#666; font-size:13px;">Saldo</p>
+          <h2 style="font-size:22px; color:#2563eb;">
+            {{ saldo | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+          </h2>
+        </div>
 
-            <div *ngIf="categoriaInsight" style="font-size: 13px; color: #7c3aed;">
-              {{ categoriaInsight }}
-            </div>
+        <!-- Entradas -->
+        <div style="
+          background: #ecfdf5;
+          padding: 18px;
+          border-radius: 14px;
+        ">
+          <p style="font-size:13px;">Entradas</p>
+          <h2 style="color:#16a34a;">
+            {{ entradas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+          </h2>
+        </div>
 
-          </div>
+        <!-- Saídas -->
+        <div style="
+          background: #fef2f2;
+          padding: 18px;
+          border-radius: 14px;
+        ">
+          <p style="font-size:13px;">Saídas</p>
+          <h2 style="color:#dc2626;">
+            {{ saidas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+          </h2>
+        </div>
 
-          <!-- 🔥 CONTROLE DE MÊS -->
-          <div style="
-            display: flex;
-            align-items: center;
-            gap: 10px;
+      </div>
+
+      <!-- ⚙️ FILTRO -->
+      <div style="margin-top: 20px;">
+        <label style="font-size: 13px;">Categoria:</label>
+        <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" style="
+          margin-left: 8px;
+          padding: 6px;
+          border-radius: 6px;
+        ">
+          <option [ngValue]="null">Todas</option>
+          <option *ngFor="let c of categorias" [ngValue]="c">
+            {{ c }}
+          </option>
+        </select>
+      </div>
+
+      <!-- 📊 GRID DE SEÇÕES -->
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      ">
+
+        <!-- 🎯 META -->
+        <div style="
+          background: white;
+          padding: 18px;
+          border-radius: 14px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        ">
+          <h3>Meta mensal</h3>
+
+          <input type="number" [(ngModel)]="metaMensal" (input)="recalcular()" style="
+            margin: 10px 0;
+            padding: 6px;
+            width: 100%;
           ">
 
-            <button (click)="mesAnterior()" style="
-              background: #e5e7eb;
-              border: none;
-              padding: 6px 10px;
-              border-radius: 6px;
-              cursor: pointer;
-            ">
-              ◀
-            </button>
-
-            <span style="font-weight: bold;">
-              {{ dataAtual | date:'MMM yyyy':'':'pt-BR' }}
-            </span>
-
-            <button (click)="proximoMes()" style="
-              background: #e5e7eb;
-              border: none;
-              padding: 6px 10px;
-              border-radius: 6px;
-              cursor: pointer;
-            ">
-              ▶
-            </button>
-
+          <div style="font-size: 13px;">
+            {{ gastoTotal | currency:'BRL' }} de {{ metaMensal | currency:'BRL' }}
           </div>
 
-          <!-- 🔥 AÇÕES -->
-          <div>
-
-            <button
-              (click)="exportarCSV()"
-              style="
-                background: #2563eb;
-                color: white;
-                padding: 8px 14px;
-                border-radius: 8px;
-                border: none;
-                cursor: pointer;
-                font-size: 13px;
-              "
-            >
-              📥 Exportar CSV
-            </button>
-
-          </div>
-
-        </div>
-
-        <!-- CARDS -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-
-          <div style="background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-            <p style="color:#666; font-size:13px;">Saldo</p>
-            <h2 style="font-size:22px; color:#2563eb;">
-              {{ saldo | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-            </h2>
-          </div>
-
-          <div style="background: #ecfdf5; padding: 16px; border-radius: 12px;">
-            <p style="font-size:13px;">Entradas</p>
-            <h2 style="color:#16a34a;">
-              {{ entradas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-            </h2>
-          </div>
-
-          <div style="background: #fef2f2; padding: 16px; border-radius: 12px;">
-            <p style="font-size:13px;">Saídas</p>
-            <h2 style="color:#dc2626;">
-              {{ saidas | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-            </h2>
-          </div>
-
-        </div>
-
-        <!-- FILTRO -->
-        <div class="flex gap-2 items-center">
-          <label class="text-sm font-semibold">Categoria:</label>
-
-          <select
-            [(ngModel)]="categoriaSelecionada"
-            (change)="recalcular()"
-            class="border p-2 rounded"
-          >
-            <option [ngValue]="null">Todas</option>
-
-            <option *ngFor="let c of categorias" [value]="c">
-              {{ c }}
-            </option>
-          </select>
-        </div>
-
-        <!-- META -->
+          <!-- Barra -->
           <div style="
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            margin-top: 20px;
+            margin-top: 8px;
+            background: #e5e7eb;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
           ">
-
-          <div class="flex justify-between items-center">
-            <h3 class="font-semibold">Meta mensal</h3>
-
-            <input
-              type="number"
-              [(ngModel)]="metaMensal"
-              (change)="salvarMeta()"
-              class="border p-2 rounded w-32"
-            />
-          </div>
-
-          <div class="text-sm text-gray-500">
-            {{ gastoTotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-            de
-            {{ metaMensal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-          </div>
-
-          <!-- BARRA -->
-          <div style="max-width: 400px; width: 100%; background: #e5e7eb; border-radius: 6px; height: 16px; overflow: hidden;">
-
             <div
               [style.width.%]="percentualMeta > 100 ? 100 : percentualMeta"
               [style.background]="
@@ -188,88 +189,67 @@ import { FormsModule } from '@angular/forms';
                 percentualMeta < 100 ? '#eab308' :
                 '#ef4444'
               "
-              style="height: 16px; transition: all 0.3s;"
+              style="height: 12px;"
             ></div>
-
           </div>
 
-          <!-- 🔥 AQUI -->
-          <div style="font-size: 12px; color: #666;">
+          <div style="font-size: 12px; margin-top: 4px;">
             {{ percentualMeta | number:'1.0-0' }}%
           </div>
 
-          <div class="text-xs text-gray-600">
-            <span *ngIf="percentualMeta < 70">✔ Dentro do planejado</span>
-            <span *ngIf="percentualMeta >= 70 && percentualMeta < 100">⚠ Atenção ao limite</span>
-            <span *ngIf="percentualMeta >= 100">🚨 Meta ultrapassada</span>
-          </div>
-
         </div>
 
-        <div
-          *ngIf="topCategoria"
-          style="
-            max-width: 400px;
-            background: #fef3c7;
-            color: #92400e;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-          "
-        >
-          🥇 Maior gasto do mês: <strong>{{ topCategoria }}</strong><br>
-          💰 {{ topValor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-        </div>
-
-        <div
-          *ngIf="alertaCategoria"
-          style="
-            max-width: 400px;
-            background: #fee2e2;
-            color: #991b1b;
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 14px;
-          "
-        >
-          {{ alertaCategoria }}
-        </div>
-
-        <div style="
-          background: white;
-          padding: 16px;
-          border-radius: 12px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-          margin-top: 20px;
+        <!-- 🥇 TOP GASTO -->
+        <div *ngIf="topCategoria" style="
+          background: #fef3c7;
+          padding: 18px;
+          border-radius: 14px;
         ">
-          🧠 <strong>Resumo do mês</strong><br>
+          🥇 <strong>{{ topCategoria }}</strong><br>
+          {{ topValor | currency:'BRL' }}
+        </div>
+
+        <!-- 🧠 RESUMO -->
+        <div style="
+          background: #ecfeff;
+          padding: 18px;
+          border-radius: 14px;
+        ">
+          <strong>Resumo do mês</strong><br>
           {{ resumo }}
         </div>
 
-        <!-- GRÁFICO -->
-        <div style="display:flex; justify-content:center; margin-top:20px;">
+      </div>
 
-          <h3 class="font-semibold mb-4">
-            Gastos por categoria
-          </h3>
+      <!-- 📈 GRÁFICO -->
+      <div style="
+        background: white;
+        padding: 18px;
+        border-radius: 14px;
+        margin-top: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      ">
 
-          <div class="h-[300px] max-w-[400px] mx-auto">
+        <h3 style="text-align:center;">Gastos por categoria</h3>
 
-            <div *ngIf="labels.length === 0" class="text-center text-gray-400">
-              Sem dados
-            </div>
+        <div style="
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          height: 280px;
+        ">
+          <app-chart
+            [labels]="labels"
+            [data]="valores"
+          ></app-chart>
+        </div>
 
-            <app-chart
-              *ngIf="labels.length > 0"
-              [labels]="labels"
-              [data]="valores"
-            ></app-chart>
-
-          </div>
-
+        <div *ngIf="labels.length === 0" style="text-align:center; color:#999;">
+          Sem dados
         </div>
 
       </div>
+
     </div>
   `
 })
