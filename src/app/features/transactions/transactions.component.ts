@@ -13,97 +13,114 @@ import { Category } from '../../core/models/category.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="p-6 space-y-6">
+    <div style="
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Inter, Arial, sans-serif;
+    ">
 
-      <h1 class="text-2xl font-bold">Transações</h1>
+      <h2 style="margin-bottom: 10px;">Transações</h2>
 
-      <!-- FORM -->
+      <!-- 🔥 FORM -->
       <form
         (submit)="editandoId ? salvarEdicao() : adicionar()"
-        class="flex flex-col gap-3 bg-white p-4 rounded-xl shadow"
+        class="card"
+        style="
+          display:flex;
+          flex-direction:column;
+          gap:10px;
+          padding:16px;
+          border-radius:12px;
+          box-shadow:0 2px 8px rgba(0,0,0,0.05);
+        "
       >
-        <input
-          type="date"
-          [(ngModel)]="data"
-          name="data"
-          class="border p-2 rounded"
-        />
 
-        <!-- ERRO -->
-        <div *ngIf="erro" class="text-red-500 text-sm">
-          {{ erro }}
-        </div>
+        <!-- TIPO -->
+        <select [(ngModel)]="tipo" name="tipo">
+          <option value="receita">Receita</option>
+          <option value="despesa">Despesa</option>
+          <option value="transferencia">Transferência</option>
+        </select>
 
         <!-- DESCRIÇÃO -->
         <input
           [(ngModel)]="descricao"
           name="descricao"
           placeholder="Descrição"
-          class="border p-2 rounded"
-          [class.border-red-400]="!descricao"
         />
 
         <!-- VALOR -->
         <input
+          type="number"
           [(ngModel)]="valor"
           name="valor"
-          type="number"
           placeholder="Valor"
-          class="border p-2 rounded"
-          [class.border-red-400]="valor <= 0"
         />
 
-        <!-- TIPO -->
-        <select [(ngModel)]="tipo" name="tipo" class="border p-2 rounded">
-          <option value="Renda">Renda</option>
-          <option value="Despesa">Despesa</option>
-        </select>
+        <!-- DATA -->
+        <input
+          type="date"
+          [(ngModel)]="data"
+          name="data"
+        />
 
         <!-- CATEGORIA -->
-        <select [(ngModel)]="categoria" name="categoria" class="border p-2 rounded">
+        <select
+          *ngIf="tipo !== 'transferencia'"
+          [(ngModel)]="categoria"
+          name="categoria"
+        >
           <option *ngFor="let c of categorias" [value]="c.nome">
             {{ c.nome }}
           </option>
         </select>
 
-        <!-- NOVA CATEGORIA -->
-        <div class="flex gap-2">
+        <!-- CONTAS -->
+        <div *ngIf="tipo === 'transferencia'" style="display:flex; gap:10px;">
 
-          <input
-            [(ngModel)]="novaCategoria"
-            name="novaCategoria"
-            placeholder="Nova categoria"
-            class="border p-2 rounded w-full"
-          />
+          <select [(ngModel)]="contaOrigem" name="contaOrigem">
+            <option *ngFor="let c of contas" [value]="c">
+              Origem: {{ c }}
+            </option>
+          </select>
 
-          <button
-            type="button"
-            (click)="adicionarCategoria()"
-            class="bg-green-500 text-white px-3 rounded"
-          >
-            +
-          </button>
+          <select [(ngModel)]="contaDestino" name="contaDestino">
+            <option *ngFor="let c of contas" [value]="c">
+              Destino: {{ c }}
+            </option>
+          </select>
 
         </div>
 
         <!-- BOTÕES -->
-        <div class="flex gap-2">
+        <div style="display:flex; gap:10px; margin-top:10px;">
 
           <button
             type="submit"
-            [disabled]="formInvalido"
-            class="px-4 py-2 rounded text-white"
-            [class.bg-gray-400]="formInvalido"
-            [class.bg-blue-600]="!formInvalido"
+            style="
+              background:#2563eb;
+              color:white;
+              padding:8px 12px;
+              border:none;
+              border-radius:8px;
+              cursor:pointer;
+            "
           >
             {{ editandoId ? 'Salvar' : 'Adicionar' }}
           </button>
 
           <button
-            *ngIf="editandoId"
             type="button"
+            *ngIf="editandoId"
             (click)="cancelarEdicao()"
-            class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
+            style="
+              background:#e5e7eb;
+              padding:8px 12px;
+              border:none;
+              border-radius:8px;
+              cursor:pointer;
+            "
           >
             Cancelar
           </button>
@@ -112,54 +129,83 @@ import { Category } from '../../core/models/category.model';
 
       </form>
 
-      <!-- EMPTY STATE -->
-      <div *ngIf="transactions.length === 0" class="text-center text-gray-400">
-        Nenhuma transação cadastrada
-      </div>
-
-      <!-- LISTA -->
-      <div class="space-y-3">
+      <!-- 🔥 LISTA -->
+      <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
 
         <div
           *ngFor="let t of transactions"
-          class="flex justify-between items-center bg-white p-4 rounded-xl shadow"
+          class="card"
+          style="
+            padding:12px;
+            border-radius:10px;
+            box-shadow:0 2px 6px rgba(0,0,0,0.05);
+          "
         >
 
-          <div>
-            <p class="font-semibold">{{ t.descricao }}</p>
-            <p class="text-xs text-gray-400">{{ t.categoria }}</p>
-          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
 
-          <div class="text-right">
+            <div>
+              <strong>{{ t.descricao }}</strong><br>
 
-            <p
-              class="font-bold"
-              [class.text-green-600]="t.valor > 0"
-              [class.text-red-600]="t.valor < 0"
-            >
-              {{ t.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
-            </p>
+              <span style="font-size:12px; color:#666;">
+                {{ t.categoria || t.tipo }}
+              </span><br>
 
-            <div class="flex gap-2 justify-end">
+              <span style="font-size:12px;">
+                {{ t.data | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
 
-              <button
-                (click)="editar(t)"
-                class="text-xs text-blue-500 hover:text-blue-700"
+            <div style="text-align:right;">
+
+              <div
+                [style.color]="t.valor < 0 ? '#dc2626' : '#16a34a'"
+                style="font-weight:bold;"
               >
-                editar
-              </button>
+                {{ t.valor | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+              </div>
 
-              <button
-                (click)="remover(t.id)"
-                class="text-xs text-red-400 hover:text-red-600"
-              >
-                remover
-              </button>
+              <div style="display:flex; gap:6px; margin-top:6px;">
+
+                <!-- EDITAR -->
+                <button
+                  (click)="editar(t)"
+                  style="
+                    background:#dbeafe;
+                    border:none;
+                    padding:4px 8px;
+                    border-radius:6px;
+                    cursor:pointer;
+                  "
+                >
+                  ✏️
+                </button>
+
+                <!-- REMOVER -->
+                <button
+                  (click)="remover(t.id)"
+                  style="
+                    background:#fee2e2;
+                    border:none;
+                    padding:4px 8px;
+                    border-radius:6px;
+                    cursor:pointer;
+                  "
+                >
+                  🗑️
+                </button>
+
+              </div>
 
             </div>
 
           </div>
 
+        </div>
+
+        <!-- EMPTY -->
+        <div *ngIf="transactions.length === 0" style="text-align:center; color:#999;">
+          Nenhuma transação cadastrada
         </div>
 
       </div>
@@ -175,8 +221,8 @@ export class TransactionsComponent implements OnInit {
 
   descricao = '';
   valor = 0;
-  tipo = 'Despesa';
-  categoria = 'Alimentação';
+  tipo: 'receita' | 'despesa' | 'transferencia' = 'despesa';
+  categoria = '';
 
   novaCategoria = '';
 
@@ -185,6 +231,12 @@ export class TransactionsComponent implements OnInit {
   editandoId: string | null = null;
 
   data: string = new Date().toISOString().substring(0, 10);
+  // data = new Date().toISOString().substring(0, 10);
+
+  contaOrigem = '';
+  contaDestino = '';
+
+  contas = ['Carteira', 'Banco', 'Cartão'];
 
   constructor(
     private service: TransactionService,
@@ -209,21 +261,27 @@ export class TransactionsComponent implements OnInit {
 
   adicionar() {
 
-    this.erro = '';
+    if (!this.descricao || !this.valor) return;
 
-    if (this.formInvalido) {
-      this.erro = 'Preencha os campos corretamente';
-      return;
+    let valorFinal = this.valor;
+
+    if (this.tipo === 'despesa') {
+      valorFinal = -Math.abs(this.valor);
+    }
+
+    if (this.tipo === 'receita') {
+      valorFinal = Math.abs(this.valor);
     }
 
     const nova: Transaction = {
       id: Date.now().toString(),
+      tipo: this.tipo,
       descricao: this.descricao,
-      valor: this.tipo === 'Despesa'
-        ? -Math.abs(this.valor)
-        : Math.abs(this.valor),
+      valor: valorFinal,
+      categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
       data: new Date(this.data),
-      categoria: this.categoria
+      contaOrigem: this.contaOrigem,
+      contaDestino: this.contaDestino
     };
 
     this.service.add(nova);
@@ -232,29 +290,54 @@ export class TransactionsComponent implements OnInit {
   }
 
   editar(t: Transaction) {
+
     this.editandoId = t.id;
 
+    this.tipo = t.tipo;
     this.descricao = t.descricao;
     this.valor = Math.abs(t.valor);
-    this.tipo = t.valor < 0 ? 'Despesa' : 'Renda';
-    this.categoria = t.categoria;
+
+    this.categoria = t.categoria || '';
+
+    this.data = new Date(t.data).toISOString().substring(0, 10);
+
+    this.contaOrigem = t.contaOrigem || '';
+    this.contaDestino = t.contaDestino || '';
   }
 
   salvarEdicao() {
 
     if (!this.editandoId) return;
 
-    const atualizadas = this.transactions.map(t => {
+    const lista = this.service.getAll();
+
+    let valorFinal = this.valor;
+
+    if (this.tipo === 'despesa') {
+      valorFinal = -Math.abs(this.valor);
+    }
+
+    if (this.tipo === 'receita') {
+      valorFinal = Math.abs(this.valor);
+    }
+
+    const atualizadas = lista.map(t => {
+
       if (t.id === this.editandoId) {
+
         return {
           ...t,
+          tipo: this.tipo,
           descricao: this.descricao,
-          valor: this.tipo === 'Despesa'
-            ? -Math.abs(this.valor)
-            : Math.abs(this.valor),
-          categoria: this.categoria
+          valor: valorFinal,
+          categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
+          data: new Date(this.data),
+          contaOrigem: this.contaOrigem,
+          contaDestino: this.contaDestino
         };
+
       }
+
       return t;
     });
 
@@ -280,10 +363,12 @@ export class TransactionsComponent implements OnInit {
   }
 
   private resetForm() {
+    this.tipo = 'despesa';
     this.descricao = '';
     this.valor = 0;
-    this.tipo = 'Despesa';
-    this.categoria = this.categorias[0]?.nome || '';
+    this.categoria = '';
     this.data = new Date().toISOString().substring(0, 10);
+    this.contaOrigem = '';
+    this.contaDestino = '';
   }
 }

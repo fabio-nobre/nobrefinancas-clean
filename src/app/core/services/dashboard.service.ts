@@ -25,7 +25,7 @@ export class DashboardService {
     const mapa: Record<string, number> = {};
 
     transactions.forEach(t => {
-      if (t.valor < 0) {
+      if (t.valor < 0 && t.categoria) {
         mapa[t.categoria] = (mapa[t.categoria] || 0) + Math.abs(t.valor);
       }
     });

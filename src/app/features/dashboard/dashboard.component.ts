@@ -298,7 +298,13 @@ export class DashboardComponent implements OnInit {
     if (metaSalva) this.metaMensal = Number(metaSalva);
 
     this.transactionsService.transactions$.subscribe(data => {
-      this.categorias = [...new Set(data.map(t => t.categoria))];
+      this.categorias = [
+        ...new Set(
+          data
+            .map(t => t.categoria)
+            .filter((c): c is string => !!c)
+        )
+      ];
       this.recalcular();
     });
   }
