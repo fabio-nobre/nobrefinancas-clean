@@ -91,6 +91,41 @@ import { FormsModule } from '@angular/forms';
 
       </div>
 
+      <div class="bg-white p-5 rounded-2xl shadow space-y-3">
+
+        <div class="flex justify-between items-center">
+          <h3 class="font-semibold">Meta mensal</h3>
+
+          <input
+            type="number"
+            [(ngModel)]="metaMensal"
+            (change)="salvarMeta()"
+            placeholder="Definir meta"
+            class="border p-2 rounded w-32"
+          />
+        </div>
+
+        <div class="text-sm text-gray-500">
+          {{ gastoTotal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+          de
+          {{ metaMensal | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </div>
+
+        <!-- BARRA -->
+        <div class="w-full bg-gray-200 rounded h-3 overflow-hidden">
+
+          <div
+            class="h-3 transition-all"
+            [style.width.%]="percentualMeta"
+            [class.bg-green-500]="percentualMeta < 70"
+            [class.bg-yellow-500]="percentualMeta >= 70 && percentualMeta < 100"
+            [class.bg-red-500]="percentualMeta >= 100"
+          ></div>
+
+        </div>
+
+      </div>
+
       <!-- GRÁFICO -->
       <div class="bg-white p-5 rounded-2xl shadow">
 
@@ -126,6 +161,9 @@ export class DashboardComponent implements OnInit {
   categoriaSelecionada: string | null = null;
   categorias: string[] = [];
 
+  metaMensal = 0;
+
+  gastoTotal = 0;
 
   constructor(
     // private mock: MockDataService,
@@ -143,6 +181,11 @@ export class DashboardComponent implements OnInit {
     const categoriaSalva = localStorage.getItem('filtro_categoria');
     if (categoriaSalva) {
       this.categoriaSelecionada = categoriaSalva;
+    }
+
+    const metaSalva = localStorage.getItem('meta_mensal');
+    if (metaSalva) {
+      this.metaMensal = Number(metaSalva);
     }
 
     this.transactionsService.transactions$.subscribe(data => {
@@ -215,8 +258,23 @@ export class DashboardComponent implements OnInit {
     this.labels = grafico.labels;
     this.valores = grafico.valores;
 
+    this.gastoTotal = Math.abs(
+      filtradas
+        .filter(t => t.valor < 0)
+        .reduce((acc, t) => acc + t.valor, 0)
+    );
+
     localStorage.setItem('filtro_mes', this.dataAtual.toISOString());
     localStorage.setItem('filtro_categoria', this.categoriaSelecionada || '');
+  }
+
+  salvarMeta() {
+    localStorage.setItem('meta_mensal', this.metaMensal.toString());
+  }
+
+  get percentualMeta() {
+    if (!this.metaMensal) return 0;
+    return (this.gastoTotal / this.metaMensal) * 100;
   }
 
 }
