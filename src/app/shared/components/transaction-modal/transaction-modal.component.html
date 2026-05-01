@@ -1,0 +1,70 @@
+<div style="
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index: 999;
+">
+
+  <div class="card" style="
+    width: 400px;
+    padding: 20px;
+    border-radius: 16px;
+  ">
+
+    <!-- HEADER -->
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3>Nova {{ tipo }}</h3>
+      <button (click)="fechar()">✖</button>
+    </div>
+
+    <!-- VALOR -->
+    <input type="number" [(ngModel)]="valor" placeholder="Valor" style="font-size:24px; margin:10px 0; width:100%;" />
+
+    <!-- TIPO -->
+    <select [(ngModel)]="tipo">
+      <option value="despesa">Despesa</option>
+      <option value="receita">Receita</option>
+      <option value="transferencia">Transferência</option>
+    </select>
+
+    <!-- DESCRIÇÃO -->
+    <input [(ngModel)]="descricao" placeholder="Descrição" />
+
+    <!-- DATA -->
+    <input type="date" [(ngModel)]="data" />
+
+    <!-- CATEGORIA -->
+    <select *ngIf="tipo !== 'transferencia'" [(ngModel)]="categoria">
+      <option *ngFor="let c of categorias" [value]="c">{{ c }}</option>
+    </select>
+
+    <!-- CONTAS -->
+    <div *ngIf="tipo === 'transferencia'" style="display:flex; gap:10px;">
+      <select [(ngModel)]="contaOrigem">
+        <option *ngFor="let c of contas" [value]="c">Origem: {{ c }}</option>
+      </select>
+
+      <select [(ngModel)]="contaDestino">
+        <option *ngFor="let c of contas" [value]="c">Destino: {{ c }}</option>
+      </select>
+    </div>
+
+    <!-- BOTÃO -->
+    <button (click)="salvar()" style="
+      margin-top: 15px;
+      width: 100%;
+      background: #7c3aed;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+    ">
+      Salvar
+    </button>
+
+  </div>
+
+</div>

@@ -1,0 +1,110 @@
+<div style="
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+">
+
+  <!-- HEADER -->
+  <div style="text-align:center; margin-bottom:20px;">
+
+    <button (click)="toggleDarkMode()" style="
+      margin-bottom:10px;
+      background:#111827;
+      color:white;
+      padding:6px 10px;
+      border-radius:8px;
+      border:none;
+    ">
+      {{ darkMode ? '☀️ Light' : '🌙 Dark' }}
+    </button>
+
+    <h1>Dashboard</h1>
+
+    <div style="margin-top:10px;">
+      <button (click)="mesAnterior()">◀</button>
+
+      <strong style="margin:0 10px;">
+        {{ dataAtual | date:'MMM yyyy':'':'pt-BR' }}
+      </strong>
+
+      <button (click)="proximoMes()">▶</button>
+    </div>
+
+  </div>
+
+  <!-- CARDS -->
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:16px;
+  ">
+
+    <div class="card" style="padding:16px;">
+      <p>Saldo</p>
+      <h2>{{ saldo | currency:'BRL' }}</h2>
+    </div>
+
+    <div class="card" style="padding:16px; background:#ecfdf5;">
+      <p>Entradas</p>
+      <h2 style="color:#16a34a;">
+        {{ entradas | currency:'BRL' }}
+      </h2>
+    </div>
+
+    <div class="card" style="padding:16px; background:#fef2f2;">
+      <p>Saídas</p>
+      <h2 style="color:#dc2626;">
+        {{ saidas | currency:'BRL' }}
+      </h2>
+    </div>
+
+  </div>
+
+  <!-- FILTRO -->
+  <div style="margin-top:20px;">
+    <label>Categoria:</label>
+
+    <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()">
+      <option [ngValue]="null">Todas</option>
+      <option *ngFor="let c of categorias" [ngValue]="c">
+        {{ c }}
+      </option>
+    </select>
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="card" style="margin-top:20px; padding:16px;">
+    <h3>Gastos por categoria</h3>
+
+    <div style="display:flex; justify-content:center;">
+      <app-chart [labels]="labels" [data]="valores">
+      </app-chart>
+    </div>
+
+    <div *ngIf="labels.length === 0" style="text-align:center;">
+      Sem dados
+    </div>
+
+  </div>
+
+  <!-- BOTÃO FLUTUANTE -->
+  <button (click)="abrirModal()" style="
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#7c3aed;
+    color:white;
+    font-size:28px;
+    border:none;
+  ">
+    +
+  </button>
+
+  <!-- MODAL -->
+  <app-transaction-modal *ngIf="modalAberto" (fechado)="fecharModal()">
+  </app-transaction-modal>
+
+</div>
