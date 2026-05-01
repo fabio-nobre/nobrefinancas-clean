@@ -134,6 +134,17 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    const mesSalvo = localStorage.getItem('filtro_mes');
+    if (mesSalvo) {
+      this.dataAtual = new Date(mesSalvo);
+    }
+
+    const categoriaSalva = localStorage.getItem('filtro_categoria');
+    if (categoriaSalva) {
+      this.categoriaSelecionada = categoriaSalva;
+    }
+
     this.transactionsService.transactions$.subscribe(data => {
 
       // 🔹 filtro por mês
@@ -203,6 +214,9 @@ export class DashboardComponent implements OnInit {
 
     this.labels = grafico.labels;
     this.valores = grafico.valores;
+
+    localStorage.setItem('filtro_mes', this.dataAtual.toISOString());
+    localStorage.setItem('filtro_categoria', this.categoriaSelecionada || '');
   }
 
 }
