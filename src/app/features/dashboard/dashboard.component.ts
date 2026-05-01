@@ -4,11 +4,12 @@ import { DashboardService } from '../../core/services/dashboard.service';
 import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { TransactionService } from '../../core/services/transaction.service';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [ChartComponent, CommonModule],
+  imports: [ChartComponent, CommonModule, FormsModule],
   template: `
     <div class="space-y-6">
 
@@ -70,6 +71,26 @@ import { CommonModule } from '@angular/common';
 
       </div>
 
+      <div class="flex gap-2 items-center">
+
+        <label class="text-sm font-semibold">Categoria:</label>
+
+        <select
+          [(ngModel)]="categoriaSelecionada"
+          (change)="recalcular()"
+          class="border p-2 rounded"
+        >
+
+          <option [ngValue]="null">Todas</option>
+
+          <option *ngFor="let c of categorias" [value]="c">
+            {{ c }}
+          </option>
+
+        </select>
+
+      </div>
+
       <!-- GRÁFICO -->
       <div class="bg-white p-5 rounded-2xl shadow">
 
@@ -102,6 +123,10 @@ export class DashboardComponent implements OnInit {
 
   status: 'positivo' | 'negativo' | 'neutro' = 'neutro';
 
+  categoriaSelecionada: string | null = null;
+  categorias: string[] = [];
+
+
   constructor(
     // private mock: MockDataService,
     private transactionsService: TransactionService,
@@ -111,16 +136,32 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.transactionsService.transactions$.subscribe(data => {
 
-      const filtradas = this.transactionsService.filtrarPorMes(data, this.dataAtual);
+      // 🔹 filtro por mês
+      const porMes = this.transactionsService.filtrarPorMes(
+        data,
+        this.dataAtual
+      );
 
+      // 🔹 filtro por categoria
+      const filtradas = this.dashboard.filtrarPorCategoria(
+        porMes,
+        this.categoriaSelecionada
+      );
+
+      // 🔹 cálculos
       this.saldo = this.dashboard.calcularSaldo(filtradas);
       this.entradas = this.dashboard.calcularEntradas(filtradas);
       this.saidas = this.dashboard.calcularSaidas(filtradas);
 
+      // 🔹 gráfico
       const grafico = this.dashboard.getGastosPorCategoria(filtradas);
 
       this.labels = grafico.labels;
       this.valores = grafico.valores;
+
+      // 🔹 categorias disponíveis
+      this.categorias = [...new Set(data.map(t => t.categoria))];
+
     });
   }
 
@@ -147,17 +188,14 @@ export class DashboardComponent implements OnInit {
   recalcular() {
     const data = this.transactionsService.getAll();
 
-    const filtradas = this.transactionsService.filtrarPorMes(data, this.dataAtual);
+    const porMes = this.transactionsService.filtrarPorMes(data, this.dataAtual);
+
+    const filtradas = this.dashboard.filtrarPorCategoria(
+      porMes,
+      this.categoriaSelecionada
+    );
 
     this.saldo = this.dashboard.calcularSaldo(filtradas);
-    if (this.saldo > 0) {
-      this.status = 'positivo';
-    } else if (this.saldo < 0) {
-      this.status = 'negativo';
-    } else {
-      this.status = 'neutro';
-    }
-
     this.entradas = this.dashboard.calcularEntradas(filtradas);
     this.saidas = this.dashboard.calcularSaidas(filtradas);
 
@@ -166,4 +204,5 @@ export class DashboardComponent implements OnInit {
     this.labels = grafico.labels;
     this.valores = grafico.valores;
   }
+
 }

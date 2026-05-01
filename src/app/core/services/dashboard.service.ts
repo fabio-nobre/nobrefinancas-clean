@@ -36,4 +36,9 @@ export class DashboardService {
     };
   }
 
+  filtrarPorCategoria(transactions: Transaction[], categoria: string | null) {
+    if (!categoria) return transactions;
+    return transactions.filter(t => t.categoria === categoria);
+  }
+
 }
