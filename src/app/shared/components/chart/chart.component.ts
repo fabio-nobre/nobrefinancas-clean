@@ -57,8 +57,8 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
           {
             data: this.data,
             backgroundColor: [
-              '#22c55e', // verde
-              '#ef4444', // vermelho
+              '#22c55e', // verde (receita)
+              '#ef4444',  // vermelho (despesa)
               '#3b82f6', // azul
               '#f59e0b', // amarelo
               '#a855f7'  // roxo

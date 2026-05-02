@@ -53,6 +53,8 @@ export class DashboardComponent implements OnInit {
   totalReceitas = 0;
   totalDespesas = 0;
 
+
+
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
   private categoriaSelecionada$ = new BehaviorSubject<string | null>(this.categoriaSelecionada);
@@ -115,11 +117,11 @@ export class DashboardComponent implements OnInit {
       this.saidas = this.dashboard.calcularSaidas(filtradas);
 
       // gráfico
-      const despesas = filtradas.filter(t => t.tipo === 'despesa');
-
-      const grafico = this.dashboard.getGastosPorCategoria(despesas);
-      this.labels = grafico.labels;
-      this.valores = grafico.valores;
+      this.labels = ['Receitas', 'Despesas'];
+      this.valores = [
+        this.dashboard.calcularEntradas(filtradas),
+        this.dashboard.calcularSaidas(filtradas)
+      ];
 
       // categorias (sem undefined)
       this.categorias = [
@@ -162,6 +164,7 @@ export class DashboardComponent implements OnInit {
 
       this.totalReceitas = this.dashboard.calcularEntradas(filtradas);
       this.totalDespesas = this.dashboard.calcularSaidas(filtradas);
+
     });
 
   }
