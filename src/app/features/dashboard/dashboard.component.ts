@@ -45,6 +45,8 @@ export class DashboardComponent implements OnInit {
 
   resumo = '';
 
+  saldoPorConta: Record<string, number> = {};
+
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
   private categoriaSelecionada$ = new BehaviorSubject<string | null>(this.categoriaSelecionada);
@@ -131,7 +133,9 @@ export class DashboardComponent implements OnInit {
         })}. ${this.topCategoria} foi sua principal categoria.`
         : 'Sem dados neste mês';
 
+      this.saldoPorConta = this.dashboard.getSaldoPorConta(filtradas);
     });
+
   }
 
   // ====== MÊS ======

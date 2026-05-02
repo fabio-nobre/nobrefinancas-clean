@@ -20,8 +20,8 @@ export class TransactionModalComponent {
   categoria = '';
   data = new Date().toISOString().substring(0, 10);
 
-  contaOrigem = '';
-  contaDestino = '';
+  conta = 'Carteira';
+  contaDestino = 'Banco';
 
   categorias = ['Alimentação', 'Transporte', 'Moradia'];
   contas = ['Carteira', 'Banco', 'Cartão'];
@@ -44,8 +44,8 @@ export class TransactionModalComponent {
       valor: valorFinal,
       categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
       data: this.data,
-      contaOrigem: this.contaOrigem,
-      contaDestino: this.contaDestino
+      conta: this.conta,
+      contaDestino: this.tipo === 'transferencia' ? this.contaDestino : undefined
     });
 
     this.fechar();

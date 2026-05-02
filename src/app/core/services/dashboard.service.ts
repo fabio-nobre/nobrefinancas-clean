@@ -41,4 +41,37 @@ export class DashboardService {
     return transactions.filter(t => t.categoria === categoria);
   }
 
+  getSaldoPorConta(transactions: any[]) {
+
+    const mapa: Record<string, number> = {};
+
+    transactions.forEach(t => {
+
+      if (!t.conta) return;
+
+      if (!mapa[t.conta]) mapa[t.conta] = 0;
+
+      if (t.tipo === 'receita') {
+        mapa[t.conta] += t.valor;
+      }
+
+      if (t.tipo === 'despesa') {
+        mapa[t.conta] -= Math.abs(t.valor);
+      }
+
+      if (t.tipo === 'transferencia') {
+
+        mapa[t.conta] -= Math.abs(t.valor);
+
+        if (t.contaDestino) {
+          if (!mapa[t.contaDestino]) mapa[t.contaDestino] = 0;
+          mapa[t.contaDestino] += Math.abs(t.valor);
+        }
+      }
+
+    });
+
+    return mapa;
+  }
+
 }

@@ -79,7 +79,7 @@ import { Category } from '../../core/models/category.model';
         <!-- CONTAS -->
         <div *ngIf="tipo === 'transferencia'" style="display:flex; gap:10px;">
 
-          <select [(ngModel)]="contaOrigem" name="contaOrigem">
+          <select [(ngModel)]="conta" name="conta">
             <option *ngFor="let c of contas" [value]="c">
               Origem: {{ c }}
             </option>
@@ -233,7 +233,7 @@ export class TransactionsComponent implements OnInit {
   data: string = new Date().toISOString().substring(0, 10);
   // data = new Date().toISOString().substring(0, 10);
 
-  contaOrigem = '';
+  conta = '';
   contaDestino = '';
 
   contas = ['Carteira', 'Banco', 'Cartão'];
@@ -280,7 +280,7 @@ export class TransactionsComponent implements OnInit {
       valor: valorFinal,
       categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
       data: this.data,
-      contaOrigem: this.contaOrigem,
+      conta: this.conta,
       contaDestino: this.contaDestino
     };
 
@@ -301,7 +301,7 @@ export class TransactionsComponent implements OnInit {
 
     this.data = new Date(t.data).toISOString().substring(0, 10);
 
-    this.contaOrigem = t.contaOrigem || '';
+    this.conta = t.conta || '';
     this.contaDestino = t.contaDestino || '';
   }
 
@@ -332,7 +332,7 @@ export class TransactionsComponent implements OnInit {
           valor: valorFinal,
           categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
           data: this.data,
-          contaOrigem: this.contaOrigem,
+          conta: this.conta,
           contaDestino: this.contaDestino
         };
 
@@ -368,7 +368,7 @@ export class TransactionsComponent implements OnInit {
     this.valor = 0;
     this.categoria = '';
     this.data = new Date().toISOString().substring(0, 10);
-    this.contaOrigem = '';
+    this.conta = '';
     this.contaDestino = '';
   }
 }
