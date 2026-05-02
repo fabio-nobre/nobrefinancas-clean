@@ -46,8 +46,16 @@ export class TransactionService {
 
     return transactions.filter(t => {
 
-      const [y, m, d] = t.data.split('-').map(Number);
-      const data = new Date(y, m - 1, d);
+      let data: Date;
+
+      if (t.data.includes('T')) {
+        // formato antigo (ISO)
+        data = new Date(t.data);
+      } else {
+        // formato novo (YYYY-MM-DD)
+        const [y, m, d] = t.data.split('-').map(Number);
+        data = new Date(y, m - 1, d);
+      }
 
       return data.getMonth() === mes && data.getFullYear() === ano;
     });
