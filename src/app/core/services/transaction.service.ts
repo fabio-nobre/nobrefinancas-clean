@@ -13,7 +13,32 @@ export class TransactionService {
 
   private loadInitial(): Transaction[] {
     const data = localStorage.getItem(this.storageKey);
-    return data ? JSON.parse(data) : [];
+
+    if (!data) return [];
+
+    const parsed = JSON.parse(data);
+
+    // 🔥 MIGRAÇÃO AUTOMÁTICA
+    const normalizado = parsed.map((t: any) => {
+
+      if (typeof t.data === 'string' && t.data.includes('T')) {
+        const d = new Date(t.data);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+
+        return {
+          ...t,
+          data: `${yyyy}-${mm}-${dd}`
+        };
+      }
+
+      return t;
+    });
+
+    localStorage.setItem(this.storageKey, JSON.stringify(normalizado));
+
+    return normalizado;
   }
 
   private update(transactions: Transaction[]) {
