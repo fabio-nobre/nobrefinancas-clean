@@ -143,6 +143,18 @@
         {{ c }}
       </option>
     </select>
+
+    <label>Conta:</label>
+
+    <select [(ngModel)]="contaSelecionada" (change)="onContaChange()">
+
+      <option [ngValue]="null">Todas</option>
+
+      <option *ngFor="let c of saldoPorConta | keyvalue" [value]="c.key">
+        {{ c.key }}
+      </option>
+
+    </select>
   </div>
 
   <!-- GRÁFICO -->
@@ -159,6 +171,7 @@
     </div>
 
   </div>
+
 
   <!-- BOTÃO FLUTUANTE -->
   <button (click)="abrirModal()" style="

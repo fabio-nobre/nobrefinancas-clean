@@ -47,6 +47,9 @@ export class DashboardComponent implements OnInit {
 
   saldoPorConta: Record<string, number> = {};
 
+  contaSelecionada: string | null = null;
+  private contaSelecionada$ = new BehaviorSubject<string | null>(null);
+
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
   private categoriaSelecionada$ = new BehaviorSubject<string | null>(this.categoriaSelecionada);
@@ -73,8 +76,9 @@ export class DashboardComponent implements OnInit {
     combineLatest([
       this.transactionsService.transactions$,
       this.dataAtual$,
-      this.categoriaSelecionada$
-    ]).subscribe(([data, dataAtual, categoria]) => {
+      this.categoriaSelecionada$,
+      this.contaSelecionada$
+    ]).subscribe(([data, dataAtual, categoria, conta]) => {
 
       console.log('DATA TOTAL:', data);
 
@@ -82,9 +86,25 @@ export class DashboardComponent implements OnInit {
       const porMes = this.transactionsService.filtrarPorMes(data, dataAtual);
 
       // filtro por categoria
-      const filtradas = categoria
-        ? porMes.filter(t => t.categoria === categoria)
-        : porMes;
+      let filtradas = porMes;
+
+      // 🔹 filtro por conta
+      if (conta) {
+        filtradas = filtradas.filter(t => {
+          if (t.tipo === 'transferencia') {
+            return t.conta === conta || t.contaDestino === conta;
+          }
+          return t.conta === conta;
+        });
+      }
+
+      // 🔹 filtro por categoria (depois da conta)
+      if (categoria) {
+        filtradas = filtradas.filter(t =>
+          t.tipo !== 'transferencia' &&
+          t.categoria === categoria
+        );
+      }
 
       // cards
       this.saldo = this.dashboard.calcularSaldo(filtradas);
@@ -92,14 +112,16 @@ export class DashboardComponent implements OnInit {
       this.saidas = this.dashboard.calcularSaidas(filtradas);
 
       // gráfico
-      const grafico = this.dashboard.getGastosPorCategoria(filtradas);
+      const despesas = filtradas.filter(t => t.tipo === 'despesa');
+
+      const grafico = this.dashboard.getGastosPorCategoria(despesas);
       this.labels = grafico.labels;
       this.valores = grafico.valores;
 
       // categorias (sem undefined)
       this.categorias = [
         ...new Set(
-          data
+          filtradas
             .map(t => t.categoria)
             .filter((c): c is string => !!c)
         )
@@ -186,6 +208,10 @@ export class DashboardComponent implements OnInit {
       document.body.classList.remove('dark');
       localStorage.setItem('darkMode', 'false');
     }
+  }
+
+  onContaChange() {
+    this.contaSelecionada$.next(this.contaSelecionada);
   }
 
 }
