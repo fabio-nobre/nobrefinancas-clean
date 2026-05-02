@@ -50,6 +50,9 @@ export class DashboardComponent implements OnInit {
   contaSelecionada: string | null = null;
   private contaSelecionada$ = new BehaviorSubject<string | null>(null);
 
+  totalReceitas = 0;
+  totalDespesas = 0;
+
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
   private categoriaSelecionada$ = new BehaviorSubject<string | null>(this.categoriaSelecionada);
@@ -156,6 +159,9 @@ export class DashboardComponent implements OnInit {
         : 'Sem dados neste mês';
 
       this.saldoPorConta = this.dashboard.getSaldoPorConta(porMes);
+
+      this.totalReceitas = this.dashboard.calcularEntradas(filtradas);
+      this.totalDespesas = this.dashboard.calcularSaidas(filtradas);
     });
 
   }

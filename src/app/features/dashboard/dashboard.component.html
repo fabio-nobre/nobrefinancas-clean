@@ -158,17 +158,30 @@
   </div>
 
   <!-- GRÁFICO -->
-  <div class="card" style="margin-top:20px; padding:16px;">
+  <div>
     <h3>Gastos por categoria</h3>
 
-    <div style="display:flex; justify-content:center;">
-      <app-chart [labels]="labels" [data]="valores">
-      </app-chart>
+    <!-- 🔥 RESUMO (AQUI) -->
+    <div style="display:flex; gap:20px; margin-bottom:10px;">
+
+      <div style="color:#22c55e;">
+        💰 Receitas: {{ totalReceitas | currency:'BRL' }}
+      </div>
+
+      <div style="color:#ef4444;">
+        💸 Despesas: {{ totalDespesas | currency:'BRL' }}
+      </div>
+
     </div>
 
-    <div *ngIf="labels.length === 0" style="text-align:center;">
-      Sem dados
+    <!-- 🔥 MENSAGEM -->
+    <div *ngIf="valores.length === 0" style="text-align:center; margin-top:40px; color:#aaa;">
+      Nenhuma despesa nesta conta
     </div>
+
+    <!-- 🔥 GRÁFICO -->
+    <app-chart *ngIf="valores.length > 0" [labels]="labels" [data]="valores">
+    </app-chart>
 
   </div>
 
