@@ -45,8 +45,11 @@ export class TransactionService {
     const ano = dataRef.getFullYear();
 
     return transactions.filter(t => {
-      const d = new Date(t.data + 'T12:00:00');
-      return d.getMonth() === mes && d.getFullYear() === ano;
+
+      const [y, m, d] = t.data.split('-').map(Number);
+      const data = new Date(y, m - 1, d);
+
+      return data.getMonth() === mes && data.getFullYear() === ano;
     });
   }
 

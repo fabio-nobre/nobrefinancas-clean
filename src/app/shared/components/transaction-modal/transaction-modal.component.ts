@@ -43,7 +43,7 @@ export class TransactionModalComponent {
       descricao: this.descricao,
       valor: valorFinal,
       categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
-      data: new Date(this.data),
+      data: this.data,
       contaOrigem: this.contaOrigem,
       contaDestino: this.contaDestino
     });

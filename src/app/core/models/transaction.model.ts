@@ -7,7 +7,7 @@ export interface Transaction {
   valor: number;
   categoria?: string;
 
-  data: Date;
+  data: string;
 
   contaOrigem?: string;
   contaDestino?: string;
