@@ -60,6 +60,29 @@
 
   </div>
 
+  <!--  -->
+  <div style="margin-top:20px;">
+    <h3>💳 Saldos por conta</h3>
+
+    <div *ngIf="saldoPorConta | keyvalue as contas">
+
+      <div *ngIf="contas.length === 0">
+        Nenhuma conta encontrada
+      </div>
+
+      <div *ngFor="let c of contas">
+        {{ c.key }}:
+        {{ c.value | currency:'BRL' }}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RESTO DO DASHBOARD -->
+  <!-- meta -->
+  <!-- resumo -->
+  <!-- gráfico -->
+
   <div style="
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(280px,1fr));

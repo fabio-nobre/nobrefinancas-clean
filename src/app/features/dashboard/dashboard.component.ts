@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit {
         })}. ${this.topCategoria} foi sua principal categoria.`
         : 'Sem dados neste mês';
 
-      this.saldoPorConta = this.dashboard.getSaldoPorConta(filtradas);
+      this.saldoPorConta = this.dashboard.getSaldoPorConta(porMes);
     });
 
   }
