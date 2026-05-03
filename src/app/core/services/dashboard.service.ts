@@ -4,8 +4,10 @@ import { Transaction } from '../models/transaction.model';
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
 
-  calcularSaldo(transactions: Transaction[]): number {
-    return transactions.reduce((acc, t) => acc + t.valor, 0);
+  calcularSaldo(transactions: any[]) {
+    return transactions
+      .filter(t => t.tipo !== 'credito') // 🔥 IGNORA CARTÃO
+      .reduce((acc, t) => acc + t.valor, 0);
   }
 
   calcularEntradas(transactions: Transaction[]): number {
@@ -69,6 +71,24 @@ export class DashboardService {
         }
       }
 
+    });
+
+    return mapa;
+  }
+
+  getFaturaPorCartao(transactions: any[], mes: string) {
+
+    const mapa: Record<string, number> = {};
+
+    transactions.forEach(t => {
+
+      if (t.tipo !== 'credito') return;
+
+      if (t.faturaMes !== mes) return;
+
+      if (!mapa[t.cartao]) mapa[t.cartao] = 0;
+
+      mapa[t.cartao] += Math.abs(t.valor);
     });
 
     return mapa;

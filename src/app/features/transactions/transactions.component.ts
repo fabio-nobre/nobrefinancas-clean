@@ -221,7 +221,8 @@ export class TransactionsComponent implements OnInit {
 
   descricao = '';
   valor = 0;
-  tipo: 'receita' | 'despesa' | 'transferencia' = 'despesa';
+  tipo: 'receita' | 'despesa' | 'transferencia' | 'credito' = 'despesa';
+
   categoria = '';
 
   novaCategoria = '';

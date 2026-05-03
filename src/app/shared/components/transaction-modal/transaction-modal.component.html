@@ -67,6 +67,7 @@
       <option value="despesa">Despesa</option>
       <option value="receita">Receita</option>
       <option value="transferencia">Transferência</option>
+      <option value="credito">Cartão de Crédito</option>
     </select>
 
     <!-- DESCRIÇÃO -->
@@ -91,8 +92,8 @@
         color:white;
       " />
 
-    <!-- CONTA (RECEITA / DESPESA) -->
-    <select *ngIf="tipo !== 'transferencia'" [(ngModel)]="conta" style="
+    <!-- CONTA (somente para receita/despesa) -->
+    <select *ngIf="tipo !== 'transferencia' && tipo !== 'credito'" [(ngModel)]="conta" style="
         width:100%;
         padding:10px;
         border-radius:10px;
@@ -102,6 +103,21 @@
         border:none;
       ">
       <option *ngFor="let c of contas" [value]="c">
+        {{ c }}
+      </option>
+    </select>
+
+    <!-- CARTÃO (somente quando tipo = credito) -->
+    <select *ngIf="tipo === 'credito'" [(ngModel)]="cartao" style="
+        width:100%;
+        padding:10px;
+        border-radius:10px;
+        margin-bottom:10px;
+        background:#1e293b;
+        color:white;
+        border:none;
+      ">
+      <option *ngFor="let c of cartoes" [value]="c">
         {{ c }}
       </option>
     </select>

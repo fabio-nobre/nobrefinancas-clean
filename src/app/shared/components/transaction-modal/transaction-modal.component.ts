@@ -13,7 +13,7 @@ export class TransactionModalComponent {
 
   @Output() fechado = new EventEmitter<void>();
 
-  tipo: 'receita' | 'despesa' | 'transferencia' = 'despesa';
+  tipo: any = 'despesa';
 
   descricao = '';
   valor = 0;
@@ -26,6 +26,9 @@ export class TransactionModalComponent {
   categorias = ['Alimentação', 'Transporte', 'Moradia'];
   contas = ['Carteira', 'Banco', 'Cartão'];
 
+  cartoes: string[] = ['Nubank', 'Inter'];
+  cartao = 'Nubank';
+
   constructor(private service: TransactionService) { }
 
   salvar() {
@@ -33,7 +36,27 @@ export class TransactionModalComponent {
     if (!this.valor) return;
 
     let valorFinal = this.valor;
+    const faturaMes = this.data.substring(0, 7);
 
+    // 💳 CARTÃO DE CRÉDITO
+    if (this.tipo === 'credito') {
+
+      this.service.add({
+        id: Date.now().toString(),
+        tipo: 'credito',
+        descricao: this.descricao,
+        valor: -Math.abs(this.valor),
+        categoria: this.categoria,
+        data: this.data,
+        cartao: this.cartao,
+        faturaMes: this.data.substring(0, 7)
+      });
+
+      this.fechar();
+      return;
+    }
+
+    // 💰 RECEITA / DESPESA / TRANSFERÊNCIA
     if (this.tipo === 'despesa') valorFinal = -Math.abs(this.valor);
     if (this.tipo === 'receita') valorFinal = Math.abs(this.valor);
 
@@ -44,7 +67,7 @@ export class TransactionModalComponent {
       valor: valorFinal,
       categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
       data: this.data,
-      conta: this.conta,
+      conta: this.tipo === 'credito' ? this.cartao : this.conta,
       contaDestino: this.tipo === 'transferencia' ? this.contaDestino : undefined
     });
 

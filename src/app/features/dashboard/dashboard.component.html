@@ -60,6 +60,15 @@
 
   </div>
 
+  <div style="margin-top:20px;">
+    <h3>💳 Fatura do Cartão</h3>
+  
+    <div *ngFor="let c of faturaCartao | keyvalue">
+      {{ c.key }}:
+      {{ c.value | currency:'BRL' }}
+    </div>
+  </div>
+
   <!--  -->
   <div style="margin-top:20px;">
     <h3>💳 Saldos por conta</h3>

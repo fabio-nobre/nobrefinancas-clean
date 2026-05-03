@@ -3,7 +3,7 @@ export interface Transaction {
 
   id: string;
 
-  tipo: 'receita' | 'despesa' | 'transferencia';
+  tipo: 'receita' | 'despesa' | 'transferencia' | 'credito';
 
   descricao: string;
   valor: number;
@@ -14,5 +14,8 @@ export interface Transaction {
 
   conta?: string;
   contaDestino?: string;
+
+  cartao?: string;
+  faturaMes?: string;
 
 }

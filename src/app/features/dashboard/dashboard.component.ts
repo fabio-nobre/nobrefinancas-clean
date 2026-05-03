@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
   totalReceitas = 0;
   totalDespesas = 0;
 
-
+  faturaCartao: Record<string, number> = {};
 
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
@@ -164,6 +164,9 @@ export class DashboardComponent implements OnInit {
 
       this.totalReceitas = this.dashboard.calcularEntradas(filtradas);
       this.totalDespesas = this.dashboard.calcularSaidas(filtradas);
+
+      const mesAtual = this.dataAtual.toISOString().substring(0, 7);
+      this.faturaCartao = this.dashboard.getFaturaPorCartao(data, mesAtual);
 
     });
 
