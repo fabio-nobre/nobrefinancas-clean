@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TransactionService } from '../../../core/services/transaction.service';
@@ -12,6 +12,7 @@ import { TransactionService } from '../../../core/services/transaction.service';
 export class TransactionModalComponent {
 
   @Output() fechado = new EventEmitter<void>();
+  @Input() tipoInicial: any = 'despesa';
 
   tipo: any = 'despesa';
 
@@ -30,6 +31,10 @@ export class TransactionModalComponent {
   cartao = 'Nubank';
 
   constructor(private service: TransactionService) { }
+
+  ngOnInit() {
+    this.tipo = this.tipoInicial;
+  }
 
   salvar() {
 

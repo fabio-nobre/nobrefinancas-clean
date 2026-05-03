@@ -58,6 +58,7 @@ export class DashboardComponent implements OnInit {
 
   faturaPorCartao: { [cartao: string]: number } = {};
 
+
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
   private categoriaSelecionada$ = new BehaviorSubject<string | null>(this.categoriaSelecionada);
@@ -65,6 +66,11 @@ export class DashboardComponent implements OnInit {
   // ====== UI ======
   modalAberto = false;
   darkMode = false;
+
+
+  // ============
+  tipoModal: 'despesa' | 'receita' | 'transferencia' | 'credito' = 'despesa';
+  menuAberto = false;
 
   constructor(
     private transactionsService: TransactionService,
@@ -263,6 +269,16 @@ export class DashboardComponent implements OnInit {
     });
 
     this.transactionsService.updateAll([...atualizadas, pagamento]);
+  }
+
+  abrirMenu() {
+    this.menuAberto = !this.menuAberto;
+  }
+
+  abrirModalTipo(tipo: any) {
+    this.tipoModal = tipo;
+    this.modalAberto = true;
+    this.menuAberto = false;
   }
 
 }
