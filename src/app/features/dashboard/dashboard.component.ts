@@ -8,6 +8,7 @@ import { TransactionService } from '../../core/services/transaction.service';
 import { DashboardService } from '../../core/services/dashboard.service';
 import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { TransactionModalComponent } from '../../shared/components/transaction-modal/transaction-modal.component';
+import { Transaction } from '../../core/models/transaction.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,6 +55,8 @@ export class DashboardComponent implements OnInit {
   totalDespesas = 0;
 
   faturaCartao: Record<string, number> = {};
+
+  faturaPorCartao: { [cartao: string]: number } = {};
 
   // ====== CONTROLE REATIVO ======
   private dataAtual$ = new BehaviorSubject<Date>(this.dataAtual);
@@ -168,9 +171,21 @@ export class DashboardComponent implements OnInit {
       const mesAtual = this.dataAtual.toISOString().substring(0, 7);
       this.faturaCartao = this.dashboard.getFaturaPorCartao(data, mesAtual);
 
+      this.faturaPorCartao = {};
+      data.forEach(t => {
+        if (t.tipo === 'credito') {
+          const cartao = t.cartao || 'Desconhecido';
+
+          this.faturaPorCartao[cartao] =
+            (this.faturaPorCartao[cartao] || 0) + Math.abs(t.valor);
+        }
+      });
+
+
     });
 
   }
+
 
   // ====== MÊS ======
   mesAnterior() {
@@ -224,6 +239,30 @@ export class DashboardComponent implements OnInit {
 
   onContaChange() {
     this.contaSelecionada$.next(this.contaSelecionada);
+  }
+
+  pagarFatura(cartao: string, valor: number) {
+
+    const atual = this.transactionsService.getAll();
+
+    const pagamento: Transaction = {
+      id: Date.now().toString(),
+      tipo: 'despesa',
+      descricao: `Pagamento fatura ${cartao}`,
+      valor: -Math.abs(valor),
+      categoria: 'Cartão',
+      data: new Date().toISOString(),
+      conta: 'Banco'
+    };
+
+    const atualizadas: Transaction[] = atual.map(t => {
+      if (t.tipo === 'credito' && t.cartao === cartao && !t.pago) {
+        return { ...t, pago: true };
+      }
+      return t;
+    });
+
+    this.transactionsService.updateAll([...atualizadas, pagamento]);
   }
 
 }

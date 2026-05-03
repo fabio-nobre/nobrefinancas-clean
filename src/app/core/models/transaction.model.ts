@@ -16,6 +16,8 @@ export interface Transaction {
   contaDestino?: string;
 
   cartao?: string;
-  faturaMes?: string;
+  faturaMes?: string
+
+  pago?: boolean;
 
 }

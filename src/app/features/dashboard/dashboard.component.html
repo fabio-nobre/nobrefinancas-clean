@@ -61,11 +61,38 @@
   </div>
 
   <div style="margin-top:20px;">
-    <h3>💳 Fatura do Cartão</h3>
-  
+    <h3>💳 Fatura do cartão</h3>
+
     <div *ngFor="let c of faturaCartao | keyvalue">
-      {{ c.key }}:
-      {{ c.value | currency:'BRL' }}
+
+      <div style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
+      background:#1e293b;
+      padding:10px;
+      border-radius:10px;
+    ">
+
+        <div>
+          {{ c.key }}:
+          {{ c.value | currency:'BRL' }}
+        </div>
+
+        <button (click)="pagarFatura(c.key, c.value)" style="
+        background:#22c55e;
+        border:none;
+        padding:6px 10px;
+        border-radius:8px;
+        color:white;
+        cursor:pointer;
+      ">
+          Pagar
+        </button>
+
+      </div>
+
     </div>
   </div>
 

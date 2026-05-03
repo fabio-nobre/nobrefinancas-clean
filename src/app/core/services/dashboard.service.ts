@@ -82,7 +82,7 @@ export class DashboardService {
 
     transactions.forEach(t => {
 
-      if (t.tipo !== 'credito') return;
+      if (t.tipo !== 'credito' || t.pago) return;
 
       if (t.faturaMes !== mes) return;
 
