@@ -12,7 +12,8 @@ import { TransactionService } from '../../../core/services/transaction.service';
 export class TransactionModalComponent {
 
   @Output() fechado = new EventEmitter<void>();
-  @Input() tipoInicial: any = 'despesa';
+  // @Input() tipoInicial: any = 'despesa';
+  @Input() tipoInicial: 'despesa' | 'receita' | 'transferencia' | 'credito' = 'despesa';
 
   tipo: any = 'despesa';
 
