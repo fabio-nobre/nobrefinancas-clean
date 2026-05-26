@@ -6,38 +6,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet, RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <div class="flex min-h-screen bg-gray-100">
-
-      <!-- Sidebar -->
-  <aside class="w-60 bg-white shadow p-4">
-
-  <h1 class="text-xl font-bold mb-6 text-blue-600">
-    Nobre Finanças
-  </h1>
-
-  <nav class="flex flex-col gap-2">
-
-    <a routerLink="/"
-       class="p-2 rounded hover:bg-gray-100">
-      📊 Dashboard
-    </a>
-
-    <a routerLink="/transactions"
-       class="p-2 rounded hover:bg-gray-100">
-      💸 Transações
-    </a>
-
-  </nav>
-
-</aside>
-
-      <!-- Conteúdo -->
-      <main class="flex-1 p-6">
-        <router-outlet />
-      </main>
-
-    </div>
-  `
+  templateUrl: './shell.component.html',
+  styleUrls: ['./shell.component.scss']
 })
 export class ShellComponent { }
