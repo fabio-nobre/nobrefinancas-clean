@@ -35,7 +35,7 @@
 
     <!-- CATEGORIA -->
     <select *ngIf="tipo !== 'transferencia'" [(ngModel)]="categoria" name="categoria">
-      <option *ngFor="let c of categorias" [value]="c.nome">
+      <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c.nome">
         {{ c.nome }}
       </option>
     </select>
@@ -44,13 +44,13 @@
     <div *ngIf="tipo === 'transferencia'" style="display:flex; gap:10px;">
 
       <select [(ngModel)]="conta" name="conta">
-        <option *ngFor="let c of contas" [value]="c">
+        <option *ngFor="let c of contas; trackBy: trackByTransaction" [value]="c">
           Origem: {{ c }}
         </option>
       </select>
 
       <select [(ngModel)]="contaDestino" name="contaDestino">
-        <option *ngFor="let c of contas" [value]="c">
+        <option *ngFor="let c of contas; trackBy: trackByTransaction" [value]="c">
           Destino: {{ c }}
         </option>
       </select>
@@ -88,7 +88,7 @@
   <!-- 🔥 LISTA -->
   <div style="margin-top:20px; display:flex; flex-direction:column; gap:10px;">
 
-    <div *ngFor="let t of transactions" class="card" style="
+    <div *ngFor="let t of transactions; trackBy: trackByTransaction" class="card" style="
             padding:12px;
             border-radius:10px;
             box-shadow:0 2px 6px rgba(0,0,0,0.05);

@@ -412,4 +412,8 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  trackByTransaction(index: number, transaction: any): string | number {
+    return transaction.id ?? index;
+  }
+
 }

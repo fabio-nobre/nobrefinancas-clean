@@ -216,7 +216,7 @@
     ">
       <h3>💳 Contas</h3>
 
-      <div *ngFor="let c of saldoPorConta | keyvalue" style="margin-top:10px;">
+      <div *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction" style="margin-top:10px;">
         <strong>{{ c.key }}</strong><br>
 
         {{ c.value | currency:'BRL' }}
@@ -297,7 +297,7 @@
         Todas categorias
       </option>
 
-      <option *ngFor="let c of categorias" [value]="c">
+      <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
         {{ c }}
       </option>
     </select>
@@ -311,7 +311,7 @@
         Todas contas
       </option>
 
-      <option *ngFor="let c of saldoPorConta | keyvalue" [value]="c.key">
+      <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction " [value]="c.key">
         {{ c.key }}
       </option>
     </select>
@@ -369,7 +369,7 @@
 
     <h2>💳 Fatura do cartão</h2>
 
-    <div *ngFor="let c of faturaCartao | keyvalue" style="
+    <div *ngFor="let c of faturaCartao | keyvalue; trackBy: trackByTransaction" style="
         margin-top:15px;
         background:#0f172a;
         border-radius:12px;

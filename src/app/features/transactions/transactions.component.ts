@@ -174,4 +174,8 @@ export class TransactionsComponent implements OnInit {
     this.conta = '';
     this.contaDestino = '';
   }
+
+  trackByTransaction(index: number, transaction: any): string | number {
+    return transaction.id ?? index;
+  }
 }
