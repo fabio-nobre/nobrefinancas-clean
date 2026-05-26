@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TransactionService } from '../../../core/services/transaction.service';
@@ -7,7 +7,8 @@ import { TransactionService } from '../../../core/services/transaction.service';
   selector: 'app-transaction-modal',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './transaction-modal.component.html'
+  templateUrl: './transaction-modal.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionModalComponent {
 

@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Input,
@@ -14,7 +15,8 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-chart',
   standalone: true,
-  template: `<canvas #canvas></canvas>`
+  template: `<canvas #canvas></canvas>`,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
 
