@@ -105,7 +105,7 @@
       {{ darkMode ? '☀️ Light' : '🌙 Dark' }}
     </button>
 
-    <app-page-header title="Dashboard" subtitle="Visão geral das suas finanças"></app-page-header>
+    <app-page-header title="Dashboard" [subtitle]="labels.subtitle"></app-page-header>
 
     <div style="
       margin-top:12px;
@@ -147,7 +147,7 @@
       border-radius:20px;
       padding:24px;
     ">
-      <app-stat-card label="Saldo Total" [value]="(saldo | currency:'BRL') ?? ''"></app-stat-card>
+      <app-stat-card [label]="labels.cards.balance" [value]="(saldo | currency:'BRL') ?? ''"></app-stat-card>
     </div>
 
 
@@ -157,7 +157,8 @@
       padding:24px;
     ">
 
-      <app-stat-card label="Entradas" [value]="(entradas | currency:'BRL') ?? ''" variant="success"></app-stat-card>
+      <app-stat-card [label]="labels.cards.income" [value]="(entradas | currency:'BRL') ?? ''"
+        variant="success"></app-stat-card>
     </div>
 
     <div class="card" style="
@@ -166,7 +167,8 @@
       padding:24px;
     ">
 
-      <app-stat-card label="Saídas" [value]="(saidas | currency:'BRL') ?? ''" variant="danger"></app-stat-card>
+      <app-stat-card [label]="labels.cards.expenses" [value]="(saidas | currency:'BRL') ?? ''"
+        variant="danger"></app-stat-card>
     </div>
 
   </div>
@@ -329,7 +331,7 @@
       max-width:650px;
       margin:30px auto 0;
     ">
-      <app-chart *ngIf="valores.length > 0" [labels]="labels" [data]="valores">
+      <app-chart *ngIf="valores.length > 0" [labels]="etiquettes" [data]="valores">
       </app-chart>
     </div>
 

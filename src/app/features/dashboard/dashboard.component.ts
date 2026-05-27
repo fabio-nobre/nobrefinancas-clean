@@ -14,6 +14,8 @@ import { TransactionModalComponent } from '../../shared/components/transaction-m
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
 import { StatCardComponent } from '../../shared/ui/stat-card/stat-card.component';
 
+import { DASHBOARD_LABELS } from '../../core/constants/dashboard.constants';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -23,18 +25,20 @@ import { StatCardComponent } from '../../shared/ui/stat-card/stat-card.component
     ChartComponent,
     TransactionModalComponent,
     PageHeaderComponent,
-    StatCardComponent
+    StatCardComponent,
   ],
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
+
+  readonly labels = DASHBOARD_LABELS;
 
   // ===== DADOS =====
   saldo = 0;
   entradas = 0;
   saidas = 0;
 
-  labels: string[] = [];
+  etiquettes: string[] = [];
   valores: number[] = [];
 
   categorias: string[] = [];
@@ -158,7 +162,7 @@ export class DashboardComponent implements OnInit {
             .calcularSaidas(filtradas);
 
         // ===== GRÁFICO =====
-        this.labels = [
+        this.etiquettes = [
           'Receitas',
           'Despesas'
         ];
@@ -196,8 +200,8 @@ export class DashboardComponent implements OnInit {
 
         // ===== TOP =====
         const maior =
-          this.labels.length
-            ? this.labels
+          this.etiquettes.length
+            ? this.etiquettes
               .map((l, i) => ({
                 l,
                 v: this.valores[i]
