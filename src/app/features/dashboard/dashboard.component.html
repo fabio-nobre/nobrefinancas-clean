@@ -156,15 +156,8 @@
       border-radius:20px;
       padding:24px;
     ">
-      <div>Entradas</div>
 
-      <h2 style="
-        font-size:48px;
-        font-weight:700;
-        color:#22c55e;
-      ">
-        {{ entradas | currency:'BRL' }}
-      </h2>
+      <app-stat-card label="Entradas" [value]="(entradas | currency:'BRL') ?? ''" variant="success"></app-stat-card>
     </div>
 
     <div class="card" style="
@@ -172,15 +165,8 @@
       border-radius:20px;
       padding:24px;
     ">
-      <div>Saídas</div>
 
-      <h2 style="
-        font-size:48px;
-        font-weight:700;
-        color:#ef4444;
-      ">
-        {{ saidas | currency:'BRL' }}
-      </h2>
+      <app-stat-card label="Saídas" [value]="(saidas | currency:'BRL') ?? ''" variant="danger"></app-stat-card>
     </div>
 
   </div>

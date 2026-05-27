@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -8,6 +9,7 @@ import {
   selector: 'app-stat-card',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule],
   template: `
     <div
       class="
@@ -30,9 +32,9 @@ import {
           text-4xl
           font-bold
           mt-4
-          text-white
-        " style="font-size:48px;
-        font-weight:700;"
+        " 
+        style="font-size:48px; font-weight:700;"
+        [ngStyle]="valueStyle"
       >
         {{ value }}
       </h2>
@@ -42,4 +44,27 @@ import {
 export class StatCardComponent {
   @Input() label = '';
   @Input() value = '';
+  @Input() variant:
+    'default' |
+    'success' |
+    'danger' = 'default';
+
+  get valueStyle(): Record<string, string> {
+    switch (this.variant) {
+      case 'success':
+        return {
+          color: '#22c55e'
+        };
+
+      case 'danger':
+        return {
+          color: '#ef4444'
+        };
+
+      default:
+        return {
+          color: '#ffffff'
+        };
+    }
+  }
 }

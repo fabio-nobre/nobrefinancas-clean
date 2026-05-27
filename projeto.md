@@ -6,3 +6,5 @@ Status Sprint 1
 ✅ design-system foundation
 ✅ shared/ui foundation
 ✅ PageHeader aplicado no Dashboard
+✅ StatCard reutilizável
+✅ dashboard parcialmente componentizado
