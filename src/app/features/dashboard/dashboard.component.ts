@@ -10,6 +10,7 @@ import { DashboardService } from '../../core/services/dashboard.service';
 
 import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { TransactionModalComponent } from '../../shared/components/transaction-modal/transaction-modal.component';
+import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +19,8 @@ import { TransactionModalComponent } from '../../shared/components/transaction-m
     CommonModule,
     FormsModule,
     ChartComponent,
-    TransactionModalComponent
+    TransactionModalComponent,
+    PageHeaderComponent
   ],
   templateUrl: './dashboard.component.html'
 })
