@@ -10,14 +10,29 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      class="bg-white rounded-2xl shadow-sm p-6"
+      class="
+        rounded-3xl
+        bg-slate-800/70
+        p-6
+        h-full
+        min-h-[160px]
+        flex
+        flex-col
+        justify-center
+      "
     >
-      <p class="text-sm text-gray-500">
+      <p class="text-sm text-slate-300 font-medium">
         {{ label }}
       </p>
 
       <h2
-        class="text-2xl font-bold mt-2"
+        class="
+          text-4xl
+          font-bold
+          mt-4
+          text-white
+        " style="font-size:48px;
+        font-weight:700;"
       >
         {{ value }}
       </h2>

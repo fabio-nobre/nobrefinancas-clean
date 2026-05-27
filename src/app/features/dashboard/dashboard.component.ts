@@ -10,7 +10,9 @@ import { DashboardService } from '../../core/services/dashboard.service';
 
 import { ChartComponent } from '../../shared/components/chart/chart.component';
 import { TransactionModalComponent } from '../../shared/components/transaction-modal/transaction-modal.component';
+
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+import { StatCardComponent } from '../../shared/ui/stat-card/stat-card.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,7 +22,8 @@ import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.com
     FormsModule,
     ChartComponent,
     TransactionModalComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    StatCardComponent
   ],
   templateUrl: './dashboard.component.html'
 })

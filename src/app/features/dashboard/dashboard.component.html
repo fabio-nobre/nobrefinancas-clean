@@ -147,13 +147,9 @@
       border-radius:20px;
       padding:24px;
     ">
-      <div>Saldo</div>
-
-      <h2 style="font-size:48px;
-        font-weight:700;">
-        {{ saldo | currency:'BRL' }}
-      </h2>
+      <app-stat-card label="Saldo Total" [value]="(saldo | currency:'BRL') ?? ''"></app-stat-card>
     </div>
+
 
     <div class="card" style="
       background:#0f3b2e;
