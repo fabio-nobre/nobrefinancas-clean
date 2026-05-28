@@ -17,6 +17,7 @@ import { StatCardComponent } from '../../shared/ui/stat-card/stat-card.component
 import { DASHBOARD_LABELS } from '../../core/constants/dashboard.constants';
 
 import { FinancialSummaryComponent } from './components/financial-summary/financial-summary.component';
+import { AccountSummaryComponent } from './components/account-summary/account-summary.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,7 +29,8 @@ import { FinancialSummaryComponent } from './components/financial-summary/financ
     TransactionModalComponent,
     PageHeaderComponent,
     StatCardComponent,
-    FinancialSummaryComponent
+    FinancialSummaryComponent,
+    AccountSummaryComponent
   ],
   templateUrl: './dashboard.component.html'
 })

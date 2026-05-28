@@ -147,20 +147,7 @@
   ">
 
     <!-- CONTAS -->
-    <div class="card" style="
-      background:#1e293b;
-      padding:40px;
-      border-radius:28px;
-      box-shadow:0 10px 30px rgba(0,0,0,.18);
-    ">
-      <h3>💳 Contas</h3>
-
-      <div *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction" style="margin-top:10px;">
-        <strong>{{ c.key }}</strong><br>
-
-        {{ c.value | currency:'BRL' }}
-      </div>
-    </div>
+    <app-account-summary [saldoPorConta]="saldoPorConta"></app-account-summary>
 
     <!-- META -->
     <div class="card" style="
