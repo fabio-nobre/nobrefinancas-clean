@@ -132,46 +132,8 @@
   </div>
 
   <!-- CARDS -->
-  <div style="
-    display:grid;
-    grid-template-columns:
-    minmax(320px,1fr)
-    minmax(320px,1fr)
-    minmax(320px,1fr);
-    gap:28px;
-    margin-bottom:30px;
-  ">
-
-    <div class="card" style="
-      background:#1e293b;
-      border-radius:20px;
-      padding:24px;
-    ">
-      <app-stat-card [label]="labels.cards.balance" [value]="(saldo | currency:'BRL') ?? ''"></app-stat-card>
-    </div>
-
-
-    <div class="card" style="
-      background:#0f3b2e;
-      border-radius:20px;
-      padding:24px;
-    ">
-
-      <app-stat-card [label]="labels.cards.income" [value]="(entradas | currency:'BRL') ?? ''"
-        variant="success"></app-stat-card>
-    </div>
-
-    <div class="card" style="
-      background:#3b1111;
-      border-radius:20px;
-      padding:24px;
-    ">
-
-      <app-stat-card [label]="labels.cards.expenses" [value]="(saidas | currency:'BRL') ?? ''"
-        variant="danger"></app-stat-card>
-    </div>
-
-  </div>
+  <app-financial-summary [balance]="saldo" [income]="entradas" [expenses]="saidas">
+  </app-financial-summary>
 
   <!-- SEGUNDA LINHA -->
   <div style="
