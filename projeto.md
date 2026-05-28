@@ -8,3 +8,14 @@ Status Sprint 1
 ✅ PageHeader aplicado no Dashboard
 ✅ StatCard reutilizável
 ✅ dashboard parcialmente componentizado
+
+Status Sprint 2
+
+✅ cards continuam iguais
+✅ cores corretas
+✅ spacing preservado
+✅ grid preservado
+✅ nada desalinhou
+✅ sem regressão visual aparente
+✅ gráfico intacto
+✅ layout geral intacto
