@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -18,6 +18,8 @@ import { DASHBOARD_LABELS } from '../../core/constants/dashboard.constants';
 
 import { FinancialSummaryComponent } from './components/financial-summary/financial-summary.component';
 import { AccountSummaryComponent } from './components/account-summary/account-summary.component';
+import { MonthlyGoalComponent } from './components/monthly-goal/monthly-goal.component';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +32,8 @@ import { AccountSummaryComponent } from './components/account-summary/account-su
     PageHeaderComponent,
     StatCardComponent,
     FinancialSummaryComponent,
-    AccountSummaryComponent
+    AccountSummaryComponent,
+    MonthlyGoalComponent,
   ],
   templateUrl: './dashboard.component.html'
 })
@@ -97,7 +100,9 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private transactionsService: TransactionService,
-    private dashboard: DashboardService
+    private dashboard: DashboardService,
+    private cdr:
+      ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -428,6 +433,16 @@ export class DashboardComponent implements OnInit {
 
   trackByTransaction(index: number, transaction: any): string | number {
     return transaction.id ?? index;
+  }
+
+  onMetaMensalChange(
+    value: number
+  ): void {
+    this.metaMensal = value;
+
+    this.recalcular();
+
+    this.cdr.detectChanges();
   }
 
 }

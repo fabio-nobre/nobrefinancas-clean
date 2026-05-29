@@ -150,42 +150,11 @@
     <app-account-summary [saldoPorConta]="saldoPorConta"></app-account-summary>
 
     <!-- META -->
-    <div class="card" style="
-      background:#1e293b;
-      padding:40px;
-      border-radius:28px;
-      box-shadow:0 10px 30px rgba(0,0,0,.18);
-    ">
-      <h3>🎯 Meta mensal</h3>
-
-      <input type="number" [(ngModel)]="metaMensal" (input)="recalcular()" style="
-          width:100%;
-          padding:12px;
-          border-radius:10px;
-          border:none;
-          margin-top:12px;
-        " />
-
-      <div style="margin-top:12px;">
-        {{ gastoTotal | currency:'BRL' }}
-        de
-        {{ metaMensal | currency:'BRL' }}
-      </div>
-
-      <div style="
-        height:10px;
-        background:#374151;
-        border-radius:999px;
-        margin-top:12px;
-      ">
-        <div [style.width.%]="percentualMeta > 100 ? 100 : percentualMeta" style="
-            height:100%;
-            background:#22c55e;
-            border-radius:999px;
-          ">
-        </div>
-      </div>
-    </div>
+    <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
+      (metaMensalChange)="
+    metaMensal = $event;
+    recalcular()
+  "></app-monthly-goal>
 
     <!-- RESUMO -->
     <div class="card" style="
