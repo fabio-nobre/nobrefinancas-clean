@@ -19,6 +19,7 @@ import { DASHBOARD_LABELS } from '../../core/constants/dashboard.constants';
 import { FinancialSummaryComponent } from './components/financial-summary/financial-summary.component';
 import { AccountSummaryComponent } from './components/account-summary/account-summary.component';
 import { MonthlyGoalComponent } from './components/monthly-goal/monthly-goal.component';
+import { MonthlySummaryComponent } from './components/monthly-summary/monthly-summary.component';
 
 
 @Component({
@@ -34,6 +35,7 @@ import { MonthlyGoalComponent } from './components/monthly-goal/monthly-goal.com
     FinancialSummaryComponent,
     AccountSummaryComponent,
     MonthlyGoalComponent,
+    MonthlySummaryComponent
   ],
   templateUrl: './dashboard.component.html'
 })

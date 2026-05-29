@@ -23,18 +23,11 @@ import { DASHBOARD_LABELS }
   changeDetection:
     ChangeDetectionStrategy.OnPush,
 
+  host: {
+    style: 'display:block; width:100%;'
+  },
+
   template: `
-    <div
-      class="card"
-      style="
-        background:#1e293b;
-        padding:40px;
-        border-radius:28px;
-        box-shadow:
-          0 10px 30px
-          rgba(0,0,0,.18);
-      "
-    >
       <h3>
         🎯
         {{ labels.cards.monthlyGoal }}
@@ -91,8 +84,6 @@ import { DASHBOARD_LABELS }
         >
         </div>
       </div>
-
-    </div>
   `
 })
 export class MonthlyGoalComponent {

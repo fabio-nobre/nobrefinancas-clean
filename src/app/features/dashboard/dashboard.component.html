@@ -147,124 +147,127 @@
   ">
 
     <!-- CONTAS -->
-    <app-account-summary [saldoPorConta]="saldoPorConta"></app-account-summary>
-
-    <!-- META -->
-    <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
-      (metaMensalChange)="
-    metaMensal = $event;
-    recalcular()
-  "></app-monthly-goal>
-
-    <!-- RESUMO -->
     <div class="card" style="
-      background:#1e293b;
-      padding:40px;
-      border-radius:28px;
-      box-shadow:0 10px 30px rgba(0,0,0,.18);
-    ">
-      <h3>🧠 Resumo do mês</h3>
-
-      <div style="
-        margin-top:16px;
-        line-height:1.7;
-      ">
-        {{ resumo }}
-      </div>
+    background:#1e293b;
+    padding:40px;
+    border-radius:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+  ">
+      <app-account-summary [saldoPorConta]="saldoPorConta" />
     </div>
 
-  </div>
-
-  <!-- FILTROS -->
-  <div style="
-    display:flex;
-    flex-wrap:wrap;
-    gap:24px;
-    margin-bottom:32px;
+    <div class="card" style="
+    background:#1e293b;
+    padding:40px;
+    border-radius:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
   ">
+      <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
+        (metaMensalChange)="
+      metaMensal = $event;
+      recalcular()
+    " />
+    </div>
 
-    <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" style="
-        min-width:220px;
-        padding:12px;
-        border-radius:10px;
+    <div class="card" style="
+    background:#1e293b;
+    padding:40px;
+    border-radius:28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+  ">
+      <app-monthly-summary [resumo]="resumo" />
+    </div>
+
+    <!-- FILTROS -->
+    <div style="
+      display:flex;
+      gap:16px;
+      margin:24px 0 32px 0;
+      align-items:center;
+    ">
+
+      <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" style="
+        width:220px;
+        height:48px;
+        border-radius:12px;
       ">
-      <option [ngValue]="null">
-        Todas categorias
-      </option>
+        <option [ngValue]="null">
+          Todas categorias
+        </option>
 
-      <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
-        {{ c }}
-      </option>
-    </select>
+        <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
+          {{ c }}
+        </option>
+      </select>
 
-    <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" style="
-        min-width:220px;
-        padding:12px;
-        border-radius:10px;
+      <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" style="
+        width:220px;
+        height:48px;
+        border-radius:12px;
       ">
-      <option [ngValue]="null">
-        Todas contas
-      </option>
+        <option [ngValue]="null">
+          Todas contas
+        </option>
 
-      <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction " [value]="c.key">
-        {{ c.key }}
-      </option>
-    </select>
+        <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction " [value]="c.key">
+          {{ c.key }}
+        </option>
+      </select>
 
-  </div>
+    </div>
 
-  <!-- GRÁFICO -->
-  <div class="card" style="
+    <!-- GRÁFICO -->
+    <div class="card" style="
     background:#1e293b;
     border-radius:20px;
     padding:30px;
     margin-top:10px;
   ">
 
-    <h2>📊 Gastos por categoria</h2>
+      <h2>📊 Gastos por categoria</h2>
 
-    <div style="
+      <div style="
       display:flex;
       gap:20px;
       margin:20px 0;
     ">
 
-      <div style="color:#22c55e;">
-        💰 Receitas:
-        {{ totalReceitas | currency:'BRL' }}
+        <div style="color:#22c55e;">
+          💰 Receitas:
+          {{ totalReceitas | currency:'BRL' }}
+        </div>
+
+        <div style="color:#ef4444;">
+          💸 Despesas:
+          {{ totalDespesas | currency:'BRL' }}
+        </div>
+
       </div>
 
-      <div style="color:#ef4444;">
-        💸 Despesas:
-        {{ totalDespesas | currency:'BRL' }}
+      <div *ngIf="valores.length === 0">
+        Nenhuma despesa neste filtro
       </div>
 
-    </div>
-
-    <div *ngIf="valores.length === 0">
-      Nenhuma despesa neste filtro
-    </div>
-
-    <div style="
+      <div style="
       max-width:650px;
       margin:30px auto 0;
     ">
-      <app-chart *ngIf="valores.length > 0" [labels]="etiquettes" [data]="valores">
-      </app-chart>
+        <app-chart *ngIf="valores.length > 0" [labels]="etiquettes" [data]="valores">
+        </app-chart>
+      </div>
+
     </div>
 
-  </div>
-
-  <!-- FATURA -->
-  <div class="card" style="
+    <!-- FATURA -->
+    <div class="card" style="
     background:#1e293b;
     border-radius:20px;
     padding:24px;
   ">
 
-    <h2>💳 Fatura do cartão</h2>
+      <h2>💳 Fatura do cartão</h2>
 
-    <div *ngFor="let c of faturaCartao | keyvalue; trackBy: trackByTransaction" style="
+      <div *ngFor="let c of faturaCartao | keyvalue; trackBy: trackByTransaction" style="
         margin-top:15px;
         background:#0f172a;
         border-radius:12px;
@@ -274,12 +277,12 @@
         align-items:center;
       ">
 
-      <div>
-        <strong>{{ c.key }}</strong><br>
-        {{ c.value | currency:'BRL' }}
-      </div>
+        <div>
+          <strong>{{ c.key }}</strong><br>
+          {{ c.value | currency:'BRL' }}
+        </div>
 
-      <button (click)="pagarFatura(c.key, c.value)" style="
+        <button (click)="pagarFatura(c.key, c.value)" style="
           background:#22c55e;
           color:white;
           border:none;
@@ -287,11 +290,11 @@
           border-radius:12px;
           cursor:pointer;
         ">
-        Pagar
-      </button>
+          Pagar
+        </button>
+
+      </div>
 
     </div>
 
   </div>
-
-</div>
