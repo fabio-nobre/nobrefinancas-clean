@@ -81,10 +81,9 @@
 
 <!-- CONTAINER -->
 <div style="
-  max-width:1600px;
-  width:100%;
+  max-width:1400px;
   margin:0 auto;
-  padding:40px 40px 100px;
+  padding:24px 32px 80px;
 ">
 
   <!-- HEADER -->
@@ -137,14 +136,12 @@
 
   <!-- SEGUNDA LINHA -->
   <div style="
-    display:grid;
-    grid-template-columns:
-    minmax(320px,1fr)
-    minmax(320px,1fr)
-    minmax(320px,1fr);
-    gap:28px;
-    margin-bottom:20px;
-  ">
+      display:grid;
+      grid-template-columns:
+        repeat(3, minmax(340px, 1fr));
+      gap:32px;
+      margin-bottom:32px;
+    ">
 
     <!-- CONTAS -->
     <div class="card" style="
@@ -183,13 +180,12 @@
       display:flex;
       gap:16px;
       margin:24px 0 32px 0;
-      align-items:center;
     ">
 
       <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" style="
-        width:220px;
-        height:48px;
-        border-radius:12px;
+        height:52px;
+        min-width:180px;
+        border-radius:14px;
       ">
         <option [ngValue]="null">
           Todas categorias
@@ -201,9 +197,9 @@
       </select>
 
       <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" style="
-        width:220px;
-        height:48px;
-        border-radius:12px;
+        height:52px;
+        min-width:180px;
+        border-radius:14px;
       ">
         <option [ngValue]="null">
           Todas contas
