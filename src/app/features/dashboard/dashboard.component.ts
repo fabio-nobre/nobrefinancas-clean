@@ -21,6 +21,7 @@ import { AccountSummaryComponent } from './components/account-summary/account-su
 import { MonthlyGoalComponent } from './components/monthly-goal/monthly-goal.component';
 import { MonthlySummaryComponent } from './components/monthly-summary/monthly-summary.component';
 import { ChartSectionComponent } from './components/chart-section/chart-section.component';
+import { CreditCardInvoiceComponent } from './components/credit-card-invoice/credit-card-invoice.component';
 
 
 
@@ -38,7 +39,8 @@ import { ChartSectionComponent } from './components/chart-section/chart-section.
     AccountSummaryComponent,
     MonthlyGoalComponent,
     MonthlySummaryComponent,
-    ChartSectionComponent
+    ChartSectionComponent,
+    CreditCardInvoiceComponent
   ],
   templateUrl: './dashboard.component.html'
 })

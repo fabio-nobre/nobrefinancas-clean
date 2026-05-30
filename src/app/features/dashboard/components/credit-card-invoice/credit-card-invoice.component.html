@@ -1,0 +1,63 @@
+<div class="card" style="
+  background:#1e293b;
+  padding:40px;
+  border-radius:28px;
+  box-shadow:0 10px 30px rgba(0,0,0,.18);
+  min-height:300px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+">
+
+  <div>
+
+    <h3 style="margin-bottom:20px;">
+      💳 Fatura do cartão
+    </h3>
+
+    <div *ngFor="
+        let item
+        of faturaCartao
+        | keyvalue
+      " style="
+        background:#0f172a;
+        border-radius:14px;
+        padding:16px;
+        margin-top:12px;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
+
+      <div>
+        <strong>
+          {{ item.key }}
+        </strong>
+
+        <br>
+
+        {{ item.value
+        | currency:'BRL' }}
+      </div>
+
+      <button (click)="
+          pagarFatura(
+            item.key,
+            item.value
+          )
+        " style="
+          background:#22c55e;
+          border:none;
+          padding:10px 18px;
+          border-radius:12px;
+          color:white;
+          cursor:pointer;
+        ">
+        Pagar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
