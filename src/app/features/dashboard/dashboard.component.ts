@@ -20,6 +20,8 @@ import { FinancialSummaryComponent } from './components/financial-summary/financ
 import { AccountSummaryComponent } from './components/account-summary/account-summary.component';
 import { MonthlyGoalComponent } from './components/monthly-goal/monthly-goal.component';
 import { MonthlySummaryComponent } from './components/monthly-summary/monthly-summary.component';
+import { ChartSectionComponent } from './components/chart-section/chart-section.component';
+
 
 
 @Component({
@@ -35,7 +37,8 @@ import { MonthlySummaryComponent } from './components/monthly-summary/monthly-su
     FinancialSummaryComponent,
     AccountSummaryComponent,
     MonthlyGoalComponent,
-    MonthlySummaryComponent
+    MonthlySummaryComponent,
+    ChartSectionComponent
   ],
   templateUrl: './dashboard.component.html'
 })

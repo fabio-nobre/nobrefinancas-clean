@@ -234,46 +234,8 @@
     </div>
 
     <!-- GRÁFICO -->
-    <div class="card" style="
-    background:#1e293b;
-    border-radius:20px;
-    padding:30px;
-    margin-top:10px;
-  ">
-
-      <h2>📊 Gastos por categoria</h2>
-
-      <div style="
-      display:flex;
-      gap:20px;
-      margin:20px 0;
-    ">
-
-        <div style="color:#22c55e;">
-          💰 Receitas:
-          {{ totalReceitas | currency:'BRL' }}
-        </div>
-
-        <div style="color:#ef4444;">
-          💸 Despesas:
-          {{ totalDespesas | currency:'BRL' }}
-        </div>
-
-      </div>
-
-      <div *ngIf="valores.length === 0">
-        Nenhuma despesa neste filtro
-      </div>
-
-      <div style="
-      max-width:650px;
-      margin:30px auto 0;
-    ">
-        <app-chart *ngIf="valores.length > 0" [labels]="etiquettes" [data]="valores">
-        </app-chart>
-      </div>
-
-    </div>
+    <app-chart-section [receitas]="entradas" [despesas]="saidas" [etiquettes]="etiquettes" [data]="valores">
+    </app-chart-section>
 
     <!-- FATURA -->
     <div class="card" style="
