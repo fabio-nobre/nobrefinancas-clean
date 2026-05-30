@@ -22,17 +22,16 @@ import { DASHBOARD_LABELS }
     ChangeDetectionStrategy.OnPush,
 
   template: `
-    <div
-      style="
-        display:grid;
-        grid-template-columns:
-        minmax(320px,1fr)
-        minmax(320px,1fr)
-        minmax(320px,1fr);
-        gap:28px;
-        margin-bottom:30px;
-      "
-    >
+      <div
+        style="
+          display:grid;
+          grid-template-columns:
+            repeat(3, 1fr);
+          gap:32px;
+          width:100%;
+          margin-bottom:32px;
+        "
+      >
 
       <div
         class="card"

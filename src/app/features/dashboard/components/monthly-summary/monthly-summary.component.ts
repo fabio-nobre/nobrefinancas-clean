@@ -29,6 +29,9 @@ import { DASHBOARD_LABELS }
         style="
           margin-top:16px;
           line-height:1.7;
+          font-size:15px;
+          color:#cbd5e1;
+          max-width:90%;
         "
       >
         {{ resumo }}
