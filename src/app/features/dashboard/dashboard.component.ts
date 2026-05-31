@@ -219,42 +219,7 @@ export class DashboardComponent implements OnInit {
             ) * 100
             : 0;
 
-        // ===== TOP =====
-        const maior =
-          this.etiquettes.length
-            ? this.etiquettes
-              .map((l, i) => ({
-                l,
-                v: this.valores[i]
-              }))
-              .sort((a, b) =>
-                b.v - a.v
-              )[0]
-            : null;
 
-        this.topCategoria =
-          maior?.l || '';
-
-        this.topValor =
-          maior?.v || 0;
-
-        // ===== RESUMO =====
-        this.resumo =
-          filtradas.length
-            ? `Em ${dataAtual.toLocaleDateString(
-              'pt-BR',
-              {
-                month: 'long',
-                year: 'numeric'
-              }
-            )}, você gastou ${this.gastoTotal.toLocaleString(
-              'pt-BR',
-              {
-                style: 'currency',
-                currency: 'BRL'
-              }
-            )}. ${this.topCategoria} foi sua principal categoria.`
-            : 'Sem dados neste mês';
 
         // ===== CONTAS =====
         this.saldoPorConta =
