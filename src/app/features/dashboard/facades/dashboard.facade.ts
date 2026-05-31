@@ -20,6 +20,9 @@ interface DashboardViewModel {
 
   valores: number[];
 
+  saldoPorConta:
+  Record<string, number>;
+
 }
 
 @Injectable({
@@ -169,6 +172,46 @@ export class DashboardFacade {
                 filtradas
               );
 
+          const saldoPorConta =
+            filtradas.reduce(
+              (acc, t) => {
+
+                const conta =
+                  t.conta ??
+                  'Sem conta';
+
+                if (!acc[conta]) {
+                  acc[conta] = 0;
+                }
+
+                if (
+                  t.tipo ===
+                  'receita'
+                ) {
+
+                  acc[conta] +=
+                    t.valor;
+                }
+
+                if (
+                  t.tipo ===
+                  'despesa'
+                ) {
+
+                  acc[conta] -=
+                    t.valor;
+                }
+
+                return acc;
+
+              },
+
+              {} as Record<
+                string,
+                number
+              >
+            );
+
           return {
 
             saldo:
@@ -180,6 +223,8 @@ export class DashboardFacade {
             entradas,
 
             saidas,
+
+            saldoPorConta,
 
             etiquettes: [
               'Receitas',
