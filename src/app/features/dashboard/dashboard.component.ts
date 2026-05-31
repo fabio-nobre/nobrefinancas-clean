@@ -183,29 +183,6 @@ export class DashboardComponent implements OnInit {
             );
         }
 
-        // ===== CARDS =====
-        this.saldo =
-          this.dashboard
-            .calcularSaldo(filtradas);
-
-        this.entradas =
-          this.dashboard
-            .calcularEntradas(filtradas);
-
-        this.saidas =
-          this.dashboard
-            .calcularSaidas(filtradas);
-
-        // ===== GRÁFICO =====
-        this.etiquettes = [
-          'Receitas',
-          'Despesas'
-        ];
-
-        this.valores = [
-          this.entradas,
-          this.saidas
-        ];
 
         // ===== CATEGORIAS =====
         this.categorias = [
