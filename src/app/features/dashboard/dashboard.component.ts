@@ -130,13 +130,14 @@ export class DashboardComponent implements OnInit {
       document.body.classList.add('dark');
     }
 
-    combineLatest([
-      this.transactionsService.transactions$,
-      this.dataAtual$,
-      this.categoriaSelecionada$,
-      this.contaSelecionada$
-    ])
-      .subscribe(([data, dataAtual, categoria, conta]) => {
+    this.facade
+      .dashboardData$
+      .subscribe(({
+        transactions: data,
+        dataAtual,
+        categoria,
+        conta
+      }) => {
 
         // FILTRO MÊS
         const porMes =
@@ -362,16 +363,17 @@ export class DashboardComponent implements OnInit {
 
   // ===== FILTROS =====
   recalcular() {
-    this
-      .categoriaSelecionada$
-      .next(
+
+    this.facade
+      .atualizarCategoria(
         this.categoriaSelecionada
       );
   }
 
   onContaChange() {
-    this.contaSelecionada$
-      .next(
+
+    this.facade
+      .atualizarConta(
         this.contaSelecionada
       );
   }
@@ -392,8 +394,8 @@ export class DashboardComponent implements OnInit {
 
     this.dataAtual = nova;
 
-    this.dataAtual$
-      .next(nova);
+    this.facade
+      .atualizarMes(nova);
   }
 
   proximoMes() {
@@ -411,8 +413,8 @@ export class DashboardComponent implements OnInit {
 
     this.dataAtual = nova;
 
-    this.dataAtual$
-      .next(nova);
+    this.facade
+      .atualizarMes(nova);
   }
 
   // ===== DARK MODE =====
