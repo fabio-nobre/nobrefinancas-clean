@@ -120,6 +120,27 @@ export class DashboardComponent implements OnInit {
     }
 
     this.facade
+      .vm$
+      .subscribe(vm => {
+
+        this.saldo =
+          vm.saldo;
+
+        this.entradas =
+          vm.entradas;
+
+        this.saidas =
+          vm.saidas;
+
+        this.etiquettes =
+          vm.etiquettes;
+
+        this.valores =
+          vm.valores;
+
+      });
+
+    this.facade
       .dashboardData$
       .subscribe(({
         transactions: data,
