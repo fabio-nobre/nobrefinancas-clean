@@ -22,7 +22,7 @@ import { MonthlyGoalComponent } from './components/monthly-goal/monthly-goal.com
 import { MonthlySummaryComponent } from './components/monthly-summary/monthly-summary.component';
 import { ChartSectionComponent } from './components/chart-section/chart-section.component';
 import { CreditCardInvoiceComponent } from './components/credit-card-invoice/credit-card-invoice.component';
-
+import { DashboardFacade } from './facades/dashboard.facade';
 
 
 @Component({
@@ -106,8 +106,15 @@ export class DashboardComponent implements OnInit {
     new BehaviorSubject<string | null>(null);
 
   constructor(
-    private transactionsService: TransactionService,
-    private dashboard: DashboardService,
+    private transactionsService:
+      TransactionService,
+
+    private dashboard:
+      DashboardService,
+
+    private facade:
+      DashboardFacade,
+
     private cdr:
       ChangeDetectorRef
   ) { }
