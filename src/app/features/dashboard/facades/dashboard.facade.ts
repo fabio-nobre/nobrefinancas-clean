@@ -5,8 +5,22 @@ import {
   map
 } from 'rxjs';
 
-import { TransactionService }
-  from '../../../core/services/transaction.service';
+import { TransactionService } from '../../../core/services/transaction.service';
+import { DashboardService } from '../../../core/services/dashboard.service';
+
+interface DashboardViewModel {
+
+  saldo: number;
+
+  entradas: number;
+
+  saidas: number;
+
+  etiquettes: string[];
+
+  valores: number[];
+
+}
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +64,10 @@ export class DashboardFacade {
 
   constructor(
     private transactions:
-      TransactionService
+      TransactionService,
+
+    private dashboard:
+      DashboardService
   ) { }
 
   readonly dashboardData$ =
@@ -79,6 +96,105 @@ export class DashboardFacade {
 
       }))
     );
+
+  readonly vm$ =
+    this.dashboardData$
+      .pipe(
+
+        map(({
+          transactions,
+          dataAtual,
+          categoria,
+          conta
+        }) => {
+
+          const porMes =
+            this.transactions
+              .filtrarPorMes(
+                transactions,
+                dataAtual
+              );
+
+          let filtradas =
+            porMes;
+
+          // filtro conta
+          if (conta) {
+
+            filtradas =
+              filtradas.filter(t => {
+
+                if (
+                  t.tipo ===
+                  'transferencia'
+                ) {
+
+                  return (
+                    t.conta === conta
+                    ||
+                    t.contaDestino
+                    === conta
+                  );
+                }
+
+                return (
+                  t.conta === conta
+                );
+              });
+          }
+
+          // filtro categoria
+          if (categoria) {
+
+            filtradas =
+              filtradas.filter(
+                t =>
+                  t.tipo !==
+                  'transferencia'
+                  &&
+                  t.categoria
+                  === categoria
+              );
+          }
+
+          const entradas =
+            this.dashboard
+              .calcularEntradas(
+                filtradas
+              );
+
+          const saidas =
+            this.dashboard
+              .calcularSaidas(
+                filtradas
+              );
+
+          return {
+
+            saldo:
+              this.dashboard
+                .calcularSaldo(
+                  filtradas
+                ),
+
+            entradas,
+
+            saidas,
+
+            etiquettes: [
+              'Receitas',
+              'Despesas'
+            ],
+
+            valores: [
+              entradas,
+              saidas
+            ]
+
+          } as DashboardViewModel;
+
+        })
+      );
 
   atualizarCategoria(
     categoria:
