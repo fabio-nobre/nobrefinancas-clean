@@ -23,6 +23,10 @@ interface DashboardViewModel {
   saldoPorConta:
   Record<string, number>;
 
+  resumo: string;
+
+  topCategoria: string;
+
 }
 
 @Injectable({
@@ -212,6 +216,66 @@ export class DashboardFacade {
               >
             );
 
+          const categorias =
+            filtradas
+              .filter(
+                t =>
+                  t.tipo ===
+                  'despesa'
+              )
+              .reduce(
+                (acc, t) => {
+
+                  const categoria =
+                    t.categoria ??
+                    'Outros';
+
+                  acc[categoria] =
+                    (
+                      acc[categoria]
+                      ?? 0
+                    )
+                    +
+                    t.valor;
+
+                  return acc;
+
+                },
+
+                {} as Record<
+                  string,
+                  number
+                >
+              );
+
+          const topCategoria =
+            Object.entries(
+              categorias
+            ).sort(
+              (a, b) =>
+                b[1] - a[1]
+            )[0]?.[0]
+            ?? 'Nenhuma';
+
+          const resumo =
+            filtradas.length
+
+              ? `Em ${dataAtual.toLocaleDateString(
+                'pt-BR',
+                {
+                  month: 'long',
+                  year: 'numeric'
+                }
+              )}, você gastou ${saidas.toLocaleString(
+                'pt-BR',
+                {
+                  style: 'currency',
+                  currency: 'BRL'
+                }
+              )}. ${topCategoria} foi sua principal categoria.`
+
+              : 'Sem dados neste mês';
+
           return {
 
             saldo:
@@ -225,6 +289,10 @@ export class DashboardFacade {
             saidas,
 
             saldoPorConta,
+
+            resumo,
+
+            topCategoria,
 
             etiquettes: [
               'Receitas',

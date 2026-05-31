@@ -141,6 +141,12 @@ export class DashboardComponent implements OnInit {
         this.saldoPorConta =
           vm.saldoPorConta;
 
+        this.resumo =
+          vm.resumo;
+
+        this.topCategoria =
+          vm.topCategoria;
+
       });
 
     this.facade
