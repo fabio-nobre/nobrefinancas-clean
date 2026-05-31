@@ -28,6 +28,26 @@ export class DashboardFacade {
       string | null
     >(null);
 
+  get dataAtual(): Date {
+    return this.dataAtual$.value;
+  }
+
+  get categoriaSelecionada():
+    string | null {
+
+    return this
+      .categoriaSelecionada$
+      .value;
+  }
+
+  get contaSelecionada():
+    string | null {
+
+    return this
+      .contaSelecionada$
+      .value;
+  }
+
   constructor(
     private transactions:
       TransactionService

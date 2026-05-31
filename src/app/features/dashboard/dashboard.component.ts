@@ -2,8 +2,6 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { BehaviorSubject, combineLatest } from 'rxjs';
-
 import { Transaction } from '../../core/models/transaction.model';
 import { TransactionService } from '../../core/services/transaction.service';
 import { DashboardService } from '../../core/services/dashboard.service';
@@ -96,15 +94,6 @@ export class DashboardComponent implements OnInit {
     | 'credito' = 'despesa';
 
   // ===== REATIVIDADE =====
-  private dataAtual$ =
-    new BehaviorSubject<Date>(this.dataAtual);
-
-  private categoriaSelecionada$ =
-    new BehaviorSubject<string | null>(null);
-
-  private contaSelecionada$ =
-    new BehaviorSubject<string | null>(null);
-
   constructor(
     private transactionsService:
       TransactionService,
@@ -276,7 +265,8 @@ export class DashboardComponent implements OnInit {
 
         // ===== FATURA =====
         const mesAtual =
-          this.dataAtual
+          this.facade
+            .dataAtual
             .toISOString()
             .substring(0, 7);
 
@@ -394,6 +384,10 @@ export class DashboardComponent implements OnInit {
 
     this.dataAtual = nova;
 
+    this.dataAtual =
+      this.facade
+        .dataAtual;
+
     this.facade
       .atualizarMes(nova);
   }
@@ -412,6 +406,10 @@ export class DashboardComponent implements OnInit {
       );
 
     this.dataAtual = nova;
+
+    this.dataAtual =
+      this.facade
+        .dataAtual;
 
     this.facade
       .atualizarMes(nova);
