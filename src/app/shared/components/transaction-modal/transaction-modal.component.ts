@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TransactionService } from '../../../core/services/transaction.service';
 
 @Component({
   selector: 'app-transaction-modal',
@@ -13,7 +12,11 @@ import { TransactionService } from '../../../core/services/transaction.service';
 export class TransactionModalComponent {
 
   @Output() fechado = new EventEmitter<void>();
-  // @Input() tipoInicial: any = 'despesa';
+
+  @Output()
+  salvarTransacao =
+    new EventEmitter<any>();
+
   @Input() tipoInicial: 'despesa' | 'receita' | 'transferencia' | 'credito' = 'despesa';
 
   tipo: any = 'despesa';
@@ -32,7 +35,6 @@ export class TransactionModalComponent {
   cartoes: string[] = ['Nubank', 'Inter'];
   cartao = 'Nubank';
 
-  constructor(private service: TransactionService) { }
 
   ngOnInit() {
     this.tipo = this.tipoInicial;
@@ -40,43 +42,74 @@ export class TransactionModalComponent {
 
   salvar() {
 
-    if (!this.valor) return;
-
-    let valorFinal = this.valor;
-    const faturaMes = this.data.substring(0, 7);
-
-    // 💳 CARTÃO DE CRÉDITO
-    if (this.tipo === 'credito') {
-
-      this.service.add({
-        id: Date.now().toString(),
-        tipo: 'credito',
-        descricao: this.descricao,
-        valor: -Math.abs(this.valor),
-        categoria: this.categoria,
-        data: this.data,
-        cartao: this.cartao,
-        faturaMes: this.data.substring(0, 7)
-      });
-
-      this.fechar();
+    if (!this.valor) {
       return;
     }
 
-    // 💰 RECEITA / DESPESA / TRANSFERÊNCIA
-    if (this.tipo === 'despesa') valorFinal = -Math.abs(this.valor);
-    if (this.tipo === 'receita') valorFinal = Math.abs(this.valor);
+    let valorFinal =
+      this.valor;
 
-    this.service.add({
-      id: Date.now().toString(),
-      tipo: this.tipo,
-      descricao: this.descricao,
-      valor: valorFinal,
-      categoria: this.tipo !== 'transferencia' ? this.categoria : undefined,
-      data: this.data,
-      conta: this.tipo === 'credito' ? this.cartao : this.conta,
-      contaDestino: this.tipo === 'transferencia' ? this.contaDestino : undefined
-    });
+    if (this.tipo === 'despesa') {
+      valorFinal =
+        -Math.abs(this.valor);
+    }
+
+    if (this.tipo === 'receita') {
+      valorFinal =
+        Math.abs(this.valor);
+    }
+
+    const transaction = {
+
+      id:
+        Date.now()
+          .toString(),
+
+      tipo:
+        this.tipo,
+
+      descricao:
+        this.descricao,
+
+      valor:
+        this.tipo === 'credito'
+          ? -Math.abs(this.valor)
+          : valorFinal,
+
+      categoria:
+        this.tipo !== 'transferencia'
+          ? this.categoria
+          : undefined,
+
+      data:
+        this.data,
+
+      conta:
+        this.tipo === 'credito'
+          ? this.cartao
+          : this.conta,
+
+      contaDestino:
+        this.tipo ===
+          'transferencia'
+          ? this.contaDestino
+          : undefined,
+
+      cartao:
+        this.tipo ===
+          'credito'
+          ? this.cartao
+          : undefined,
+
+      faturaMes:
+        this.tipo ===
+          'credito'
+          ? this.data.substring(0, 7)
+          : undefined
+    };
+
+    this.salvarTransacao
+      .emit(transaction);
 
     this.fechar();
   }
