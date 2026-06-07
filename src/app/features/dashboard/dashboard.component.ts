@@ -1,4 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  inject
+} from '@angular/core';
+
+import {
+  MatDialog,
+  MatDialogModule
+} from '@angular/material/dialog';
+
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -29,6 +40,7 @@ import { DashboardFacade } from './facades/dashboard.facade';
   imports: [
     CommonModule,
     FormsModule,
+    MatDialogModule,
     ChartComponent,
     TransactionModalComponent,
     PageHeaderComponent,
@@ -38,7 +50,7 @@ import { DashboardFacade } from './facades/dashboard.facade';
     MonthlyGoalComponent,
     MonthlySummaryComponent,
     ChartSectionComponent,
-    CreditCardInvoiceComponent
+    CreditCardInvoiceComponent,
   ],
   templateUrl: './dashboard.component.html'
 })
@@ -111,7 +123,10 @@ export class DashboardComponent implements OnInit {
       DashboardFacade,
 
     private cdr:
-      ChangeDetectorRef
+      ChangeDetectorRef,
+
+    private dialog:
+      MatDialog
   ) { }
 
   ngOnInit() {
@@ -250,6 +265,16 @@ export class DashboardComponent implements OnInit {
 
   abrirModal() {
     this.modalAberto = true;
+  }
+
+  abrirModalMaterial(): void {
+
+    this.dialog.open(
+      TransactionModalComponent,
+      {
+        width: '600px'
+      }
+    );
   }
 
   fecharModal() {
