@@ -23,5 +23,35 @@ body.dark select {
 body.dark button {
   opacity: 0.95;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.transaction-dialog .mat-mdc-dialog-container {
+  padding: 0 !important;
+  border-radius: 28px !important;
+  overflow: hidden !important;
+}
+
+.transaction-dialog .mdc-dialog__surface {
+  background: transparent !important;
+  overflow: hidden !important;
+  border-radius: 28px !important;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, .45) !important;
+}
+
+.cdk-overlay-dark-backdrop {
+  background:
+    rgba(2, 6, 23, .82) !important;
+
+  backdrop-filter:
+    blur(10px);
+}

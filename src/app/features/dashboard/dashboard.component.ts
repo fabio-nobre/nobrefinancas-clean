@@ -267,9 +267,12 @@ export class DashboardComponent implements OnInit {
       this.dialog.open(
         TransactionModalComponent,
         {
-          width: '620px',
+          width: '560px',
           maxWidth: '95vw',
           autoFocus: false,
+          hasBackdrop: true,
+          disableClose: false,
+          closeOnNavigation: true,
           panelClass:
             'transaction-dialog'
         }

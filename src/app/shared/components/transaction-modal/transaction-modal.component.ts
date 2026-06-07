@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import {
+  MatDialogRef
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-transaction-modal',
@@ -45,6 +48,10 @@ export class TransactionModalComponent {
   cartoes: string[] = ['Nubank', 'Inter'];
   cartao = 'Nubank';
 
+  constructor(
+    private dialogRef:
+      MatDialogRef<TransactionModalComponent>
+  ) { }
 
   ngOnInit() {
 
@@ -166,6 +173,14 @@ export class TransactionModalComponent {
   }
 
   fechar() {
+
+    this.fecharadoLegacy();
+
+    this.dialogRef.close();
+  }
+
+  private fecharadoLegacy() {
+
     this.fechado.emit();
   }
 

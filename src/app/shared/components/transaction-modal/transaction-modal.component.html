@@ -1,49 +1,43 @@
+<!-- CARD -->
 <div style="
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index: 999;
+  width:100%;
+  background:
+    linear-gradient(
+      180deg,
+      #0f172a,
+      #111827
+    );
+  padding:32px;
+  color:white;
+  overflow:hidden;
+  box-sizing:border-box;
 ">
 
-  <!-- CARD -->
+  <!-- HEADER -->
   <div style="
-    width: 480px;
-    max-width: 95%;
-    background: #0f172a;
-    border-radius: 20px;
-    padding: 24px;
-    color: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-  ">
-
-    <!-- HEADER -->
-    <div style="
       display:flex;
       justify-content:space-between;
       align-items:center;
       margin-bottom:20px;
     ">
-      <h2 style="font-size:18px;">
-        Nova {{ tipo }}
-      </h2>
+    <h2 style="font-size:18px;">
+      Nova {{ tipo }}
+    </h2>
 
-      <button (click)="fechar()" style="
+    <button (click)="fechar()" style="
         background: transparent;
         border: none;
         color: #aaa;
         font-size:18px;
         cursor:pointer;
       ">
-        ✕
-      </button>
-    </div>
+      ✕
+    </button>
+  </div>
 
-    <!-- VALOR -->
-    <div style="margin-bottom:20px;">
-      <input type="number" [(ngModel)]="valor" placeholder="0,00" style="
+  <!-- VALOR -->
+  <div style="margin-bottom:20px;">
+    <input type="number" [(ngModel)]="valor" placeholder="0,00" style="
           width:100%;
           font-size:36px;
           text-align:center;
@@ -52,12 +46,13 @@
           outline:none;
           color:white;
         " />
-    </div>
+  </div>
 
-    <!-- DESCRIÇÃO -->
-    <input [(ngModel)]="descricao" placeholder="Descrição" style="
+  <!-- DESCRIÇÃO -->
+  <input [(ngModel)]="descricao" placeholder="Descrição" style="
         width:100%;
         padding:10px;
+        box-sizing:border-box;
         border-radius:10px;
         margin-bottom:10px;
         background:#1e293b;
@@ -65,10 +60,11 @@
         color:white;
       " />
 
-    <!-- DATA -->
-    <input type="date" [(ngModel)]="data" style="
+  <!-- DATA -->
+  <input type="date" [(ngModel)]="data" style="
         width:100%;
         padding:10px;
+        box-sizing:border-box;
         border-radius:10px;
         margin-bottom:10px;
         background:#1e293b;
@@ -76,44 +72,60 @@
         color:white;
       " />
 
-    <!-- CONTA (somente para receita/despesa) -->
-    <select *ngIf="tipo !== 'transferencia' && tipo !== 'credito'" [(ngModel)]="conta" style="
+  <!-- CONTA (somente para receita/despesa) -->
+  <select *ngIf="tipo !== 'transferencia' && tipo !== 'credito'" [(ngModel)]="conta" style="
         width:100%;
         padding:10px;
+        box-sizing:border-box;
         border-radius:10px;
         margin-bottom:10px;
         background:#1e293b;
         color:white;
         border:none;
       ">
-      <option *ngFor="let c of contas" [value]="c">
-        {{ c }}
-      </option>
-    </select>
+    <option *ngFor="let c of contas" [value]="c">
+      {{ c }}
+    </option>
+  </select>
 
-    <!-- CARTÃO (somente quando tipo = credito) -->
-    <select *ngIf="tipo === 'credito'" [(ngModel)]="cartao" style="
+  <!-- CARTÃO (somente quando tipo = credito) -->
+  <select *ngIf="tipo === 'credito'" [(ngModel)]="cartao" style="
         width:100%;
         padding:10px;
+        box-sizing:border-box;
         border-radius:10px;
         margin-bottom:10px;
         background:#1e293b;
         color:white;
         border:none;
       ">
-      <option *ngFor="let c of cartoes" [value]="c">
-        {{ c }}
-      </option>
-    </select>
+    <option *ngFor="let c of cartoes" [value]="c">
+      {{ c }}
+    </option>
+  </select>
 
-    <!-- TRANSFERÊNCIA -->
-    <div *ngIf="tipo === 'transferencia'" style="
+  <!-- TRANSFERÊNCIA -->
+  <div *ngIf="tipo === 'transferencia'" style="
       display:flex;
       gap:10px;
       margin-bottom:10px;
     ">
 
-      <select [(ngModel)]="conta" style="
+    <select [(ngModel)]="conta" style="
+        flex:1;
+        padding:10px;
+        box-sizing:border-box;
+        border-radius:10px;
+        background:#1e293b;
+        color:white;
+        border:none;
+      ">
+      <option *ngFor="let c of contas" [value]="c">
+        Origem: {{ c }}
+      </option>
+    </select>
+
+    <select [(ngModel)]="contaDestino" style="
         flex:1;
         padding:10px;
         border-radius:10px;
@@ -121,43 +133,31 @@
         color:white;
         border:none;
       ">
-        <option *ngFor="let c of contas" [value]="c">
-          Origem: {{ c }}
-        </option>
-      </select>
+      <option *ngFor="let c of contas" [value]="c">
+        Destino: {{ c }}
+      </option>
+    </select>
 
-      <select [(ngModel)]="contaDestino" style="
-        flex:1;
-        padding:10px;
-        border-radius:10px;
-        background:#1e293b;
-        color:white;
-        border:none;
-      ">
-        <option *ngFor="let c of contas" [value]="c">
-          Destino: {{ c }}
-        </option>
-      </select>
+  </div>
 
-    </div>
-
-    <!-- CATEGORIA -->
-    <select *ngIf="tipo !== 'transferencia'" [(ngModel)]="categoria" style="
+  <!-- CATEGORIA -->
+  <select *ngIf="tipo !== 'transferencia'" [(ngModel)]="categoria" style="
         width:100%;
         padding:10px;
+        box-sizing:border-box;
         border-radius:10px;
         margin-bottom:10px;
         background:#1e293b;
         color:white;
         border:none;
       ">
-      <option *ngFor="let c of categorias" [value]="c">
-        {{ c }}
-      </option>
-    </select>
+    <option *ngFor="let c of categorias" [value]="c">
+      {{ c }}
+    </option>
+  </select>
 
-    <!-- BOTÃO -->
-    <button (click)="salvar()" style="
+  <!-- BOTÃO -->
+  <button (click)="salvar()" style="
       margin-top:20px;
       width:100%;
       padding:14px;
@@ -169,8 +169,7 @@
       font-size:16px;
       cursor:pointer;
     ">
-      Salvar
-    </button>
+    Salvar
+  </button>
 
-  </div>
 </div>
