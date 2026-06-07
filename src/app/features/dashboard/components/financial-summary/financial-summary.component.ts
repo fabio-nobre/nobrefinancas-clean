@@ -22,72 +22,192 @@ import { DASHBOARD_LABELS }
     ChangeDetectionStrategy.OnPush,
 
   template: `
-      <div
-        style="
-          display:grid;
-          grid-template-columns:
-            repeat(3, 1fr);
-          gap:32px;
-          width:100%;
-          margin-bottom:32px;
-        "
-      >
+  <div style="
+    display:grid;
+    grid-template-columns:
+      1fr 1fr;
+    gap:28px;
+    width:100%;
+    margin-bottom:42px;
+  ">
 
-      <div
-        class="card"
-        style="
-          background:#1e293b;
-          border-radius:20px;
-          padding:24px;
-        "
-      >
-        <app-stat-card
-          [label]="labels.cards.balance"
-          [value]="
-            (balance | currency:'BRL')
-            ?? ''
-          "
-        />
-      </div>
+    <!-- SALDO HERO -->
+    <div
+      class="card"
+      style="
+        grid-column:1 / -1;
 
-      <div
-        class="card"
-        style="
-          background:#0f3b2e;
-          border-radius:20px;
-          padding:24px;
-        "
-      >
-        <app-stat-card
-          [label]="labels.cards.income"
-          [value]="
-            (income | currency:'BRL')
-            ?? ''
-          "
-          variant="success"
-        />
-      </div>
+        background:
+        linear-gradient(
+          135deg,
+          rgba(109,40,217,.18),
+          rgba(15,23,42,.96)
+        );
 
-      <div
-        class="card"
-        style="
-          background:#3b1111;
-          border-radius:20px;
-          padding:24px;
-        "
-      >
-        <app-stat-card
-          [label]="labels.cards.expenses"
-          [value]="
-            (expenses | currency:'BRL')
-            ?? ''
-          "
-          variant="danger"
-        />
+        border-radius:36px;
+
+        padding:34px;
+
+        border:
+        1px solid
+        rgba(124,58,237,.18);
+
+        min-height:180px;
+
+        display:flex;
+        align-items:center;
+
+        box-shadow:
+          0 14px 42px
+          rgba(0,0,0,.26);
+
+        transition:
+          transform .2s ease,
+          box-shadow .2s ease;
+      "
+
+      onmouseover="
+      this.style.transform='translateY(-3px)';
+      this.style.boxShadow='0 24px 50px rgba(0,0,0,.32)';
+      "
+
+      onmouseout="
+      this.style.transform='translateY(0)';
+      this.style.boxShadow='0 14px 42px rgba(0,0,0,.26)';
+      "
+    >
+
+      <div>
+
+        <div style="
+          color:#a78bfa;
+          font-size:13px;
+          font-weight:700;
+          text-transform:uppercase;
+          letter-spacing:.12em;
+          margin-bottom:12px;
+        ">
+          {{ labels.cards.balance }}
+        </div>
+
+        <div style="
+          font-size:56px;
+          font-weight:800;
+          color:white;
+          line-height:1;
+        ">
+          {{
+            balance
+            | currency:'BRL'
+          }}
+        </div>
+
       </div>
 
     </div>
-  `
+
+    <!-- RECEITAS -->
+    <div
+      class="card"
+      style="
+        background:
+        linear-gradient(
+          180deg,
+          rgba(16,185,129,.12),
+          rgba(15,23,42,.96)
+        );
+
+        border-radius:30px;
+
+        padding:28px;
+
+        border:
+        1px solid
+        rgba(16,185,129,.10);
+
+        min-height:170px;
+
+        box-shadow:
+          0 14px 42px
+          rgba(0,0,0,.22);
+
+        transition:
+          transform .2s ease;
+      "
+
+      onmouseover="
+      this.style.transform='translateY(-3px)';
+      "
+
+      onmouseout="
+      this.style.transform='translateY(0)';
+      "
+    >
+
+      <app-stat-card
+        [label]="labels.cards.income"
+        [value]="
+          (income
+          | currency:'BRL')
+          ?? ''
+        "
+        variant="success"
+      />
+
+    </div>
+
+    <!-- DESPESAS -->
+    <div
+      class="card"
+      style="
+        background:
+        linear-gradient(
+          180deg,
+          rgba(239,68,68,.12),
+          rgba(15,23,42,.96)
+        );
+
+        border-radius:30px;
+
+        padding:28px;
+
+        border:
+        1px solid
+        rgba(239,68,68,.10);
+
+        min-height:170px;
+
+        box-shadow:
+          0 14px 42px
+          rgba(0,0,0,.22);
+
+        transition:
+          transform .2s ease;
+      "
+
+      onmouseover="
+      this.style.transform='translateY(-3px)';
+      "
+
+      onmouseout="
+      this.style.transform='translateY(0)';
+      "
+    >
+
+      <app-stat-card
+        [label]="labels.cards.expenses"
+        [value]="
+          (expenses
+          | currency:'BRL')
+          ?? ''
+        "
+        variant="danger"
+      />
+
+    </div>
+
+  </div>
+`
 })
 export class FinancialSummaryComponent {
 
