@@ -30,12 +30,17 @@ interface DashboardViewModel {
   faturaCartao:
   Record<string, number>;
 
+  gastoTotal: number;
+
+  percentualMeta: number;
+
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardFacade {
+
 
   private dataAtual$ =
     new BehaviorSubject<Date>(
@@ -46,6 +51,8 @@ export class DashboardFacade {
     new BehaviorSubject<
       string | null
     >(null);
+
+  metaMensal = 0;
 
   private contaSelecionada$ =
     new BehaviorSubject<
@@ -291,6 +298,17 @@ export class DashboardFacade {
                 mesAtual
               );
 
+          const gastoTotal =
+            Math.abs(saidas);
+
+          const percentualMeta =
+            this.metaMensal
+              ? (
+                gastoTotal /
+                this.metaMensal
+              ) * 100
+              : 0;
+
           return {
 
             saldo:
@@ -310,6 +328,10 @@ export class DashboardFacade {
             topCategoria,
 
             faturaCartao,
+
+            gastoTotal,
+
+            percentualMeta,
 
             etiquettes: [
               'Receitas',

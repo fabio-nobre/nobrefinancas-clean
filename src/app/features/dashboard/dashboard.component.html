@@ -163,10 +163,7 @@
     min-height:180px;
   ">
       <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
-        (metaMensalChange)="
-      metaMensal = $event;
-      recalcular()
-    " />
+        (metaMensalChange)="onMetaMensalChange($event)" />
     </div>
 
     <div class="card" style="

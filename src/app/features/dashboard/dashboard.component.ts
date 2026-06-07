@@ -149,6 +149,12 @@ export class DashboardComponent implements OnInit {
 
         this.faturaCartao =
           vm.faturaCartao;
+
+        this.gastoTotal =
+          vm.gastoTotal;
+
+        this.percentualMeta =
+          vm.percentualMeta;
       });
 
     this.facade
@@ -427,6 +433,8 @@ export class DashboardComponent implements OnInit {
     value: number
   ): void {
     this.metaMensal = value;
+
+    this.facade.metaMensal = value;
 
     this.recalcular();
 
