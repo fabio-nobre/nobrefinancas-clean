@@ -6,16 +6,29 @@ import {
   Output
 } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { CommonModule }
+  from '@angular/common';
+
+import {
+  FormsModule
+} from '@angular/forms';
+
 
 @Component({
   selector: 'app-credit-card-invoice',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './credit-card-invoice.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreditCardInvoiceComponent {
+
+  @Input()
+  contas: string[] =
+    [];
 
   @Input()
   faturaCartao:
@@ -26,8 +39,8 @@ export class CreditCardInvoiceComponent {
     new EventEmitter<{
       cartao: string;
       valor: number;
+      conta: string;
     }>();
-
 
   pagarFatura(
     cartao: string,
@@ -35,9 +48,20 @@ export class CreditCardInvoiceComponent {
   ) {
 
     this.pagar.emit({
+
       cartao,
-      valor
+
+      valor,
+
+      conta:
+        this
+          .contaSelecionada[
+        cartao
+        ]
     });
   }
 
+  contaSelecionada:
+    Record<string, string>
+    = {};
 }
