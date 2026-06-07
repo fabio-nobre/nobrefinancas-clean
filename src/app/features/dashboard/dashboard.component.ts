@@ -316,6 +316,9 @@ export class DashboardComponent implements OnInit {
       .transactionsService
       .add(transaction);
 
+    this.recalcular();
+
+    this.cdr.detectChanges();
   }
 
   // ===== FATURA =====
