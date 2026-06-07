@@ -76,7 +76,8 @@
 </div>
 
 <!-- MODAL -->
-<app-transaction-modal *ngIf="modalAberto" [tipoInicial]="tipoModal" (fechado)="fecharModal()">
+<app-transaction-modal *ngIf="modalAberto" [tipoInicial]="tipoModal" (fechado)="fecharModal()"
+  (salvarTransacao)="salvarTransacao($event)">
 </app-transaction-modal>
 
 <!-- CONTAINER -->

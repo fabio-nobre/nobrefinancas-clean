@@ -256,6 +256,17 @@ export class DashboardComponent implements OnInit {
     this.modalAberto = false;
   }
 
+  salvarTransacao(
+    transaction: Transaction
+  ): void {
+
+    this
+      .transactionsService
+      .add(transaction);
+
+    this.fecharModal();
+  }
+
   // ===== FATURA =====
   pagarFatura(
     cartao: string,

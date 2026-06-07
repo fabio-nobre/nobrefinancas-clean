@@ -19,7 +19,12 @@ export class TransactionModalComponent {
 
   @Input() tipoInicial: 'despesa' | 'receita' | 'transferencia' | 'credito' = 'despesa';
 
-  tipo: any = 'despesa';
+  tipo:
+    | 'despesa'
+    | 'receita'
+    | 'transferencia'
+    | 'credito'
+    = 'despesa';
 
   descricao = '';
   valor = 0;
