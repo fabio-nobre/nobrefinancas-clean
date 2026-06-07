@@ -100,7 +100,6 @@ export class DashboardComponent implements OnInit {
   totalDespesas = 0;
 
   // ===== UI =====
-  modalAberto = false;
   darkMode = false;
 
   menuAberto = false;
@@ -254,32 +253,57 @@ export class DashboardComponent implements OnInit {
       !this.menuAberto;
   }
 
-  abrirModalTipo(tipo: any) {
-
-    this.tipoModal = tipo;
-
-    this.modalAberto = true;
+  abrirModalTipo(
+    tipo:
+      | 'despesa'
+      | 'receita'
+      | 'transferencia'
+      | 'credito'
+  ): void {
 
     this.menuAberto = false;
+
+    const dialogRef =
+      this.dialog.open(
+        TransactionModalComponent,
+        {
+          width: '620px',
+          maxWidth: '95vw',
+          autoFocus: false,
+          panelClass:
+            'transaction-dialog'
+        }
+      );
+
+    const instance =
+      dialogRef.componentInstance;
+
+    instance.tipoInicial =
+      tipo;
+
+    instance.salvarTransacao
+      .subscribe(
+        transaction => {
+
+          this.salvarTransacao(
+            transaction
+          );
+
+          dialogRef.close();
+        }
+      );
   }
 
-  abrirModal() {
-    this.modalAberto = true;
-  }
+
 
   abrirModalMaterial(): void {
 
-    this.dialog.open(
-      TransactionModalComponent,
-      {
-        width: '600px'
-      }
+    console.log(
+      'MatDialog pronto'
     );
   }
 
-  fecharModal() {
-    this.modalAberto = false;
-  }
+
 
   salvarTransacao(
     transaction: Transaction
@@ -289,7 +313,6 @@ export class DashboardComponent implements OnInit {
       .transactionsService
       .add(transaction);
 
-    this.fecharModal();
   }
 
   // ===== FATURA =====
