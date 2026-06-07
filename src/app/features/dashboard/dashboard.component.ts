@@ -147,6 +147,8 @@ export class DashboardComponent implements OnInit {
         this.topCategoria =
           vm.topCategoria;
 
+        this.faturaCartao =
+          vm.faturaCartao;
       });
 
     this.facade

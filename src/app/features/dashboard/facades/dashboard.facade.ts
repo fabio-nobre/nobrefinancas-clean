@@ -27,6 +27,9 @@ interface DashboardViewModel {
 
   topCategoria: string;
 
+  faturaCartao:
+  Record<string, number>;
+
 }
 
 @Injectable({
@@ -276,6 +279,18 @@ export class DashboardFacade {
 
               : 'Sem dados neste mês';
 
+          const mesAtual =
+            dataAtual
+              .toISOString()
+              .substring(0, 7);
+
+          const faturaCartao =
+            this.dashboard
+              .getFaturaPorCartao(
+                transactions,
+                mesAtual
+              );
+
           return {
 
             saldo:
@@ -293,6 +308,8 @@ export class DashboardFacade {
             resumo,
 
             topCategoria,
+
+            faturaCartao,
 
             etiquettes: [
               'Receitas',

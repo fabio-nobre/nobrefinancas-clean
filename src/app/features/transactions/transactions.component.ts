@@ -94,18 +94,38 @@ export class TransactionsComponent implements OnInit {
 
   editar(t: Transaction) {
 
+
     this.editandoId = t.id;
 
-    this.tipo = t.tipo;
-    this.descricao = t.descricao;
-    this.valor = Math.abs(t.valor);
+    this.tipo =
+      t.tipo === 'credito'
+        ? 'despesa'
+        : t.tipo;
 
-    this.categoria = t.categoria || '';
+    this.descricao =
+      t.descricao;
 
-    this.data = new Date(t.data).toISOString().substring(0, 10);
+    this.valor =
+      Math.abs(t.valor);
 
-    this.conta = t.conta || '';
-    this.contaDestino = t.contaDestino || '';
+    this.categoria =
+      t.categoria || '';
+
+    this.data =
+      new Date(t.data)
+        .toISOString()
+        .substring(0, 10);
+
+    this.conta =
+      t.conta || '';
+
+    this.contaDestino =
+      t.contaDestino || '';
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   salvarEdicao() {
