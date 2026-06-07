@@ -235,10 +235,11 @@
     </app-chart-section>
 
     <!-- FATURA -->
-    <app-credit-card-invoice [faturaCartao]="faturaCartao" (pagar)="
+    <app-credit-card-invoice [faturaCartao]="faturaCartao" [contas]="contas" (pagar)="
         pagarFatura(
           $event.cartao,
-          $event.valor
+          $event.valor,
+          $event.conta
         )
       ">
     </app-credit-card-invoice>

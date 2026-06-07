@@ -57,6 +57,12 @@ export class DashboardComponent implements OnInit {
   categorias: string[] = [];
   categoriaSelecionada: string | null = null;
 
+  contas: string[] =
+    [
+      'Banco',
+      'Carteira'
+    ];
+
   contaSelecionada: string | null = null;
 
   dataAtual = new Date();
@@ -253,23 +259,41 @@ export class DashboardComponent implements OnInit {
   // ===== FATURA =====
   pagarFatura(
     cartao: string,
-    valor: number
+    valor: number,
+    conta: string
   ) {
 
     const atual =
-      this.transactionsService.getAll();
+      this
+        .transactionsService
+        .getAll();
 
-    const pagamento: Transaction = {
-      id: Date.now().toString(),
-      tipo: 'despesa',
+    const pagamento:
+      Transaction = {
+
+      id:
+        Date.now()
+          .toString(),
+
+      tipo:
+        'despesa',
+
       descricao:
         `Pagamento fatura ${cartao}`,
-      valor: -Math.abs(valor),
-      categoria: 'Cartão',
+
+      valor:
+        -Math.abs(
+          valor
+        ),
+
+      categoria:
+        'Cartão',
+
       data:
         new Date()
           .toISOString(),
-      conta: 'Banco'
+
+      conta
     };
 
     const atualizadas:
@@ -277,13 +301,25 @@ export class DashboardComponent implements OnInit {
       atual.map(t => {
 
         if (
-          t.tipo === 'credito'
-          && t.cartao === cartao
-          && !t.pago
+
+          t.tipo ===
+          'credito'
+
+          &&
+
+          t.cartao ===
+          cartao
+
+          &&
+
+          !t.pago
+
         ) {
 
           return {
+
             ...t,
+
             pago: true
           };
         }
@@ -291,9 +327,12 @@ export class DashboardComponent implements OnInit {
         return t;
       });
 
-    this.transactionsService
+    this
+      .transactionsService
       .updateAll([
+
         ...atualizadas,
+
         pagamento
       ]);
   }
