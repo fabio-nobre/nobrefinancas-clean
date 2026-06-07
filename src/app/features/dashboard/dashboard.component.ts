@@ -200,7 +200,6 @@ export class DashboardComponent implements OnInit {
             );
         }
 
-
         // ===== CATEGORIAS =====
         this.categorias = [
 
@@ -215,25 +214,6 @@ export class DashboardComponent implements OnInit {
           )
         ];
 
-        // ===== META =====
-        this.gastoTotal =
-          Math.abs(this.saidas);
-
-        this.percentualMeta =
-          this.metaMensal
-            ? (
-              this.gastoTotal /
-              this.metaMensal
-            ) * 100
-            : 0;
-
-
-
-        // ===== CONTAS =====
-        this.saldoPorConta =
-          this.dashboard
-            .getSaldoPorConta(porMes);
-
         // ===== RECEITA / DESPESA =====
         this.totalReceitas =
           this.dashboard
@@ -243,19 +223,6 @@ export class DashboardComponent implements OnInit {
           this.dashboard
             .calcularSaidas(filtradas);
 
-        // ===== FATURA =====
-        const mesAtual =
-          this.facade
-            .dataAtual
-            .toISOString()
-            .substring(0, 7);
-
-        this.faturaCartao =
-          this.dashboard
-            .getFaturaPorCartao(
-              data,
-              mesAtual
-            );
       });
 
   }

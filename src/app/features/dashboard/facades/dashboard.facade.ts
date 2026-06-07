@@ -187,44 +187,10 @@ export class DashboardFacade {
               );
 
           const saldoPorConta =
-            filtradas.reduce(
-              (acc, t) => {
-
-                const conta =
-                  t.conta ??
-                  'Sem conta';
-
-                if (!acc[conta]) {
-                  acc[conta] = 0;
-                }
-
-                if (
-                  t.tipo ===
-                  'receita'
-                ) {
-
-                  acc[conta] +=
-                    t.valor;
-                }
-
-                if (
-                  t.tipo ===
-                  'despesa'
-                ) {
-
-                  acc[conta] -=
-                    t.valor;
-                }
-
-                return acc;
-
-              },
-
-              {} as Record<
-                string,
-                number
-              >
-            );
+            this.dashboard
+              .getSaldoPorConta(
+                filtradas
+              );
 
           const categorias =
             filtradas
