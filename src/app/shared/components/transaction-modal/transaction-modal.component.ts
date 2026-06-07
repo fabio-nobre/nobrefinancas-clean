@@ -19,6 +19,11 @@ export class TransactionModalComponent {
 
   @Input() tipoInicial: 'despesa' | 'receita' | 'transferencia' | 'credito' = 'despesa';
 
+  @Input()
+  transaction:
+    any | null =
+    null;
+
   tipo:
     | 'despesa'
     | 'receita'
@@ -42,7 +47,46 @@ export class TransactionModalComponent {
 
 
   ngOnInit() {
-    this.tipo = this.tipoInicial;
+
+    // ADD MODE
+    if (!this.transaction) {
+
+      this.tipo =
+        this.tipoInicial;
+
+      return;
+    }
+
+    // EDIT MODE
+    this.tipo =
+      this.transaction.tipo;
+
+    this.descricao =
+      this.transaction.descricao;
+
+    this.valor =
+      Math.abs(
+        this.transaction.valor
+      );
+
+    this.categoria =
+      this.transaction.categoria ?? '';
+
+    this.data =
+      this.transaction.data
+        ?.substring(0, 10);
+
+    this.conta =
+      this.transaction.conta
+      ?? 'Carteira';
+
+    this.contaDestino =
+      this.transaction.contaDestino
+      ?? 'Banco';
+
+    this.cartao =
+      this.transaction.cartao
+      ?? 'Nubank';
   }
 
   salvar() {
@@ -67,6 +111,8 @@ export class TransactionModalComponent {
     const transaction = {
 
       id:
+        this.transaction?.id
+        ??
         Date.now()
           .toString(),
 
