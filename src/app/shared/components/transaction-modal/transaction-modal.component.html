@@ -15,14 +15,35 @@
 
   <!-- HEADER -->
   <div style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:20px;
-    ">
-    <h2 style="font-size:18px;">
-      Nova {{ tipo }}
-    </h2>
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:32px;
+  ">
+    <div>
+      <span style="
+        color:#94a3b8;
+        font-size:13px;
+        font-weight:600;
+        text-transform:uppercase;
+        letter-spacing:.08em;
+      ">
+        {{
+        transaction
+        ? 'Editando'
+        : 'Nova transação'
+        }}
+      </span>
+
+      <h2 style="
+        font-size:28px;
+        font-weight:700;
+        margin:6px 0 0;
+        color:white;
+      ">
+        {{ tipo | titlecase }}
+      </h2>
+    </div>
 
     <button (click)="fechar()" style="
         background: transparent;
@@ -36,52 +57,69 @@
   </div>
 
   <!-- VALOR -->
-  <div style="margin-bottom:20px;">
+  <div style="
+    margin-bottom:28px;
+    padding:24px;
+    border-radius:24px;
+    background:
+      rgba(255,255,255,.03);
+    border:
+      1px solid
+      rgba(255,255,255,.06);
+  ">
     <input type="number" [(ngModel)]="valor" placeholder="0,00" style="
-          width:100%;
-          font-size:36px;
-          text-align:center;
-          background: transparent;
-          border:none;
-          outline:none;
-          color:white;
-        " />
+        width:100%;
+        font-size:52px;
+        text-align:center;
+        background:transparent;
+        border:none;
+        outline:none;
+        color:white;
+        font-weight:700;
+        box-sizing:border-box;
+      " />
   </div>
 
   <!-- DESCRIÇÃO -->
   <input [(ngModel)]="descricao" placeholder="Descrição" style="
         width:100%;
-        padding:10px;
-        box-sizing:border-box;
-        border-radius:10px;
-        margin-bottom:10px;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
-        border:none;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       " />
 
   <!-- DATA -->
   <input type="date" [(ngModel)]="data" style="
         width:100%;
-        padding:10px;
-        box-sizing:border-box;
-        border-radius:10px;
-        margin-bottom:10px;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
-        border:none;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       " />
 
   <!-- CONTA (somente para receita/despesa) -->
   <select *ngIf="tipo !== 'transferencia' && tipo !== 'credito'" [(ngModel)]="conta" style="
         width:100%;
-        padding:10px;
-        box-sizing:border-box;
-        border-radius:10px;
-        margin-bottom:10px;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
-        border:none;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       ">
     <option *ngFor="let c of contas" [value]="c">
       {{ c }}
@@ -91,13 +129,15 @@
   <!-- CARTÃO (somente quando tipo = credito) -->
   <select *ngIf="tipo === 'credito'" [(ngModel)]="cartao" style="
         width:100%;
-        padding:10px;
-        box-sizing:border-box;
-        border-radius:10px;
-        margin-bottom:10px;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
-        border:none;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       ">
     <option *ngFor="let c of cartoes" [value]="c">
       {{ c }}
@@ -112,13 +152,16 @@
     ">
 
     <select [(ngModel)]="conta" style="
-        flex:1;
-        padding:10px;
-        box-sizing:border-box;
-        border-radius:10px;
+        width:100%;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
-        border:none;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       ">
       <option *ngFor="let c of contas" [value]="c">
         Origem: {{ c }}
@@ -126,12 +169,16 @@
     </select>
 
     <select [(ngModel)]="contaDestino" style="
-        flex:1;
-        padding:10px;
-        border-radius:10px;
+        width:100%;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
-        border:none;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       ">
       <option *ngFor="let c of contas" [value]="c">
         Destino: {{ c }}
@@ -143,13 +190,15 @@
   <!-- CATEGORIA -->
   <select *ngIf="tipo !== 'transferencia'" [(ngModel)]="categoria" style="
         width:100%;
-        padding:10px;
-        box-sizing:border-box;
-        border-radius:10px;
-        margin-bottom:10px;
+        padding:16px;
+        border-radius:16px;
+        margin-bottom:12px;
         background:#1e293b;
+        border:1px solid rgba(255,255,255,.05);
         color:white;
-        border:none;
+        box-sizing:border-box;
+        outline:none;
+        font-size:15px;
       ">
     <option *ngFor="let c of categorias" [value]="c">
       {{ c }}
@@ -158,18 +207,30 @@
 
   <!-- BOTÃO -->
   <button (click)="salvar()" style="
-      margin-top:20px;
-      width:100%;
-      padding:14px;
-      border-radius:12px;
-      border:none;
-      font-weight:bold;
-      background: linear-gradient(90deg, #7c3aed, #9333ea);
-      color:white;
-      font-size:16px;
-      cursor:pointer;
-    ">
-    Salvar
+    margin-top:24px;
+    width:100%;
+    height:58px;
+    border-radius:18px;
+    border:none;
+    font-weight:700;
+    background:
+      linear-gradient(
+        135deg,
+        #7c3aed,
+        #9333ea
+      );
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:
+      0 15px 30px
+      rgba(124,58,237,.35);
+  ">
+    {{
+    transaction
+    ? 'Salvar alterações'
+    : 'Salvar transação'
+    }}
   </button>
 
 </div>
