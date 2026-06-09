@@ -31,73 +31,165 @@ import { DASHBOARD_LABELS }
     margin-bottom:42px;
   ">
 
-    <!-- SALDO HERO -->
-    <div
-      class="card"
-      style="
-        grid-column:1 / -1;
+  <!-- SALDO HERO -->
+<div
+  class="card"
+  style="
+    grid-column:1 / -1;
 
-        background:
-        linear-gradient(
-          135deg,
-          rgba(109,40,217,.18),
-          rgba(15,23,42,.96)
-        );
+    background:
+    linear-gradient(
+      135deg,
+      rgba(109,40,217,.18),
+      rgba(15,23,42,.96)
+    );
 
-        border-radius:36px;
+    border-radius:36px;
 
-        padding:34px;
+    padding:34px;
 
-        border:
-        1px solid
-        rgba(124,58,237,.18);
+    border:
+    1px solid
+    rgba(124,58,237,.18);
 
-        min-height:180px;
+    min-height:180px;
 
+    box-shadow:
+      0 14px 42px
+      rgba(0,0,0,.26);
+
+    transition:
+      transform .2s ease,
+      box-shadow .2s ease;
+  "
+
+  onmouseover="
+  this.style.transform='translateY(-3px)';
+  this.style.boxShadow='0 24px 50px rgba(0,0,0,.32)';
+  "
+
+  onmouseout="
+  this.style.transform='translateY(0)';
+  this.style.boxShadow='0 14px 42px rgba(0,0,0,.26)';
+  "
+>
+
+  <div style="
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:32px;
+  ">
+
+    <!-- ESQUERDA -->
+    <div>
+
+      <div style="
+        color:#a78bfa;
+        font-size:13px;
+        font-weight:700;
+        text-transform:uppercase;
+        letter-spacing:.12em;
+        margin-bottom:14px;
+      ">
+        {{ labels.cards.balance }}
+      </div>
+
+      <div style="
+        font-size:58px;
+        font-weight:800;
+        color:white;
+        line-height:1;
+        margin-bottom:16px;
+      ">
+        {{
+          balance
+          | currency:'BRL'
+        }}
+      </div>
+
+      <div style="
         display:flex;
         align-items:center;
+        gap:10px;
+        color:#cbd5e1;
+        font-size:15px;
+        font-weight:600;
+      ">
+        <span style="color:#4ade80;">
+          ↑ {{ monthGrowth }}%
+        </span>
 
-        box-shadow:
-          0 14px 42px
-          rgba(0,0,0,.26);
+        em relação ao mês anterior
+      </div>
 
-        transition:
-          transform .2s ease,
-          box-shadow .2s ease;
-      "
+    </div>
 
-      onmouseover="
-      this.style.transform='translateY(-3px)';
-      this.style.boxShadow='0 24px 50px rgba(0,0,0,.32)';
-      "
+    <!-- DIREITA -->
+    <div style="
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      min-width:220px;
+    ">
 
-      onmouseout="
-      this.style.transform='translateY(0)';
-      this.style.boxShadow='0 14px 42px rgba(0,0,0,.26)';
-      "
-    >
-
-      <div>
+      <div style="
+        padding:14px 18px;
+        border-radius:18px;
+        background:
+        rgba(255,255,255,.05);
+        border:
+        1px solid
+        rgba(255,255,255,.04);
+      ">
 
         <div style="
-          color:#a78bfa;
+          color:#94a3b8;
           font-size:13px;
-          font-weight:700;
-          text-transform:uppercase;
-          letter-spacing:.12em;
-          margin-bottom:12px;
+          margin-bottom:6px;
         ">
-          {{ labels.cards.balance }}
+          Entradas
         </div>
 
         <div style="
-          font-size:56px;
-          font-weight:800;
-          color:white;
-          line-height:1;
+          color:#22c55e;
+          font-size:22px;
+          font-weight:700;
         ">
           {{
-            balance
+            income
+            | currency:'BRL'
+          }}
+        </div>
+
+      </div>
+
+      <div style="
+        padding:14px 18px;
+        border-radius:18px;
+        background:
+        rgba(255,255,255,.05);
+        border:
+        1px solid
+        rgba(255,255,255,.04);
+      ">
+
+        <div style="
+          color:#94a3b8;
+          font-size:13px;
+          margin-bottom:6px;
+        ">
+          Saídas
+        </div>
+
+        <div style="
+          color:#ef4444;
+          font-size:22px;
+          font-weight:700;
+        ">
+          {{
+            expenses
             | currency:'BRL'
           }}
         </div>
@@ -105,6 +197,10 @@ import { DASHBOARD_LABELS }
       </div>
 
     </div>
+
+  </div>
+
+</div>
 
     <!-- RECEITAS -->
     <div
@@ -219,6 +315,9 @@ export class FinancialSummaryComponent {
 
   @Input({ required: true })
   expenses = 0;
+
+  @Input()
+  monthGrowth = 12.4;
 
   readonly labels =
     DASHBOARD_LABELS;

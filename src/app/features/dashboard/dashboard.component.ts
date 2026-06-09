@@ -433,14 +433,15 @@ export class DashboardComponent implements OnInit {
         1
       );
 
-    this.dataAtual = nova;
-
     this.dataAtual =
-      this.facade
-        .dataAtual;
+      nova;
 
     this.facade
-      .atualizarMes(nova);
+      .atualizarMes(
+        nova
+      );
+
+    this.recalcular();
   }
 
   proximoMes() {
@@ -456,14 +457,15 @@ export class DashboardComponent implements OnInit {
         1
       );
 
-    this.dataAtual = nova;
-
     this.dataAtual =
-      this.facade
-        .dataAtual;
+      nova;
 
     this.facade
-      .atualizarMes(nova);
+      .atualizarMes(
+        nova
+      );
+
+    this.recalcular();
   }
 
   // ===== DARK MODE =====

@@ -143,25 +143,116 @@
       {{ darkMode ? '☀️ Light' : '🌙 Dark' }}
     </button>
 
-    <app-page-header title="Dashboard" [subtitle]="labels.subtitle"></app-page-header>
+    <div style="
+      text-align:center;
+    ">
+
+      <div style="
+        display:inline-flex;
+        align-items:center;
+        gap:10px;
+    
+        padding:10px 18px;
+    
+        border-radius:999px;
+    
+        background:
+          rgba(255,255,255,.04);
+    
+        border:
+          1px solid
+          rgba(255,255,255,.05);
+    
+        margin-bottom:28px;
+    
+        color:#cbd5e1;
+        font-size:14px;
+        font-weight:600;
+      ">
+        💰 Nobre Finanças Premium
+      </div>
+
+      <h1 style="
+        font-size:56px;
+        font-weight:800;
+        color:white;
+        line-height:1.05;
+        margin:0;
+      ">
+        Seu patrimônio financeiro
+      </h1>
+
+      <p style="
+        color:#94a3b8;
+        font-size:18px;
+        margin-top:18px;
+        margin-bottom:26px;
+        line-height:1.6;
+      ">
+        Controle receitas, despesas,
+        cartões e acompanhe sua
+        evolução financeira em
+        tempo real.
+      </p>
+
+    </div>
 
     <div style="
-      margin-top:12px;
+      margin-top:20px;
+
       display:flex;
       justify-content:center;
       align-items:center;
-      gap:14px;
+      gap:18px;
+
+      padding:16px 26px;
+
+      width:fit-content;
+      margin-left:auto;
+      margin-right:auto;
+
+      border-radius:999px;
+
+      background:
+      rgba(255,255,255,.04);
+
+      border:
+      1px solid
+      rgba(255,255,255,.05);
+
+      backdrop-filter:
+      blur(12px);
     ">
 
-      <button (click)="mesAnterior()">
+      <button (click)="mesAnterior()" style="
+            width:42px;
+            height:42px;
+            border:none;
+            border-radius:50%;
+            background:#111827;
+            color:#e2e8f0;
+            cursor:pointer;
+        ">
         ◀
       </button>
 
-      <strong style="font-size:20px;">
+      <strong style="
+        font-size:22px;
+        color:white;
+        letter-spacing:.02em;
+      ">
         {{ dataAtual | date:'MMMM yyyy':'':'pt-BR' }}
       </strong>
 
-      <button (click)="proximoMes()">
+      <button (click)="proximoMes()" style="
+            width:42px;
+            height:42px;
+            border:none;
+            border-radius:50%;
+            background:#111827;
+            color:#e2e8f0;
+            cursor:pointer;
+          ">
         ▶
       </button>
 
