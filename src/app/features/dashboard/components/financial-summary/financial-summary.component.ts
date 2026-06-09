@@ -35,7 +35,8 @@ import { DASHBOARD_LABELS }
 <div
   class="card"
   style="
-    grid-column:1 / -1;
+    grid-column:
+    1 / span 2;
 
     background:
     linear-gradient(
@@ -46,13 +47,13 @@ import { DASHBOARD_LABELS }
 
     border-radius:36px;
 
-    padding:34px;
+    padding:28px 32px;
 
     border:
     1px solid
     rgba(124,58,237,.18);
 
-    min-height:180px;
+    min-height:210px;
 
     box-shadow:
       0 14px 42px
@@ -135,8 +136,12 @@ import { DASHBOARD_LABELS }
     ">
 
       <div style="
-        padding:14px 18px;
-        border-radius:18px;
+        padding:18px;
+        border-radius:22px;
+
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
         background:
         rgba(255,255,255,.05);
         border:
@@ -185,7 +190,7 @@ import { DASHBOARD_LABELS }
 
         <div style="
           color:#ef4444;
-          font-size:22px;
+          font-size:26px;
           font-weight:700;
         ">
           {{
@@ -215,7 +220,7 @@ import { DASHBOARD_LABELS }
 
         border-radius:30px;
 
-        padding:28px;
+        padding:24px 28px;
 
         border:
         1px solid
@@ -265,7 +270,7 @@ import { DASHBOARD_LABELS }
 
         border-radius:30px;
 
-        padding:28px;
+        padding:24px 28px;
 
         border:
         1px solid
