@@ -123,7 +123,7 @@ fabGlow 2.8s ease infinite;
 <div style="
   max-width:2600px;
   margin:0 auto;
-  padding:24px 32px 80px;
+  padding:24px 20px 80px;
 ">
 
   <!-- HEADER -->
@@ -284,68 +284,25 @@ fabGlow 2.8s ease infinite;
     display:grid;
 
     grid-template-columns:
-      repeat(3, minmax(280px, 1fr));
+      repeat(3, minmax(320px, 1fr));
 
     gap:24px;
 
     width:100%;
 
-    align-items:start;
+    align-items:stretch;
   ">
 
     <!-- CONTAS -->
-    <div class="card" onmouseover="
-      this.style.transform='translateY(-6px) scale(1.01)';
-      this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';
-      " onmouseout="
-      this.style.transform='translateY(0) scale(1)';
-      this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';
-      " style="
-        background:
-        linear-gradient(
-          180deg,
-          rgba(30,41,59,.92),
-          rgba(15,23,42,.96)
-        );
-    
-        padding:28px;
-    
-        border-radius:32px;
-    
-        border:
-        1px solid
-        rgba(255,255,255,.04);
-    
-        backdrop-filter:
-        blur(18px);
-    
-        box-shadow:
-        0 12px 40px
-        rgba(0,0,0,.22),
-    
-        inset 0 1px 0
-        rgba(255,255,255,.03);
-    
-        min-height: 180px;
-        height: 180px;
-    
-        transition:
-        transform .2s ease,
-        box-shadow .2s ease;
-    
-        animation:
-        fadeUp .45s ease;
-      ">
+    <div class="card" style=" background: linear-gradient( 180deg, rgba(30,41,59,.92), rgba(15,23,42,.96) );
+      padding:28px; border-radius:32px; border: 1px solid rgba(255,255,255,.04); backdrop-filter: blur(18px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.03); height: 220px; transition: transform
+      .2s ease, box-shadow .2s ease; animation: fadeUp .45s ease; ">
       <app-account-summary [saldoPorConta]=" saldoPorConta" />
     </div>
 
     <!-- METAS -->
-    <div class="card" onmouseover="
-      this.style.transform='translateY(-6px) scale(1.01)';
-      this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';
-      " onmouseout="
-      this.style.transform='translateY(0) scale(1)';
-      this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
+    <div class="card" style="
       background:
       linear-gradient(
       180deg,
@@ -372,26 +329,20 @@ fabGlow 2.8s ease infinite;
       inset 0 1px 0
       rgba(255,255,255,.03);
 
-      min-height: 180px;
-      height: 180px;
+      height: 220px;
 
       transition:
       transform .2s ease,
       box-shadow .2s ease;
       animation:
-fadeUp .45s ease;
+      fadeUp .45s ease;
   ">
       <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
         (metaMensalChange)="onMetaMensalChange($event)" />
     </div>
 
     <!-- RESUMO -->
-    <div class="card" onmouseover="
-      this.style.transform='translateY(-6px) scale(1.01)';
-      this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';
-      " onmouseout="
-      this.style.transform='translateY(0) scale(1)';
-      this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
+    <div class="card" style="
       background:
       linear-gradient(
       180deg,
@@ -418,8 +369,7 @@ fadeUp .45s ease;
       inset 0 1px 0
       rgba(255,255,255,.03);
 
-      min-height: 180px;
-      height: 180px;
+      height: 220px;
 
       transition:
       transform .2s ease,
@@ -621,12 +571,7 @@ fadeUp .45s ease;
     </div>
 
     <!-- ÚLTIMAS MOVIMENTAÇÕES -->
-    <div class="card"
-      onmouseover="
-        this.style.transform='translateY(-6px) scale(1.01)';
-        this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';" onmouseout="
-        this.style.transform='translateY(0) scale(1)';
-        this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
+    <div class="card" style="
           grid-column:1 / -1;
           width:100%;
           min-height:260px;
