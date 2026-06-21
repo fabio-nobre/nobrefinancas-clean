@@ -38,8 +38,7 @@
 }
 
 .card {
-  will-change:
-    transform;
+  display: block;
 }
 
 .dashboard-card {

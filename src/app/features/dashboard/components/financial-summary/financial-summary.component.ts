@@ -26,58 +26,15 @@ import { DASHBOARD_LABELS }
   changeDetection:
     ChangeDetectionStrategy.OnPush,
 
+  styleUrl:
+    './financial-summary.component.css',
+
   template: `
-  <div style="
-    display:grid;
-    grid-template-columns:
-      1fr 1fr;
-    gap:28px;
-    width:100%;
-    margin-bottom:42px;
-  ">
+ <div class="summary-grid">
 
   <!-- SALDO HERO -->
 <div
   class="card summary-card--hero"
-  style="
-    grid-column:
-    1 / span 2;
-
-    background:
-    linear-gradient(
-      135deg,
-      rgba(109,40,217,.18),
-      rgba(15,23,42,.96)
-    );
-
-    border-radius:36px;
-
-    padding:28px 32px;
-
-    border:
-    1px solid
-    rgba(124,58,237,.18);
-
-    min-height:210px;
-
-    box-shadow:
-      0 14px 42px
-      rgba(0,0,0,.26);
-
-    transition:
-      transform .2s ease,
-      box-shadow .2s ease;
-  "
-
-  onmouseover="
-  this.style.transform='translateY(-3px)';
-  this.style.boxShadow='0 24px 50px rgba(0,0,0,.32)';
-  "
-
-  onmouseout="
-  this.style.transform='translateY(0)';
-  this.style.boxShadow='0 14px 42px rgba(0,0,0,.26)';
-  "
 >
 
   <div style="
@@ -214,39 +171,6 @@ import { DASHBOARD_LABELS }
     <!-- RECEITAS -->
     <div
       class="card summary-card--income"
-      style="
-        background:
-        linear-gradient(
-          180deg,
-          rgba(16,185,129,.12),
-          rgba(15,23,42,.96)
-        );
-
-        border-radius:30px;
-
-        padding:24px 28px;
-
-        border:
-        1px solid
-        rgba(16,185,129,.10);
-
-        min-height:170px;
-
-        box-shadow:
-          0 14px 42px
-          rgba(0,0,0,.22);
-
-        transition:
-          transform .2s ease;
-      "
-
-      onmouseover="
-      this.style.transform='translateY(-3px)';
-      "
-
-      onmouseout="
-      this.style.transform='translateY(0)';
-      "
     >
 
 
@@ -273,39 +197,6 @@ import { DASHBOARD_LABELS }
     <!-- DESPESAS -->
     <div
       class="card summary-card--expense"
-      style="
-        background:
-        linear-gradient(
-          180deg,
-          rgba(239,68,68,.12),
-          rgba(15,23,42,.96)
-        );
-
-        border-radius:30px;
-
-        padding:24px 28px;
-
-        border:
-        1px solid
-        rgba(239,68,68,.10);
-
-        min-height:170px;
-
-        box-shadow:
-          0 14px 42px
-          rgba(0,0,0,.22);
-
-        transition:
-          transform .2s ease;
-      "
-
-      onmouseover="
-      this.style.transform='translateY(-3px)';
-      "
-
-      onmouseout="
-      this.style.transform='translateY(0)';
-      "
     >
 
     <div class="stat-card-premium">
