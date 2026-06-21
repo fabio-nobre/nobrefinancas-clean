@@ -41,3 +41,22 @@
   will-change:
     transform;
 }
+
+.dashboard-card {
+
+  background:
+    linear-gradient(180deg,
+      rgba(30, 41, 59, .92),
+      rgba(15, 23, 42, .96));
+
+  border-radius: 32px;
+
+  border:
+    1px solid rgba(255, 255, 255, .04);
+
+  backdrop-filter:
+    blur(18px);
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, .22);
+}
