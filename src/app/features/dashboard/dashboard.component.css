@@ -116,6 +116,8 @@
   margin-top: 32px;
 
   overflow: auto;
+
+  padding: 28px;
 }
 
 .dashboard-filter-card {
