@@ -117,3 +117,30 @@
 
   overflow: auto;
 }
+
+.dashboard-filter-card {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-start;
+
+  gap: 18px;
+
+  height: 120px;
+
+  padding: 24px;
+
+  grid-column: 1;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+.dashboard-filter-card:hover {
+
+  transform:
+    translateY(-3px);
+}
