@@ -92,3 +92,28 @@
   animation:
     fadeUp .45s ease;
 }
+
+.dashboard-card--premium:hover {
+
+  transform:
+    translateY(-6px) scale(1.01);
+
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, .32),
+    0 0 0 1px rgba(124, 58, 237, .08),
+    0 0 50px rgba(124, 58, 237, .06);
+}
+
+.dashboard-card-full {
+
+  grid-column:
+    1 / -1;
+
+  width: 100%;
+
+  min-height: 260px;
+
+  margin-top: 32px;
+
+  overflow: auto;
+}
