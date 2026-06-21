@@ -213,7 +213,7 @@ import { DASHBOARD_LABELS }
 
     <!-- RECEITAS -->
     <div
-      class="card"
+      class="card summary-card--income"
       style="
         background:
         linear-gradient(
