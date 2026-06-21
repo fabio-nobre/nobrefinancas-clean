@@ -21,6 +21,7 @@
     box-shadow .2s ease;
 }
 
+/* Receitas */
 .summary-card--income {
 
   background:
@@ -34,6 +35,27 @@
 
   border:
     1px solid rgba(16, 185, 129, .10);
+
+  min-height: 170px;
+
+  box-shadow:
+    0 14px 42px rgba(0, 0, 0, .22);
+}
+
+/* Despesas */
+.summary-card--expense {
+
+  background:
+    linear-gradient(180deg,
+      rgba(239, 68, 68, .12),
+      rgba(15, 23, 42, .96));
+
+  border-radius: 30px;
+
+  padding: 24px 28px;
+
+  border:
+    1px solid rgba(239, 68, 68, .10);
 
   min-height: 170px;
 

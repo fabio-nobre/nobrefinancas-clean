@@ -272,7 +272,7 @@ import { DASHBOARD_LABELS }
 
     <!-- DESPESAS -->
     <div
-      class="card"
+      class="card summary-card--expense"
       style="
         background:
         linear-gradient(
