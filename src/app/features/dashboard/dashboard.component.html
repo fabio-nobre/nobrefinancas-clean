@@ -375,11 +375,8 @@ fabGlow 2.8s ease infinite;
     </div>
 
     <!-- FATURA -->
-    <div class="card dashboard-card dashboard-card--premium" style="
-        padding:32px;
-        height:280px;
-    ">
-      <app-credit-card-invoice [faturaCartao]="faturaCartao" [contas]="contas" (pagar)="
+    <div class="card dashboard-card dashboard-card--premium dashboard-card-invoice">
+      <app-credit-card-invoice [faturaCartao]=" faturaCartao" [contas]="contas" (pagar)="
         pagarFatura(
           $event.cartao,
           $event.valor,

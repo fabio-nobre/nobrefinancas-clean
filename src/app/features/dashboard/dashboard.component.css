@@ -144,3 +144,10 @@
   transform:
     translateY(-3px);
 }
+
+.dashboard-card-invoice {
+
+  padding: 32px;
+
+  height: 280px;
+}
