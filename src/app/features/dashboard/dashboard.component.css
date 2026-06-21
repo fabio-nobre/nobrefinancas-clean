@@ -1,0 +1,43 @@
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform:
+      translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform:
+      translateY(0);
+  }
+}
+
+@keyframes fabGlow {
+
+  0% {
+    box-shadow:
+      0 28px 70px rgba(124, 58, 237, .35),
+
+      0 0 0 10px rgba(124, 58, 237, .08);
+  }
+
+  50% {
+    box-shadow:
+      0 32px 85px rgba(124, 58, 237, .52),
+
+      0 0 0 14px rgba(124, 58, 237, .14);
+  }
+
+  100% {
+    box-shadow:
+      0 28px 70px rgba(124, 58, 237, .35),
+
+      0 0 0 10px rgba(124, 58, 237, .08);
+  }
+}
+
+.card {
+  will-change:
+    transform;
+}
