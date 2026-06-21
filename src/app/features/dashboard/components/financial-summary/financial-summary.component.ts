@@ -38,7 +38,7 @@ import { DASHBOARD_LABELS }
 
   <!-- SALDO HERO -->
 <div
-  class="card"
+  class="card summary-card--hero"
   style="
     grid-column:
     1 / span 2;
