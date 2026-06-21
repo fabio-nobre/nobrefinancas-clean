@@ -52,6 +52,7 @@ import { DashboardFacade } from './facades/dashboard.facade';
     ChartSectionComponent,
     CreditCardInvoiceComponent,
   ],
+  styleUrl: './dashboard.component.css',
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit {
