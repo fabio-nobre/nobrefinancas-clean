@@ -8,6 +8,10 @@ import {
 import { StatCardComponent }
   from '../../../../shared/ui/stat-card/stat-card.component';
 
+import { CountUpComponent }
+  from '../../../../shared/components/count-up/count-up.component';
+
+
 import { DASHBOARD_LABELS }
   from '../../../../core/constants/dashboard.constants';
 
@@ -16,7 +20,8 @@ import { DASHBOARD_LABELS }
   standalone: true,
   imports: [
     CommonModule,
-    StatCardComponent
+    StatCardComponent,
+    CountUpComponent
   ],
   changeDetection:
     ChangeDetectionStrategy.OnPush,
@@ -104,10 +109,9 @@ import { DASHBOARD_LABELS }
         line-height:1;
         margin-bottom:16px;
       ">
-        {{
-          balance
-          | currency:'BRL'
-        }}
+        <app-count-up
+          [value]="balance">
+        </app-count-up>
       </div>
 
       <div style="
@@ -245,15 +249,24 @@ import { DASHBOARD_LABELS }
       "
     >
 
-      <app-stat-card
-        [label]="labels.cards.income"
-        [value]="
-          (income
-          | currency:'BRL')
-          ?? ''
-        "
-        variant="success"
-      />
+
+     <div class="stat-card-premium">
+
+      <p>
+        {{ labels.cards.income }}
+      </p>
+
+      <div style="
+        color:#22c55e;
+        font-size:48px;
+        font-weight:700;
+      ">
+        <app-count-up
+          [value]="income">
+        </app-count-up>
+      </div>
+
+    </div>
 
     </div>
 
@@ -295,15 +308,23 @@ import { DASHBOARD_LABELS }
       "
     >
 
-      <app-stat-card
-        [label]="labels.cards.expenses"
-        [value]="
-          (expenses
-          | currency:'BRL')
-          ?? ''
-        "
-        variant="danger"
-      />
+    <div class="stat-card-premium">
+
+      <p>
+        {{ labels.cards.expenses }}
+      </p>
+
+      <div style="
+        color:#ef4444;
+        font-size:48px;
+        font-weight:700;
+      ">
+        <app-count-up
+          [value]="expenses">
+        </app-count-up>
+      </div>
+
+    </div>
 
     </div>
 
