@@ -15,7 +15,20 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-chart',
   standalone: true,
-  template: `<canvas #canvas></canvas>`,
+  template: `
+   <div style="
+    width:100%;
+    height:360px;
+    position:relative;
+  ">
+    <canvas
+      #canvas
+      style="
+        width:100% !important;
+        height:100% !important;
+      ">
+    </canvas>
+  </div>`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
@@ -48,9 +61,13 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
   // 🎯 método central
   private renderChart(): void {
 
+
+
     if (!this.canvas) return;
 
-    this.chart = new Chart(this.canvas.nativeElement, {
+    const canvas = this.canvas.nativeElement;
+
+    this.chart = new Chart(canvas, {
       type: 'doughnut',
 
       data: {
@@ -59,12 +76,16 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
           {
             data: this.data,
             backgroundColor: [
-              '#22c55e', // verde (receita)
-              '#ef4444',  // vermelho (despesa)
-              '#3b82f6', // azul
-              '#f59e0b', // amarelo
-              '#a855f7'  // roxo
-            ]
+              '#22c55e',
+              '#ef4444',
+              '#3b82f6',
+              '#f59e0b',
+              '#a855f7'
+            ],
+
+            borderWidth: 2,
+
+            hoverOffset: 4
           }
         ]
       },
@@ -72,12 +93,16 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+
+        cutout: '60%',
+
         plugins: {
           legend: {
-            position: 'bottom'
+            display: false
           }
         }
       }
     });
+
   }
 }
