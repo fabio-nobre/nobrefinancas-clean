@@ -409,44 +409,11 @@ fabGlow 2.8s ease infinite;
         this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';" onmouseout="
         this.style.transform='translateY(0) scale(1)';
         this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
-          background:
-          linear-gradient(
-            180deg,
-            rgba(30,41,59,.92),
-            rgba(15,23,42,.96)
-          );
-    
           padding:32px;
-    
-          border-radius:32px;
-    
-          border:
-          1px solid
-          rgba(255,255,255,.04);
-    
-          backdrop-filter:
-          blur(18px);
-    
-          box-shadow:
-          0 12px 40px
-          rgba(0,0,0,.22);
-    
           display:flex;
           flex-direction:column;
-          justify-content:flex-start;
           min-height:420px;
-
-          display:flex;
-          flex-direction:column;
-    
-          transition:
-          transform .2s ease,
-          box-shadow .2s ease;
-          animation:
-          fadeUp .45s ease;
-
           overflow:hidden;
-
         ">
       <app-chart-section [receitas]="entradas" [despesas]="saidas" [etiquettes]="etiquettes" [data]="valores">
       </app-chart-section>
@@ -459,35 +426,8 @@ fabGlow 2.8s ease infinite;
         this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';" onmouseout="
         this.style.transform='translateY(0) scale(1)';
         this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
-          background:
-          linear-gradient(
-            180deg,
-            rgba(30,41,59,.92),
-            rgba(15,23,42,.96)
-          );
-
-      padding:32px;
-
-      border-radius:32px;
-
-      border:
-      1px solid
-      rgba(255,255,255,.04);
-
-      backdrop-filter:
-      blur(18px);
-
-      box-shadow:
-      0 12px 40px
-      rgba(0,0,0,.22);
-
-      height:280px;
-
-      transition:
-      transform .2s ease,
-      box-shadow .2s ease;
-      animation:
-      fadeUp .45s ease;
+        padding:32px;
+        height:280px;
     ">
       <app-credit-card-invoice [faturaCartao]="faturaCartao" [contas]="contas" (pagar)="
         pagarFatura(
