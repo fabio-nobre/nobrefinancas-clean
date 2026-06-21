@@ -69,6 +69,7 @@ export class DashboardComponent implements OnInit {
   categorias: string[] = [];
   categoriaSelecionada: string | null = null;
 
+
   contas: string[] =
     [
       'Banco',
@@ -78,6 +79,8 @@ export class DashboardComponent implements OnInit {
   contaSelecionada: string | null = null;
 
   dataAtual = new Date();
+
+  ultimasMovimentacoes: Transaction[] = [];
 
   // ===== META =====
   metaMensal = 0;
@@ -219,6 +222,16 @@ export class DashboardComponent implements OnInit {
               && t.categoria === categoria
             );
         }
+
+        this.ultimasMovimentacoes =
+          [...filtradas]
+            .sort(
+              (a, b) =>
+                new Date(b.data).getTime()
+                -
+                new Date(a.data).getTime()
+            )
+            .slice(0, 8);
 
         // ===== CATEGORIAS =====
         this.categorias = [

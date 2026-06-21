@@ -566,17 +566,17 @@ fadeUp .45s ease;
 
     <!-- FATURA -->
     <div class="card" onmouseover="
-this.style.transform='translateY(-6px) scale(1.01)';
-this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';
-" onmouseout="
-this.style.transform='translateY(0) scale(1)';
-this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
-      background:
-      linear-gradient(
-        180deg,
-        rgba(30,41,59,.92),
-        rgba(15,23,42,.96)
-      );
+        this.style.transform='translateY(-6px) scale(1.01)';
+        this.style.boxShadow='0 30px 60px rgba(0,0,0,.32),0 0 0 1px rgba(124,58,237,.08),0 0 50px rgba(124,58,237,.06)';
+      " onmouseout="
+        this.style.transform='translateY(0) scale(1)';
+        this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
+        background:
+        linear-gradient(
+          180deg,
+          rgba(30,41,59,.92),
+          rgba(15,23,42,.96)
+        );
 
       padding:32px;
 
@@ -599,8 +599,7 @@ this.style.boxShadow='0 12px 40px rgba(0,0,0,.22)';" style="
       transform .2s ease,
       box-shadow .2s ease;
       animation:
-fadeUp .45s ease;
-
+      fadeUp .45s ease;
     ">
       <app-credit-card-invoice [faturaCartao]="faturaCartao" [contas]="contas" (pagar)="
         pagarFatura(
@@ -610,6 +609,77 @@ fadeUp .45s ease;
         )
       ">
       </app-credit-card-invoice>
+    </div>
+    <!-- ÚLTIMAS MOVIMENTAÇÕES -->
+    <div class="card" style="
+        grid-column:1 / -1;
+    
+        background:
+        linear-gradient(
+          180deg,
+          rgba(30,41,59,.92),
+          rgba(15,23,42,.96)
+        );
+    
+        padding:28px;
+    
+        border-radius:32px;
+    
+        border:
+        1px solid
+        rgba(255,255,255,.04);
+    
+        backdrop-filter:
+        blur(18px);
+    
+        box-shadow:
+        0 12px 40px
+        rgba(0,0,0,.22);
+    
+        min-height:260px;
+      ">
+
+      <h3 style="
+        margin-bottom:20px;
+        color:white;
+      ">
+        🕒 Últimas movimentações
+      </h3>
+
+      <div *ngFor="
+          let mov of ultimasMovimentacoes
+        " style="
+          display:flex;
+          justify-content:space-between;
+    
+          padding:14px 0;
+    
+          border-bottom:
+          1px solid
+          rgba(255,255,255,.05);
+        ">
+
+        <div>
+          {{ mov.descricao }}
+        </div>
+
+        <div [style.color]="
+            mov.tipo === 'receita'
+            ? '#22c55e'
+            : '#ef4444'
+          " style="
+            font-weight:700;
+          ">
+
+          {{
+          mov.valor
+          | currency:'BRL'
+          }}
+
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>
