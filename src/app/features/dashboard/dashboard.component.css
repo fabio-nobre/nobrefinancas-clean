@@ -450,3 +450,59 @@
 .dashboard-movement-value {
   font-weight: 700;
 }
+
+.dashboard-movement-value {
+  font-weight: 700;
+}
+
+.dashboard-movement-income {
+  color: #22c55e;
+}
+
+.dashboard-movement-expense {
+  color: #ef4444;
+}
+
+
+/* DarkMode */
+.dashboard-theme-toggle {
+
+  margin-bottom: 12px;
+
+  padding: 10px 14px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, .06);
+
+  background:
+    rgba(15, 23, 42, .75);
+
+  color: #e2e8f0;
+
+  backdrop-filter: blur(12px);
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+.dashboard-theme-toggle:hover {
+
+  transform: translateY(-2px);
+
+  background:
+    rgba(30, 41, 59, .9);
+
+  border-color:
+    rgba(124, 58, 237, .25);
+
+  box-shadow:
+    0 8px 24px rgba(124, 58, 237, .12);
+}

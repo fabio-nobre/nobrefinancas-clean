@@ -35,15 +35,7 @@
   <!-- HEADER -->
   <div class="dashboard-header">
 
-    <button (click)="toggleDarkMode()" style="
-        margin-bottom:12px;
-        background:#111827;
-        color:white;
-        padding:8px 12px;
-        border-radius:10px;
-        border:none;
-        cursor:pointer;
-      ">
+    <button (click)="toggleDarkMode()" class="dashboard-theme-toggle">
       {{ darkMode ? '☀️ Light' : '🌙 Dark' }}
     </button>
 
@@ -154,39 +146,32 @@
         )
       ">
     </app-credit-card-invoice>
-  </div>
 
-  <!-- ÚLTIMAS MOVIMENTAÇÕES -->
-  <div class="card
+    <!-- ÚLTIMAS MOVIMENTAÇÕES -->
+    <div class="card
       dashboard-card
       dashboard-card-full">
 
-    <h3 class="dashboard-section-title">
-      🕒 Últimas movimentações
-    </h3>
+      <h3 class="dashboard-section-title">
+        🕒 Últimas movimentações
+      </h3>
 
-    <div *ngFor="
+      <div *ngFor="
           let mov of ultimasMovimentacoes
         " class="dashboard-movement-item">
 
-      <div>
-        {{ mov.descricao }}
-      </div>
+        <div>
+          {{ mov.descricao }}
+        </div>
 
-      <div [style.color]="
-            mov.tipo === 'receita'
-            ? '#22c55e'
-            : '#ef4444'
-          " class="dashboard-movement-value">
-
-        {{
-        mov.valor
-        | currency:'BRL'
-        }}
+        <div class="dashboard-movement-value" [ngClass]="{
+          'dashboard-movement-income': mov.tipo === 'receita',
+          'dashboard-movement-expense': mov.tipo !== 'receita'
+        }">
+          {{ mov.valor | currency:'BRL' }}
+        </div>
 
       </div>
 
     </div>
-
   </div>
-</div>
