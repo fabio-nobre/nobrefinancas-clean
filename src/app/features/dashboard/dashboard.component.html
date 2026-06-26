@@ -127,10 +127,7 @@ fabGlow 2.8s ease infinite;
 ">
 
   <!-- HEADER -->
-  <div style="
-    max-width:1400px;
-    margin:0 auto 40px;
-  ">
+  <div class="dashboard-header">
 
     <button (click)="toggleDarkMode()" style="
         margin-bottom:12px;
@@ -144,61 +141,24 @@ fabGlow 2.8s ease infinite;
       {{ darkMode ? '☀️ Light' : '🌙 Dark' }}
     </button>
 
-    <div style="
-      text-align:center;
-    ">
-
-      <div style="
-        display:inline-flex;
-        align-items:center;
-        gap:10px;
-    
-        padding:10px 18px;
-    
-        border-radius:999px;
-    
-        background:
-          rgba(255,255,255,.04);
-    
-        border:
-          1px solid
-          rgba(255,255,255,.05);
-    
-        margin-bottom:28px;
-    
-        color:#cbd5e1;
-        font-size:14px;
-        font-weight:600;
-      ">
-        💰 Nobre Finanças Premium
-      </div>
-
-      <h1 style="
-        font-size:56px;
-        font-weight:800;
-        color:white;
-        line-height:1.05;
-        margin:0;
-      ">
-        Seu patrimônio financeiro
-      </h1>
-
-      <p style="
-        color:#94a3b8;
-        font-size:18px;
-        margin-top:18px;
-        margin-bottom:26px;
-        line-height:1.6;
-      ">
-        Controle receitas, despesas,
-        cartões e acompanhe sua
-        evolução financeira em
-        tempo real.
-      </p>
-
+    <div class="dashboard-badge">
+      💰 Nobre Finanças Premium
     </div>
 
-    <div style="
+    <h1 class="dashboard-title">
+      Seu patrimônio financeiro
+    </h1>
+
+    <p class="dashboard-subtitle">
+      Controle receitas, despesas,
+      cartões e acompanhe sua
+      evolução financeira em
+      tempo real.
+    </p>
+
+  </div>
+
+  <div style="
       margin-top:20px;
 
       display:flex;
@@ -225,7 +185,7 @@ fabGlow 2.8s ease infinite;
       blur(12px);
     ">
 
-      <button (click)="mesAnterior()" onmouseover="
+    <button (click)="mesAnterior()" onmouseover="
         this.style.background='rgba(124,58,237,.18)';
         this.style.transform='scale(1.08)';" onmouseout="
         this.style.background='rgba(255,255,255,.05)';
@@ -240,18 +200,18 @@ fabGlow 2.8s ease infinite;
         cursor:pointer;
         transition:.2s;
     ">
-        ◀
-      </button>
+      ◀
+    </button>
 
-      <strong style="
+    <strong style="
         font-size:22px;
         color:white;
         letter-spacing:.02em;
       ">
-        {{ dataAtual | date:'MMMM yyyy':'':'pt-BR' }}
-      </strong>
+      {{ dataAtual | date:'MMMM yyyy':'':'pt-BR' }}
+    </strong>
 
-      <button (click)="proximoMes()" onmouseover="
+    <button (click)="proximoMes()" onmouseover="
           this.style.background='rgba(124,58,237,.18)';
           this.style.transform='scale(1.08)';
           " onmouseout="
@@ -268,19 +228,19 @@ fabGlow 2.8s ease infinite;
           cursor:pointer;
           transition:.2s;
         ">
-        ▶
-      </button>
-
-    </div>
+      ▶
+    </button>
 
   </div>
 
-  <!-- CARDS -->
-  <app-financial-summary [balance]="saldo" [income]="entradas" [expenses]="saidas">
-  </app-financial-summary>
+</div>
 
-  <!-- SEGUNDA LINHA -->
-  <div style="
+<!-- CARDS -->
+<app-financial-summary [balance]="saldo" [income]="entradas" [expenses]="saidas">
+</app-financial-summary>
+
+<!-- SEGUNDA LINHA -->
+<div style="
     display:grid;
 
     grid-template-columns:
@@ -293,38 +253,38 @@ fabGlow 2.8s ease infinite;
     align-items:stretch;
   ">
 
-    <!-- CONTAS -->
-    <div class="card dashboard-card" style="padding:28px; height: 220px;">
-      <app-account-summary [saldoPorConta]=" saldoPorConta" />
-    </div>
+  <!-- CONTAS -->
+  <div class="card dashboard-card" style="padding:28px; height: 220px;">
+    <app-account-summary [saldoPorConta]=" saldoPorConta" />
+  </div>
 
-    <!-- METAS -->
-    <div class="card dashboard-card" style="padding:28px; height: 220px;">
-      <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
-        (metaMensalChange)="onMetaMensalChange($event)" />
-    </div>
+  <!-- METAS -->
+  <div class="card dashboard-card" style="padding:28px; height: 220px;">
+    <app-monthly-goal [metaMensal]="metaMensal" [gastoTotal]="gastoTotal" [percentualMeta]="percentualMeta"
+      (metaMensalChange)="onMetaMensalChange($event)" />
+  </div>
 
-    <!-- RESUMO -->
-    <div class="card dashboard-card" style="padding:28px; height: 220px;">
-      <app-monthly-summary [resumo]="resumo" />
-    </div>
+  <!-- RESUMO -->
+  <div class="card dashboard-card" style="padding:28px; height: 220px;">
+    <app-monthly-summary [resumo]="resumo" />
+  </div>
 
-    <!-- FILTROS -->
-    <div class="
+  <!-- FILTROS -->
+  <div class="
       card
       dashboard-card
       dashboard-filter-card
     ">
 
-      <span style="
+    <span style="
         color:#94a3b8;
         font-size:13px;
         font-weight:600;
       ">
-        Filtros
-      </span>
+      Filtros
+    </span>
 
-      <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" style="
+    <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" style="
       height:44px;
       min-width:180px;
       border-radius:14px;
@@ -333,16 +293,16 @@ fabGlow 2.8s ease infinite;
       color:#e2e8f0;
       border:1px solid #334155;
       ">
-        <option [ngValue]="null">
-          Todas categorias
-        </option>
+      <option [ngValue]="null">
+        Todas categorias
+      </option>
 
-        <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
-          {{ c }}
-        </option>
-      </select>
+      <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
+        {{ c }}
+      </option>
+    </select>
 
-      <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" style="
+    <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" style="
       height:44px;
       min-width:180px;
       border-radius:14px;
@@ -351,54 +311,54 @@ fabGlow 2.8s ease infinite;
       color:#e2e8f0;
       border:1px solid #334155;
       ">
-        <option [ngValue]="null">
-          Todas contas
-        </option>
+      <option [ngValue]="null">
+        Todas contas
+      </option>
 
-        <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction " [value]="c.key">
-          {{ c.key }}
-        </option>
-      </select>
+      <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction " [value]="c.key">
+        {{ c.key }}
+      </option>
+    </select>
 
-    </div>
+  </div>
 
-    <!-- GRÁFICO -->
-    <div class="card dashboard-card dashboard-card--premium" style="
+  <!-- GRÁFICO -->
+  <div class="card dashboard-card dashboard-card--premium" style="
           padding:32px;
           display:flex;
           flex-direction:column;
           min-height:420px;
           overflow:hidden;
         ">
-      <app-chart-section [receitas]="entradas" [despesas]="saidas" [etiquettes]="etiquettes" [data]="valores">
-      </app-chart-section>
-    </div>
+    <app-chart-section [receitas]="entradas" [despesas]="saidas" [etiquettes]="etiquettes" [data]="valores">
+    </app-chart-section>
+  </div>
 
-    <!-- FATURA -->
-    <div class="card dashboard-card dashboard-card--premium dashboard-card-invoice">
-      <app-credit-card-invoice [faturaCartao]=" faturaCartao" [contas]="contas" (pagar)="
+  <!-- FATURA -->
+  <div class="card dashboard-card dashboard-card--premium dashboard-card-invoice">
+    <app-credit-card-invoice [faturaCartao]=" faturaCartao" [contas]="contas" (pagar)="
         pagarFatura(
           $event.cartao,
           $event.valor,
           $event.conta
         )
       ">
-      </app-credit-card-invoice>
-    </div>
+    </app-credit-card-invoice>
+  </div>
 
-    <!-- ÚLTIMAS MOVIMENTAÇÕES -->
-    <div class="card
+  <!-- ÚLTIMAS MOVIMENTAÇÕES -->
+  <div class="card
       dashboard-card
       dashboard-card-full">
 
-      <h3 style="
+    <h3 style="
         margin-bottom:20px;
         color:white;
       ">
-        🕒 Últimas movimentações
-      </h3>
+      🕒 Últimas movimentações
+    </h3>
 
-      <div *ngFor="
+    <div *ngFor="
           let mov of ultimasMovimentacoes
         " style="
           display:flex;
@@ -411,11 +371,11 @@ fabGlow 2.8s ease infinite;
           rgba(255,255,255,.05);
         ">
 
-        <div>
-          {{ mov.descricao }}
-        </div>
+      <div>
+        {{ mov.descricao }}
+      </div>
 
-        <div [style.color]="
+      <div [style.color]="
             mov.tipo === 'receita'
             ? '#22c55e'
             : '#ef4444'
@@ -423,15 +383,14 @@ fabGlow 2.8s ease infinite;
             font-weight:700;
           ">
 
-          {{
-          mov.valor
-          | currency:'BRL'
-          }}
-
-        </div>
+        {{
+        mov.valor
+        | currency:'BRL'
+        }}
 
       </div>
 
     </div>
+
   </div>
 </div>
