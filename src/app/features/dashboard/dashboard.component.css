@@ -147,13 +147,6 @@
     translateY(-3px);
 }
 
-.dashboard-card-invoice {
-
-  padding: 32px;
-
-  height: 280px;
-}
-
 .dashboard-header {
 
   max-width: 1400px;
@@ -218,4 +211,242 @@
   margin-bottom: 26px;
 
   line-height: 1.6;
+}
+
+/* Grafico */
+.dashboard-card-chart {
+  padding: 32px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* FATURA */
+.dashboard-card-invoice {
+  padding: 32px;
+  height: 280px;
+}
+
+/* CONTAINER */
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* FAB */
+.dashboard-fab {
+  position: fixed;
+  bottom: 44px;
+  right: 44px;
+  z-index: 99999;
+}
+
+/* MENU */
+.dashboard-fab-menu {
+  position: absolute;
+  bottom: 112px;
+  right: 12px;
+  width: 260px;
+
+  background: rgba(15, 23, 42, .96);
+  backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, .05);
+  border-radius: 28px;
+
+  padding: 14px;
+
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, .45);
+
+  overflow: hidden;
+}
+
+/* ITENS MENU */
+.dashboard-fab-menu-item {
+  padding: 18px;
+  cursor: pointer;
+  border-radius: 18px;
+
+  font-weight: 600;
+  font-size: 15px;
+
+  color: #e2e8f0;
+
+  transition: .18s;
+}
+
+.dashboard-fab-menu-item:hover {
+  background: #2b3648;
+}
+
+/* BOTAO FAB */
+.dashboard-fab-button {
+
+  width: 96px;
+  height: 96px;
+
+  border: none;
+  border-radius: 50%;
+
+  background:
+    linear-gradient(135deg,
+      #7c3aed,
+      #9333ea);
+
+  color: white;
+  font-size: 54px;
+  line-height: 1;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 28px 70px rgba(124, 58, 237, .42),
+    0 0 0 12px rgba(124, 58, 237, .12);
+
+  transition:
+    transform .18s ease,
+    box-shadow .18s ease;
+
+  animation:
+    fabGlow 2.8s ease infinite;
+}
+
+.dashboard-fab-button:hover {
+
+  transform: scale(1.06);
+
+  box-shadow:
+    0 25px 60px rgba(124, 58, 237, .52),
+    0 0 0 12px rgba(124, 58, 237, .16);
+}
+
+/* Navegador de meses */
+.dashboard-month-nav {
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 16px 26px;
+
+  width: fit-content;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, .04);
+
+  border: 1px solid rgba(255, 255, 255, .05);
+
+  backdrop-filter: blur(12px);
+}
+
+/* Botões meses */
+.dashboard-month-button {
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background:
+    rgba(255, 255, 255, .05);
+
+  color: white;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.dashboard-month-button:hover {
+
+  background:
+    rgba(124, 58, 237, .18);
+
+  transform: scale(1.08);
+}
+
+/* Titulo meses */
+.dashboard-month-title {
+  font-size: 22px;
+  color: white;
+  letter-spacing: .02em;
+}
+
+/* SEGUNDA LINHA */
+.dashboard-secondary-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(320px, 1fr));
+
+  gap: 24px;
+
+  width: 100%;
+
+  align-items: stretch;
+}
+
+/* CARDs Secundarios */
+.dashboard-card-secondary {
+
+  padding: 28px;
+
+  height: 220px;
+}
+
+
+/* Filtros */
+.dashboard-filter-label {
+  color: #94a3b8;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dashboard-select {
+  height: 44px;
+  min-width: 180px;
+
+  border-radius: 14px;
+
+  padding: 0 12px;
+
+  background: #0f172a;
+  color: #e2e8f0;
+
+  border: 1px solid #334155;
+}
+
+.dashboard-section-title {
+  margin-bottom: 20px;
+  color: white;
+}
+
+/* Ultimas movimentações */
+.dashboard-movement-item {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 14px 0;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, .05);
+}
+
+.dashboard-movement-value {
+  font-weight: 700;
 }
