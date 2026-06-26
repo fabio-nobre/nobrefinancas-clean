@@ -146,32 +146,32 @@
         )
       ">
     </app-credit-card-invoice>
-
-    <!-- ÚLTIMAS MOVIMENTAÇÕES -->
-    <div class="card
+  </div>
+  <!-- ÚLTIMAS MOVIMENTAÇÕES -->
+  <div class="card
       dashboard-card
       dashboard-card-full">
 
-      <h3 class="dashboard-section-title">
-        🕒 Últimas movimentações
-      </h3>
+    <h3 class="dashboard-section-title">
+      🕒 Últimas movimentações
+    </h3>
 
-      <div *ngFor="
+    <div *ngFor="
           let mov of ultimasMovimentacoes
         " class="dashboard-movement-item">
 
-        <div>
-          {{ mov.descricao }}
-        </div>
+      <div>
+        {{ mov.descricao }}
+      </div>
 
-        <div class="dashboard-movement-value" [ngClass]="{
+      <div class="dashboard-movement-value" [ngClass]="{
           'dashboard-movement-income': mov.tipo === 'receita',
           'dashboard-movement-expense': mov.tipo !== 'receita'
         }">
-          {{ mov.valor | currency:'BRL' }}
-        </div>
-
+        {{ mov.valor | currency:'BRL' }}
       </div>
 
     </div>
+
   </div>
+</div>
