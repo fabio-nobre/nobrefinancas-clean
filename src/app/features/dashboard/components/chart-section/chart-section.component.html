@@ -4,9 +4,42 @@
     📊 Gastos por categoria
   </h3>
 
-  <div class="chart-section-body">
-    <app-chart [labels]="etiquettes" [data]="data">
-    </app-chart>
+  <div class="chart-section-layout">
+
+    <div class="chart-section-chart">
+
+      <app-chart [labels]="etiquettes" [data]="data">
+      </app-chart>
+
+    </div>
+
+    <div class="chart-section-legend">
+
+      @for (
+      item of legendItems;
+      track item.label
+      ) {
+
+      <div class="legend-item">
+
+        <div class="legend-item-name">
+          {{ item.label }}
+        </div>
+
+        <div class="legend-item-value">
+          {{ item.value | currency:'BRL' }}
+        </div>
+
+        <div class="legend-item-percent">
+          {{ item.percent }}%
+        </div>
+
+      </div>
+
+      }
+
+    </div>
+
   </div>
 
 </div>
