@@ -15,6 +15,9 @@ import { DASHBOARD_LABELS }
   changeDetection:
     ChangeDetectionStrategy.OnPush,
 
+  styleUrl:
+    './monthly-summary.component.css',
+
   host: {
     style: 'display:block; width:100%;'
   },
@@ -25,15 +28,7 @@ import { DASHBOARD_LABELS }
         {{ labels.cards.monthlySummary }}
       </h3>
 
-      <div
-        style="
-          margin-top:16px;
-          line-height:1.7;
-          font-size:15px;
-          color:#cbd5e1;
-          max-width:90%;
-        "
-      >
+      <div class="summary-text">
         {{ resumo }}
       </div>
   `

@@ -25,6 +25,13 @@ import { DASHBOARD_LABELS }
         {{ labels.cards.accounts }}
       </h3>
 
+      <div class="account-text">
+        {{
+          saldoTotal
+          | currency:'BRL'
+        }}
+      </div>
+
       <div
         *ngFor="
           let conta of saldoPorConta
@@ -55,10 +62,22 @@ export class AccountSummaryComponent {
   readonly labels =
     DASHBOARD_LABELS;
 
+  get saldoTotal(): number {
+
+    return Object.values(
+      this.saldoPorConta
+    ).reduce(
+      (total, valor) => total + valor,
+      0
+    );
+  }
+
   trackByConta(
     index: number,
     item: KeyValue<string, number>
   ): string {
     return item.key;
   }
+
+
 }
