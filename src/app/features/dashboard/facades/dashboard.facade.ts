@@ -7,6 +7,7 @@ import {
 
 import { TransactionService } from '../../../core/services/transaction.service';
 import { DashboardService } from '../../../core/services/dashboard.service';
+import { DashboardMetricsService } from '../../../core/services/dashboard-metrics.service';
 
 interface DashboardViewModel {
 
@@ -84,7 +85,10 @@ export class DashboardFacade {
       TransactionService,
 
     private dashboard:
-      DashboardService
+      DashboardService,
+
+    private metrics:
+      DashboardMetricsService
   ) { }
 
   readonly dashboardData$ =
@@ -225,13 +229,10 @@ export class DashboardFacade {
               );
 
           const topCategoria =
-            Object.entries(
-              categorias
-            ).sort(
-              (a, b) =>
-                b[1] - a[1]
-            )[0]?.[0]
-            ?? 'Nenhuma';
+            this.metrics
+              .getTopCategoria(
+                categorias
+              );
 
           const resumo =
             filtradas.length
