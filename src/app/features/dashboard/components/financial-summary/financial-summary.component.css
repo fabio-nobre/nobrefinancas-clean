@@ -11,12 +11,12 @@
 
   border-radius: 36px;
 
-  padding: 28px 32px;
+  padding: 32px;
 
   border:
     1px solid rgba(124, 58, 237, .18);
 
-  min-height: 210px;
+  min-height: 240px;
 
   box-shadow:
     0 14px 42px rgba(0, 0, 0, .26);
@@ -119,10 +119,13 @@
 
 .hero-content {
   width: 100%;
+
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
+
   gap: 32px;
+  flex-wrap: wrap;
 }
 
 .hero-left {
@@ -130,10 +133,8 @@
 }
 
 .hero-right {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-width: 220px;
+  min-width: 280px;
+  width: 280px;
 }
 
 .hero-label {
@@ -175,10 +176,6 @@
   border: 1px solid rgba(255, 255, 255, .04);
 }
 
-.hero-metric-income {}
-
-.hero-metric-expense {}
-
 .hero-metric-label {
   color: #94a3b8;
   font-size: 13px;
@@ -195,4 +192,36 @@
   color: #ef4444;
   font-size: 26px;
   font-weight: 700;
+}
+
+.hero-metric {
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.hero-metric:hover {
+
+  transform: translateY(-3px);
+
+  background:
+    rgba(255, 255, 255, .08);
+
+  border-color:
+    rgba(124, 58, 237, .25);
+}
+
+.hero-growth-positive {
+  color: #4ade80;
+  font-weight: 700;
+}
+
+.hero-metric-income {
+  border-left: 4px solid #22c55e;
+}
+
+.hero-metric-expense {
+  border-left: 4px solid #ef4444;
 }

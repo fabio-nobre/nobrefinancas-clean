@@ -53,7 +53,7 @@ import { DASHBOARD_LABELS }
       </div>
 
       <div class="hero-growth">
-        <span style="color:#4ade80;">
+        <span class="hero-growth-positive">
           ↑ {{ monthGrowth }}%
         </span>
 
