@@ -37,48 +37,22 @@ import { DASHBOARD_LABELS }
   class="card summary-card--hero"
 >
 
-  <div style="
-    width:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:32px;
-  ">
+  <div class="hero-content">
 
     <!-- ESQUERDA -->
-    <div>
+    <div class="hero-left">
 
-      <div style="
-        color:#a78bfa;
-        font-size:13px;
-        font-weight:700;
-        text-transform:uppercase;
-        letter-spacing:.12em;
-        margin-bottom:14px;
-      ">
+      <div class="hero-label">
         {{ labels.cards.balance }}
       </div>
 
-      <div style="
-        font-size:58px;
-        font-weight:800;
-        color:white;
-        line-height:1;
-        margin-bottom:16px;
-      ">
+      <div class="hero-balance">
         <app-count-up
           [value]="balance">
         </app-count-up>
       </div>
 
-      <div style="
-        display:flex;
-        align-items:center;
-        gap:10px;
-        color:#cbd5e1;
-        font-size:15px;
-        font-weight:600;
-      ">
+      <div class="hero-growth">
         <span style="color:#4ade80;">
           ↑ {{ monthGrowth }}%
         </span>
@@ -89,40 +63,15 @@ import { DASHBOARD_LABELS }
     </div>
 
     <!-- DIREITA -->
-    <div style="
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      min-width:220px;
-    ">
+    <div class="hero-right">
 
-      <div style="
-        padding:18px;
-        border-radius:22px;
+      <div class="hero-metric hero-metric-income">
 
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        background:
-        rgba(255,255,255,.05);
-        border:
-        1px solid
-        rgba(255,255,255,.04);
-      ">
-
-        <div style="
-          color:#94a3b8;
-          font-size:13px;
-          margin-bottom:6px;
-        ">
+        <div class="hero-metric-label">
           Entradas
         </div>
 
-        <div style="
-          color:#22c55e;
-          font-size:22px;
-          font-weight:700;
-        ">
+        <div class="hero-metric-income-value">
           {{
             income
             | currency:'BRL'
@@ -131,29 +80,13 @@ import { DASHBOARD_LABELS }
 
       </div>
 
-      <div style="
-        padding:14px 18px;
-        border-radius:18px;
-        background:
-        rgba(255,255,255,.05);
-        border:
-        1px solid
-        rgba(255,255,255,.04);
-      ">
+      <div class="hero-metric hero-metric-expense">
 
-        <div style="
-          color:#94a3b8;
-          font-size:13px;
-          margin-bottom:6px;
-        ">
+        <div class="hero-metric-label">
           Saídas
         </div>
 
-        <div style="
-          color:#ef4444;
-          font-size:26px;
-          font-weight:700;
-        ">
+        <div class="hero-metric-expense-value">
           {{
             expenses
             | currency:'BRL'
@@ -167,57 +100,6 @@ import { DASHBOARD_LABELS }
   </div>
 
 </div>
-
-    <!-- RECEITAS -->
-    <div
-      class="card summary-card--income"
-    >
-
-
-     <div class="stat-card-premium">
-
-      <p>
-        {{ labels.cards.income }}
-      </p>
-
-      <div style="
-        color:#22c55e;
-        font-size:48px;
-        font-weight:700;
-      ">
-        <app-count-up
-          [value]="income">
-        </app-count-up>
-      </div>
-
-    </div>
-
-    </div>
-
-    <!-- DESPESAS -->
-    <div
-      class="card summary-card--expense"
-    >
-
-    <div class="stat-card-premium">
-
-      <p>
-        {{ labels.cards.expenses }}
-      </p>
-
-      <div style="
-        color:#ef4444;
-        font-size:48px;
-        font-weight:700;
-      ">
-        <app-count-up
-          [value]="expenses">
-        </app-count-up>
-      </div>
-
-    </div>
-
-    </div>
 
   </div>
 `

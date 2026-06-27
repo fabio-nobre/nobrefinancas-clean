@@ -110,13 +110,89 @@
 .summary-grid {
 
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  gap: 28px;
+  grid-template-columns: 1fr;
 
   width: 100%;
 
   margin-bottom: 42px;
+}
+
+.hero-content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+.hero-left {
+  flex: 1;
+}
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 220px;
+}
+
+.hero-label {
+  color: #a78bfa;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+}
+
+.hero-balance {
+  font-size: 58px;
+  font-weight: 800;
+  color: white;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.hero-growth {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #cbd5e1;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hero-metric {
+  padding: 18px;
+  border-radius: 22px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, .05);
+
+  border: 1px solid rgba(255, 255, 255, .04);
+}
+
+.hero-metric-income {}
+
+.hero-metric-expense {}
+
+.hero-metric-label {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.hero-metric-income-value {
+  color: #22c55e;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.hero-metric-expense-value {
+  color: #ef4444;
+  font-size: 26px;
+  font-weight: 700;
 }
