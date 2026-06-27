@@ -106,18 +106,13 @@
 
 .dashboard-card-full {
 
-  grid-column:
-    1 / -1;
-
-  width: 100%;
-
-  min-height: 260px;
-
   margin-top: 32px;
+
+  padding: 28px;
 
   overflow: auto;
 
-  padding: 28px;
+  min-height: 180px;
 }
 
 .dashboard-filter-card {
@@ -126,13 +121,13 @@
 
   align-items: center;
 
-  justify-content: flex-start;
+  gap: 12px;
 
-  gap: 18px;
+  padding: 16px 20px;
 
-  height: 120px;
+  min-height: auto;
 
-  padding: 24px;
+  width: fit-content;
 
   grid-column: 1;
 
@@ -149,10 +144,16 @@
 
 .dashboard-header {
 
-  max-width: 1400px;
+  max-width: 900px;
 
-  margin:
-    0 auto 40px;
+  margin: 0 auto 24px;
+
+  text-align: center;
+}
+
+.dashboard-filter-row {
+
+  grid-column: 1 / -1;
 }
 
 .dashboard-header-content {
@@ -189,15 +190,12 @@
 
 .dashboard-title {
 
-  font-size: 56px;
+  font-size:
+    clamp(2.8rem, 4vw, 4rem);
 
-  font-weight: 800;
+  line-height: 1.1;
 
-  color: white;
-
-  line-height: 1.05;
-
-  margin: 0;
+  margin-bottom: 12px;
 }
 
 .dashboard-subtitle {
@@ -215,8 +213,8 @@
 
 /* Grafico */
 .dashboard-card-chart {
-  padding: 32px;
-  min-height: 420px;
+  min-height: 460px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -224,8 +222,10 @@
 
 /* FATURA */
 .dashboard-card-invoice {
-  padding: 32px;
-  height: 280px;
+
+  min-height: 420px;
+
+  padding: 28px;
 }
 
 /* CONTAINER */
@@ -402,9 +402,9 @@
 /* CARDs Secundarios */
 .dashboard-card-secondary {
 
-  padding: 28px;
+  min-height: 220px;
 
-  height: 220px;
+  padding: 24px;
 }
 
 
@@ -505,4 +505,33 @@
 
   box-shadow:
     0 8px 24px rgba(124, 58, 237, .12);
+}
+
+.dashboard-analytics-grid {
+
+  grid-column: 1 / -1;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.6fr) minmax(360px, 1fr);
+
+  gap: 24px;
+
+  align-items: stretch;
+}
+
+.dashboard-filter-toolbar {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 16px 20px;
+
+  width: fit-content;
+
+  margin: 24px 0;
 }

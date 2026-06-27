@@ -15,6 +15,7 @@ import { ChartComponent } from '../../../../shared/components/chart/chart.compon
     CommonModule,
     ChartComponent
   ],
+  styleUrls: ['./chart-section.component.css'],
   templateUrl: './chart-section.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

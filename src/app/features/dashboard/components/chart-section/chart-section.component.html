@@ -1,41 +1,10 @@
-<div style="
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-">
+<div class="chart-section">
 
-  <h3 style="
-    margin-bottom:18px;
-    font-size:20px;
-  ">
+  <h3 class="chart-section-title">
     📊 Gastos por categoria
   </h3>
 
-  <div style="
-    display:flex;
-    gap:20px;
-    margin-bottom:20px;
-    font-size:14px;
-  ">
-
-    <span style="color:#22c55e;">
-      💰 Receitas:
-      {{ receitas | currency:'BRL' }}
-    </span>
-
-    <span style="color:#ef4444;">
-      💸 Despesas:
-      {{ despesas | currency:'BRL' }}
-    </span>
-
-  </div>
-  <div style="
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  ">
+  <div class="chart-section-body">
     <app-chart [labels]="etiquettes" [data]="data">
     </app-chart>
   </div>

@@ -96,39 +96,44 @@
   <div class="card dashboard-card dashboard-card-secondary">
     <app-monthly-summary [resumo]="resumo" />
   </div>
+</div>
 
-  <!-- FILTROS -->
-  <div class="
-      card
-      dashboard-card
-      dashboard-filter-card
-    ">
+<!-- FILTROS -->
+<div class="card dashboard-card dashboard-filter-toolbar">
 
-    <span class="dashboard-filter-label">
-      Filtros
-    </span>
+  <span class="dashboard-filter-label">
+    Filtros
+  </span>
 
-    <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" class="dashboard-select">
-      <option [ngValue]="null">
-        Todas categorias
-      </option>
+  <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" class="dashboard-select">
 
-      <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
-        {{ c }}
-      </option>
-    </select>
+    <option [ngValue]="null">
+      Todas categorias
+    </option>
 
-    <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" class="dashboard-select">
-      <option [ngValue]="null">
-        Todas contas
-      </option>
+    <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
 
-      <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction " [value]="c.key">
-        {{ c.key }}
-      </option>
-    </select>
+      {{ c }}
+    </option>
 
-  </div>
+  </select>
+
+  <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" class="dashboard-select">
+
+    <option [ngValue]="null">
+      Todas contas
+    </option>
+
+    <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction" [value]="c.key">
+
+      {{ c.key }}
+    </option>
+
+  </select>
+
+</div>
+
+<div class="dashboard-analytics-grid">
 
   <!-- GRÁFICO -->
   <div class="card dashboard-card dashboard-card--premium dashboard-card-chart">
@@ -147,31 +152,31 @@
       ">
     </app-credit-card-invoice>
   </div>
-  <!-- ÚLTIMAS MOVIMENTAÇÕES -->
-  <div class="card
+</div>
+<!-- ÚLTIMAS MOVIMENTAÇÕES -->
+<div class="card
       dashboard-card
       dashboard-card-full">
 
-    <h3 class="dashboard-section-title">
-      🕒 Últimas movimentações
-    </h3>
+  <h3 class="dashboard-section-title">
+    🕒 Últimas movimentações
+  </h3>
 
-    <div *ngFor="
+  <div *ngFor="
           let mov of ultimasMovimentacoes
         " class="dashboard-movement-item">
 
-      <div>
-        {{ mov.descricao }}
-      </div>
+    <div>
+      {{ mov.descricao }}
+    </div>
 
-      <div class="dashboard-movement-value" [ngClass]="{
+    <div class="dashboard-movement-value" [ngClass]="{
           'dashboard-movement-income': mov.tipo === 'receita',
           'dashboard-movement-expense': mov.tipo !== 'receita'
         }">
-        {{ mov.valor | currency:'BRL' }}
-      </div>
-
+      {{ mov.valor | currency:'BRL' }}
     </div>
 
   </div>
+
 </div>

@@ -15,12 +15,9 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-chart',
   standalone: true,
+  styleUrls: ['./chart.component.css'],
   template: `
-   <div style="
-    width:100%;
-    height:360px;
-    position:relative;
-  ">
+   <div class="chart-container">
     <canvas
       #canvas
       style="
@@ -75,6 +72,7 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
         datasets: [
           {
             data: this.data,
+
             backgroundColor: [
               '#22c55e',
               '#ef4444',
@@ -94,7 +92,11 @@ export class ChartComponent implements AfterViewInit, OnChanges, OnDestroy {
         responsive: true,
         maintainAspectRatio: false,
 
-        cutout: '60%',
+        cutout: '45%',
+
+        layout: {
+          padding: 20
+        },
 
         plugins: {
           legend: {
