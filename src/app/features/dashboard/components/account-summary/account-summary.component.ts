@@ -15,6 +15,9 @@ import { DASHBOARD_LABELS }
   changeDetection:
     ChangeDetectionStrategy.OnPush,
 
+  styleUrl:
+    './account-summary.component.css',
+
   host: {
     style: 'display:block; width:100%;'
   },
