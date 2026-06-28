@@ -53,4 +53,30 @@ export class DashboardMetricsService {
 
     return `Em ${periodo}, suas despesas superaram suas receitas. Revise principalmente os gastos com ${topCategoria}.`;
   }
+
+  getSaudeFinanceira(
+    saldo: number,
+    percentualMeta: number
+  ): number {
+
+    let score = 100;
+
+    if (saldo < 0) {
+      score -= 40;
+    }
+
+    if (percentualMeta > 100) {
+      score -= 30;
+    }
+
+    if (percentualMeta > 120) {
+      score -= 20;
+    }
+
+    return Math.max(
+      0,
+      Math.min(score, 100)
+    );
+  }
+
 }
