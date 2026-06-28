@@ -35,6 +35,10 @@ interface DashboardViewModel {
 
   percentualMeta: number;
 
+  scoreFinanceiro: number;
+
+  diagnosticoFinanceiro: string;
+
 }
 
 @Injectable({
@@ -307,6 +311,10 @@ export class DashboardFacade {
             gastoTotal,
 
             percentualMeta,
+
+            scoreFinanceiro,
+
+            diagnosticoFinanceiro,
 
             etiquettes: [
               'Receitas',

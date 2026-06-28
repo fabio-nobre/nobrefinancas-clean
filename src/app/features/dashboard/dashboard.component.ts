@@ -114,6 +114,10 @@ export class DashboardComponent implements OnInit {
     | 'transferencia'
     | 'credito' = 'despesa';
 
+  scoreFinanceiro = 0;
+
+  diagnosticoFinanceiro = '';
+
   // ===== REATIVIDADE =====
   constructor(
     private transactionsService:
@@ -179,6 +183,12 @@ export class DashboardComponent implements OnInit {
 
         this.percentualMeta =
           vm.percentualMeta;
+
+        this.scoreFinanceiro =
+          vm.scoreFinanceiro;
+
+        this.diagnosticoFinanceiro =
+          vm.diagnosticoFinanceiro;
       });
 
     this.facade
