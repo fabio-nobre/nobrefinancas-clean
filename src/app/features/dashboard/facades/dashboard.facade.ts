@@ -235,23 +235,13 @@ export class DashboardFacade {
               );
 
           const resumo =
-            filtradas.length
-
-              ? `Em ${dataAtual.toLocaleDateString(
-                'pt-BR',
-                {
-                  month: 'long',
-                  year: 'numeric'
-                }
-              )}, você gastou ${saidas.toLocaleString(
-                'pt-BR',
-                {
-                  style: 'currency',
-                  currency: 'BRL'
-                }
-              )}. ${topCategoria} foi sua principal categoria.`
-
-              : 'Sem dados neste mês';
+            this.metrics
+              .getResumoMensal(
+                dataAtual,
+                saidas,
+                topCategoria,
+                filtradas.length > 0
+              );
 
           const mesAtual =
             dataAtual
