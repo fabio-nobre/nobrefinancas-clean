@@ -234,10 +234,17 @@ export class DashboardFacade {
                 categorias
               );
 
+          const saldo =
+            this.dashboard
+              .calcularSaldo(
+                filtradas
+              );
+
           const resumo =
             this.metrics
               .getResumoMensal(
                 dataAtual,
+                saldo,
                 saidas,
                 topCategoria,
                 filtradas.length > 0

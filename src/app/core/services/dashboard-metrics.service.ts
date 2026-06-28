@@ -27,6 +27,7 @@ export class DashboardMetricsService {
 
   getResumoMensal(
     dataAtual: Date,
+    saldo: number,
     saidas: number,
     topCategoria: string,
     possuiDados: boolean
@@ -36,19 +37,20 @@ export class DashboardMetricsService {
       return 'Sem dados neste mês';
     }
 
-    return `Em ${dataAtual.toLocaleDateString(
-      'pt-BR',
-      {
-        month: 'long',
-        year: 'numeric'
-      }
-    )}, você gastou ${saidas.toLocaleString(
-      'pt-BR',
-      {
-        style: 'currency',
-        currency: 'BRL'
-      }
-    )}. ${topCategoria} foi sua principal categoria.`;
-  }
+    const periodo =
+      dataAtual.toLocaleDateString(
+        'pt-BR',
+        {
+          month: 'long',
+          year: 'numeric'
+        }
+      );
 
+    if (saldo >= 0) {
+
+      return `Em ${periodo}, você manteve saldo positivo. ${topCategoria} foi sua principal categoria de gasto.`;
+    }
+
+    return `Em ${periodo}, suas despesas superaram suas receitas. Revise principalmente os gastos com ${topCategoria}.`;
+  }
 }
