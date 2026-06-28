@@ -273,6 +273,17 @@ export class DashboardFacade {
               ) * 100
               : 0;
 
+          const scoreFinanceiro =
+            this.metrics.getSaudeFinanceira(
+              saldo,
+              percentualMeta
+            );
+
+          const diagnosticoFinanceiro =
+            this.metrics.getDiagnosticoFinanceiro(
+              scoreFinanceiro
+            );
+
           return {
 
             saldo:

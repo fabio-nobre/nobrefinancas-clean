@@ -79,4 +79,23 @@ export class DashboardMetricsService {
     );
   }
 
+  getDiagnosticoFinanceiro(
+    score: number
+  ): string {
+
+    if (score >= 90) {
+      return 'Excelente controle financeiro';
+    }
+
+    if (score >= 70) {
+      return 'Situação financeira saudável';
+    }
+
+    if (score >= 50) {
+      return 'Atenção aos gastos do mês';
+    }
+
+    return 'Risco financeiro elevado';
+  }
+
 }
