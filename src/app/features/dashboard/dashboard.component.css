@@ -535,3 +535,32 @@
 
   margin: 24px 0;
 }
+
+.dashboard-filter-title {
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  color: #e2e8f0;
+
+  white-space: nowrap;
+}
+
+.dashboard-filter-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.dashboard-filter-group label {
+
+  font-size: 11px;
+
+  color: #94a3b8;
+
+  font-weight: 600;
+}

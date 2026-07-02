@@ -103,35 +103,55 @@
 <!-- FILTROS -->
 <div class="card dashboard-card dashboard-filter-toolbar">
 
-  <span class="dashboard-filter-label">
-    Filtros
-  </span>
+  <div class="dashboard-filter-title">
+    🔍 Filtros
+  </div>
 
-  <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" class="dashboard-select">
+  <div class="dashboard-filter-group">
 
-    <option [ngValue]="null">
-      Todas categorias
-    </option>
+    <label>
+      Categoria
+    </label>
 
-    <option *ngFor="let c of categorias; trackBy: trackByTransaction" [value]="c">
+    <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" class="dashboard-select">
 
-      {{ c }}
-    </option>
+      <option [ngValue]="null">
+        Todas categorias
+      </option>
 
-  </select>
+      <option *ngFor="
+          let c of categorias;
+          trackBy: trackByTransaction
+        " [value]="c">
+        {{ c }}
+      </option>
 
-  <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" class="dashboard-select">
+    </select>
 
-    <option [ngValue]="null">
-      Todas contas
-    </option>
+  </div>
 
-    <option *ngFor="let c of saldoPorConta | keyvalue; trackBy: trackByTransaction" [value]="c.key">
+  <div class="dashboard-filter-group">
 
-      {{ c.key }}
-    </option>
+    <label>
+      Conta
+    </label>
 
-  </select>
+    <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" class="dashboard-select">
+
+      <option [ngValue]="null">
+        Todas contas
+      </option>
+
+      <option *ngFor="
+          let c of saldoPorConta | keyvalue;
+          trackBy: trackByTransaction
+        " [value]="c.key">
+        {{ c.key }}
+      </option>
+
+    </select>
+
+  </div>
 
 </div>
 
