@@ -94,7 +94,9 @@
 
   <!-- RESUMO -->
   <div class="card dashboard-card dashboard-card-secondary">
-    <app-monthly-summary [resumo]="resumo" />
+    <app-monthly-summary [resumo]="resumo" [scoreFinanceiro]="scoreFinanceiro"
+      [diagnosticoFinanceiro]="diagnosticoFinanceiro" [topCategoria]="topCategoria">
+    </app-monthly-summary>
   </div>
 </div>
 

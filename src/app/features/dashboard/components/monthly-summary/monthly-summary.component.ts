@@ -23,20 +23,50 @@ import { DASHBOARD_LABELS }
   },
 
   template: `
-      <h3>
-        🧠
-        {{ labels.cards.monthlySummary }}
-      </h3>
+    <h3>
+      🧠
+      {{ labels.cards.monthlySummary }}
+    </h3>
 
-      <div class="summary-text">
-        {{ resumo }}
-      </div>
+    <div class="summary-text">
+
+      <strong>
+        {{ diagnosticoFinanceiro }}
+      </strong>
+
+      <br><br>
+
+      Score:
+      {{ scoreFinanceiro }}/100
+
+      <br><br>
+
+      {{ resumo }}
+
+      <br><br>
+
+      Principal gasto:
+
+      <strong>
+        {{ topCategoria }}
+      </strong>
+
+    </div>
   `
 })
 export class MonthlySummaryComponent {
 
   @Input({ required: true })
   resumo = '';
+
+  @Input()
+  scoreFinanceiro = 0;
+
+  @Input()
+  diagnosticoFinanceiro = '';
+
+  @Input()
+  topCategoria = '';
 
   readonly labels =
     DASHBOARD_LABELS;
