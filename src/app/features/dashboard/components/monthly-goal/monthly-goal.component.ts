@@ -23,6 +23,10 @@ import { DASHBOARD_LABELS }
   changeDetection:
     ChangeDetectionStrategy.OnPush,
 
+  styleUrl:
+    './monthly-goal.component.css',
+
+
   host: {
     style: 'display:block; width:100%;'
   },
@@ -32,6 +36,14 @@ import { DASHBOARD_LABELS }
         🎯
         {{ labels.cards.monthlyGoal }}
       </h3>
+
+      <div class="goal-percent">
+        {{ percentualExibicao | number:'1.0-0' }}%
+      </div>
+
+      <div class="goal-status">
+        {{ statusMeta }}
+      </div>
 
       <input
         type="number"
@@ -46,21 +58,31 @@ import { DASHBOARD_LABELS }
         "
       />
 
-      <div
-        style="margin-top:12px;"
-      >
-        {{
-          gastoTotal
-          | currency:'BRL'
-        }}
+    <div class="goal-values">
 
-        de
+      <div>
+        <span>Gasto</span>
 
-        {{
-          metaMensal
-          | currency:'BRL'
-        }}
+        <strong>
+          {{
+            gastoTotal
+            | currency:'BRL'
+          }}
+        </strong>
       </div>
+
+      <div>
+        <span>Meta</span>
+
+        <strong>
+          {{
+            metaMensal
+            | currency:'BRL'
+          }}
+        </strong>
+      </div>
+
+    </div>
 
       <div
         style="
@@ -119,4 +141,30 @@ export class MonthlyGoalComponent {
     this.metaMensalChange
       .emit(value);
   }
+
+  get statusMeta(): string {
+
+    if (!this.metaMensal) {
+      return 'Defina uma meta';
+    }
+
+    if (this.percentualMeta <= 80) {
+      return 'Dentro da meta';
+    }
+
+    if (this.percentualMeta <= 100) {
+      return 'Próximo do limite';
+    }
+
+    return 'Meta ultrapassada';
+  }
+
+  get percentualExibicao(): number {
+
+    return Math.min(
+      this.percentualMeta,
+      999
+    );
+  }
+
 }

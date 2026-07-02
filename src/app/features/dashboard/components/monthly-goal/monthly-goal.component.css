@@ -1,0 +1,61 @@
+.goal-percent {
+
+  margin-top: 10px;
+
+  font-size: 32px;
+
+  font-weight: 700;
+
+  color: #22c55e;
+}
+
+.goal-status {
+
+  margin-top: 4px;
+
+  color: #cbd5e1;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.goal-values {
+
+  margin-top: 12px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 16px;
+
+  font-size: 13px;
+
+  color: #cbd5e1;
+}
+
+.goal-values div {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.goal-values span {
+
+  font-size: 11px;
+
+  color: #94a3b8;
+}
+
+.goal-values strong {
+
+  font-size: 14px;
+
+  color: #ffffff;
+}
