@@ -30,26 +30,21 @@ import { DASHBOARD_LABELS }
 
     <div class="summary-text">
 
-      <strong>
+      <div class="health-score">
+        {{ scoreFinanceiro }}/100
+      </div>
+
+      <div class="health-status">
         {{ diagnosticoFinanceiro }}
-      </strong>
+      </div>
 
-      <br><br>
+      <div class="top-category">
+        <span>Principal gasto</span>
 
-      Score:
-      {{ scoreFinanceiro }}/100
-
-      <br><br>
-
-      {{ resumo }}
-
-      <br><br>
-
-      Principal gasto:
-
-      <strong>
-        {{ topCategoria }}
-      </strong>
+        <strong>
+          {{ topCategoria }}
+        </strong>
+      </div>
 
     </div>
   `
