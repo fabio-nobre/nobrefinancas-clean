@@ -38,11 +38,26 @@ import { DASHBOARD_LABELS }
       </h3>
 
       <div class="goal-percent">
-        {{ percentualExibicao | number:'1.0-0' }}%
+        {{ percentualExibicao }}
       </div>
 
       <div class="goal-status">
+
         {{ statusMeta }}
+
+        <div
+          *ngIf="!dentroDaMeta"
+          class="goal-warning"
+        >
+          +
+          {{
+            excessoMeta
+            | currency:'BRL'
+          }}
+
+          acima da meta
+        </div>
+
       </div>
 
       <input
@@ -84,28 +99,23 @@ import { DASHBOARD_LABELS }
 
     </div>
 
-      <div
+    <div class="goal-progress">
+
+      <div class="goal-progress-bar"
+        [style.width.%]="
+          percentualMeta > 100
+            ? 100
+            : percentualMeta
+        "
         style="
-          height:10px;
-          background:#374151;
+          height:100%;
+          background:#22c55e;
           border-radius:999px;
-          margin-top:12px;
         "
       >
-        <div
-          [style.width.%]="
-            percentualMeta > 100
-              ? 100
-              : percentualMeta
-          "
-          style="
-            height:100%;
-            background:#22c55e;
-            border-radius:999px;
-          "
-        >
-        </div>
       </div>
+
+    </div>
   `
 })
 export class MonthlyGoalComponent {
@@ -159,12 +169,36 @@ export class MonthlyGoalComponent {
     return 'Meta ultrapassada';
   }
 
-  get percentualExibicao(): number {
+  get excessoMeta(): number {
 
-    return Math.min(
-      this.percentualMeta,
-      999
+    return Math.max(
+      0,
+      this.gastoTotal - this.metaMensal
     );
+  }
+
+  get dentroDaMeta(): boolean {
+
+    return (
+      this.metaMensal > 0
+      &&
+      this.gastoTotal <= this.metaMensal
+    );
+  }
+
+  get percentualExibicao(): string {
+
+    if (!this.metaMensal) {
+      return '0%';
+    }
+
+    if (this.percentualMeta > 100) {
+      return '100%+';
+    }
+
+    return `${Math.round(
+      this.percentualMeta
+    )}%`;
   }
 
 }
