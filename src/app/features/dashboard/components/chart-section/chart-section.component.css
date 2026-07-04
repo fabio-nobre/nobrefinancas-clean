@@ -91,3 +91,14 @@
 
   font-weight: 700;
 }
+
+.chart-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  text-align: center;
+}

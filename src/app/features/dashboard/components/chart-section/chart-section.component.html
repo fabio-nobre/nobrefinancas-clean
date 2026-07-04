@@ -8,8 +8,18 @@
 
     <div class="chart-section-chart">
 
+      @if (hasData) {
+
       <app-chart [labels]="etiquettes" [data]="data">
       </app-chart>
+
+      } @else {
+
+      <div class="chart-empty-state">
+        Sem despesas no período
+      </div>
+
+      }
 
     </div>
 

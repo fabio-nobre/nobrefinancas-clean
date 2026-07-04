@@ -29,6 +29,10 @@ export class ChartSectionComponent {
 
   @Input() data: number[] = [];
 
+  get hasData(): boolean {
+    return this.data.some(value => value > 0);
+  }
+
   get legendItems() {
 
     const total =
