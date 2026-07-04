@@ -46,10 +46,11 @@ export class ChartSectionComponent {
         value,
 
         percent:
-          Math.round(
-            (value / total) * 100
-          )
-
+          total > 0
+            ? Math.round(
+              (value / total) * 100
+            )
+            : 0
       })
     );
   }
