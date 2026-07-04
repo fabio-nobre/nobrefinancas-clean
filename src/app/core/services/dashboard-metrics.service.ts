@@ -59,6 +59,14 @@ export class DashboardMetricsService {
     percentualMeta: number
   ): number {
 
+    if (
+      saldo === 0
+      &&
+      percentualMeta === 0
+    ) {
+      return 0;
+    }
+
     let score = 100;
 
     if (saldo < 0) {
@@ -82,6 +90,10 @@ export class DashboardMetricsService {
   getDiagnosticoFinanceiro(
     score: number
   ): string {
+
+    if (score === 0) {
+      return 'Sem movimentações no período';
+    }
 
     if (score >= 90) {
       return 'Excelente controle financeiro';

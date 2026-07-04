@@ -46,7 +46,11 @@ import { DASHBOARD_LABELS }
         {{ statusMeta }}
 
         <div
-          *ngIf="!dentroDaMeta"
+          *ngIf="
+            metaMensal > 0
+            &&
+            !dentroDaMeta
+          "
           class="goal-warning"
         >
           +
