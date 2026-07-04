@@ -41,8 +41,7 @@
 }
 
 .chart-section-chart {
-
-  flex: 0 0 320px;
+  min-height: 260px;
 }
 
 .chart-section-legend {
@@ -96,9 +95,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 260px;
-  border-radius: 20px;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
+  min-height: 260px;
+  width: 100%;
   text-align: center;
 }
