@@ -100,67 +100,59 @@
   </div>
 </div>
 
-<!-- FILTROS -->
-<div class="card dashboard-card dashboard-filter-toolbar">
-
-  <div class="dashboard-filter-title">
-    🔍 Filtros
-  </div>
-
-  <div class="dashboard-filter-group">
-
-    <label>
-      Categoria
-    </label>
-
-    <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" class="dashboard-select">
-
-      <option [ngValue]="null">
-        Todas categorias
-      </option>
-
-      <option *ngFor="
-          let c of categorias;
-          trackBy: trackByTransaction
-        " [value]="c">
-        {{ c }}
-      </option>
-
-    </select>
-
-  </div>
-
-  <div class="dashboard-filter-group">
-
-    <label>
-      Conta
-    </label>
-
-    <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" class="dashboard-select">
-
-      <option [ngValue]="null">
-        Todas contas
-      </option>
-
-      <option *ngFor="
-          let c of saldoPorConta | keyvalue;
-          trackBy: trackByTransaction
-        " [value]="c.key">
-        {{ c.key }}
-      </option>
-
-    </select>
-
-  </div>
-
-</div>
-
 <div class="dashboard-analytics-grid">
 
   <!-- GRÁFICO -->
   <div class="card dashboard-card dashboard-card--premium dashboard-card-chart">
+
+    <div class="chart-card-header">
+
+      <div class="chart-card-title">
+        📊 Gastos por categoria
+      </div>
+
+      <div class="chart-card-filters">
+
+        <select [(ngModel)]="categoriaSelecionada" (change)="recalcular()" class="dashboard-select">
+
+          <option [ngValue]="null">
+            Todas categorias
+          </option>
+
+          <option *ngFor="
+              let c of categorias;
+              trackBy: trackByTransaction
+            " [value]="c">
+
+            {{ c }}
+
+          </option>
+
+        </select>
+
+        <select [(ngModel)]="contaSelecionada" (change)="onContaChange()" class="dashboard-select">
+
+          <option [ngValue]="null">
+            Todas contas
+          </option>
+
+          <option *ngFor="
+              let c of saldoPorConta | keyvalue;
+              trackBy: trackByTransaction
+            " [value]="c.key">
+
+            {{ c.key }}
+
+          </option>
+
+        </select>
+
+      </div>
+    </div>
+
     <app-chart-section [receitas]="entradas" [despesas]="saidas" [etiquettes]="etiquettes" [data]="valores">
     </app-chart-section>
+
   </div>
 
   <!-- FATURA -->

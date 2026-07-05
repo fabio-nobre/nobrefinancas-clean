@@ -9,12 +9,6 @@
   flex-direction: column;
 }
 
-.chart-section-title {
-
-  margin-bottom: 18px;
-
-  font-size: 20px;
-}
 
 .chart-section-body {
 
@@ -35,7 +29,7 @@
 
   justify-content: center;
 
-  gap: 40px;
+  gap: 64px;
 
   min-height: 340px;
 }
@@ -98,4 +92,21 @@
   min-height: 260px;
   width: 100%;
   text-align: center;
+}
+
+.chart-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.chart-card-filters {
+  display: flex;
+  gap: 12px;
+}
+
+.chart-card-filters .dashboard-select {
+  width: 180px;
 }
