@@ -323,7 +323,7 @@ export class DashboardFacade {
 
             valores: [
               entradas,
-              saidas
+              Math.abs(saidas)
             ]
 
           } as DashboardViewModel;
