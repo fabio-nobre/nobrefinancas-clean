@@ -1,140 +1,41 @@
-/* Saldo */
 .summary-card--hero {
-
-  grid-column:
-    1 / span 2;
-
-  background:
-    linear-gradient(135deg,
-      rgba(109, 40, 217, .18),
-      rgba(15, 23, 42, .96));
-
+  grid-column: 1 / span 2;
+  background: linear-gradient(135deg, rgba(109, 40, 217, .18), rgba(15, 23, 42, .96));
   border-radius: 36px;
-
   padding: 32px;
-
-  border:
-    1px solid rgba(124, 58, 237, .18);
-
+  border: 1px solid rgba(124, 58, 237, .18);
   min-height: 240px;
-
-  box-shadow:
-    0 14px 42px rgba(0, 0, 0, .26);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, .26)
 }
 
 .summary-card--hero:hover {
-
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    0 24px 50px rgba(0, 0, 0, .32);
+  transform: translateY(-3px);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, .32)
 }
-
-
-/* Receitas */
-.summary-card--income {
-
-  background:
-    linear-gradient(180deg,
-      rgba(16, 185, 129, .12),
-      rgba(15, 23, 42, .96));
-
-  border-radius: 30px;
-
-  padding: 24px 28px;
-
-  border:
-    1px solid rgba(16, 185, 129, .10);
-
-  min-height: 170px;
-
-  box-shadow:
-    0 14px 42px rgba(0, 0, 0, .22);
-
-  width: auto;
-
-  grid-column: auto;
-}
-
-.summary-card--income:hover {
-
-  transform:
-    translateY(-3px);
-}
-
-/* Despesas */
-.summary-card--expense {
-
-  background:
-    linear-gradient(180deg,
-      rgba(239, 68, 68, .12),
-      rgba(15, 23, 42, .96));
-
-  border-radius: 30px;
-
-  padding: 24px 28px;
-
-  border:
-    1px solid rgba(239, 68, 68, .10);
-
-  min-height: 170px;
-
-  box-shadow:
-    0 14px 42px rgba(0, 0, 0, .22);
-
-  width: auto;
-
-  grid-column: auto;
-}
-
-.summary-card--expense:hover {
-
-  transform:
-    translateY(-3px);
-}
-
-/* Graficos */
-.dashboard-card--premium:hover {
-
-  transform:
-    translateY(-6px) scale(1.01);
-
-  box-shadow:
-    0 30px 60px rgba(0, 0, 0, .32),
-    0 0 0 1px rgba(124, 58, 237, .08),
-    0 0 50px rgba(124, 58, 237, .06);
-}
-
 
 .summary-grid {
-
   display: grid;
   grid-template-columns: 1fr;
-
   width: 100%;
-
-  margin-bottom: 42px;
+  margin-bottom: 42px
 }
 
 .hero-content {
   width: 100%;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   gap: 32px;
-  flex-wrap: wrap;
+  flex-wrap: wrap
 }
 
 .hero-left {
-  flex: 1;
+  flex: 1
 }
 
 .hero-right {
   min-width: 280px;
-  width: 280px;
+  width: 280px
 }
 
 .hero-label {
@@ -143,7 +44,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .12em;
-  margin-bottom: 14px;
+  margin-bottom: 14px
 }
 
 .hero-balance {
@@ -151,7 +52,7 @@
   font-weight: 800;
   color: white;
   line-height: 1;
-  margin-bottom: 16px;
+  margin-bottom: 16px
 }
 
 .hero-growth {
@@ -160,68 +61,53 @@
   gap: 10px;
   color: #cbd5e1;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 600
+}
+
+.hero-growth-positive {
+  color: #4ade80;
+  font-weight: 700
 }
 
 .hero-metric {
   padding: 18px;
   border-radius: 22px;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   background: rgba(255, 255, 255, .05);
-
   border: 1px solid rgba(255, 255, 255, .04);
+  transition: transform .25s ease, border-color .25s ease, background .25s ease
+}
+
+.hero-metric:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(124, 58, 237, .25)
 }
 
 .hero-metric-label {
   color: #94a3b8;
   font-size: 13px;
-  margin-bottom: 6px;
+  margin-bottom: 6px
+}
+
+.hero-metric-income {
+  border-left: 4px solid #22c55e
 }
 
 .hero-metric-income-value {
   color: #22c55e;
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 700
+}
+
+.hero-metric-expense {
+  border-left: 4px solid #ef4444
 }
 
 .hero-metric-expense-value {
   color: #ef4444;
   font-size: 26px;
-  font-weight: 700;
-}
-
-.hero-metric {
-
-  transition:
-    transform .25s ease,
-    border-color .25s ease,
-    background .25s ease;
-}
-
-.hero-metric:hover {
-
-  transform: translateY(-3px);
-
-  background:
-    rgba(255, 255, 255, .08);
-
-  border-color:
-    rgba(124, 58, 237, .25);
-}
-
-.hero-growth-positive {
-  color: #4ade80;
-  font-weight: 700;
-}
-
-.hero-metric-income {
-  border-left: 4px solid #22c55e;
-}
-
-.hero-metric-expense {
-  border-left: 4px solid #ef4444;
+  font-weight: 700
 }
