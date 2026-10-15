@@ -219,8 +219,7 @@ export class DashboardFacade {
                       acc[categoria]
                       ?? 0
                     )
-                    +
-                    t.valor;
+                    + Math.abs(t.valor);
 
                   return acc;
 
@@ -288,6 +287,12 @@ export class DashboardFacade {
               scoreFinanceiro
             );
 
+          const etiquettes =
+            Object.keys(categorias);
+
+          const valores =
+            Object.values(categorias);
+
           return {
 
             saldo:
@@ -316,15 +321,9 @@ export class DashboardFacade {
 
             diagnosticoFinanceiro,
 
-            etiquettes: [
-              'Receitas',
-              'Despesas'
-            ],
+            etiquettes,
 
-            valores: [
-              entradas,
-              Math.abs(saidas)
-            ]
+            valores
 
           } as DashboardViewModel;
 
