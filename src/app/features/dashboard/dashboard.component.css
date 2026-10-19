@@ -1,26 +1,9 @@
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px)
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0)
-  }
-}
-
-.card {
-  display: block;
-}
-
 .dashboard-card {
   background: linear-gradient(180deg, rgba(30, 41, 59, .92), rgba(15, 23, 42, .96));
   border: 1px solid rgba(255, 255, 255, .04);
   border-radius: 32px;
   backdrop-filter: blur(18px);
   box-shadow: 0 12px 40px rgba(0, 0, 0, .22);
-  animation: fadeUp .45s ease
 }
 
 .dashboard-card-full {
@@ -112,10 +95,6 @@
   color: #e2e8f0
 }
 
-.dashboard-fab-menu-item:hover {
-  background: #2b3648
-}
-
 .dashboard-fab-button {
   width: 96px;
   height: 96px;
@@ -128,7 +107,6 @@
   font-weight: 300;
   cursor: pointer;
   box-shadow: 0 28px 70px rgba(124, 58, 237, .42), 0 0 0 12px rgba(124, 58, 237, .12);
-  transition: transform .18s ease, box-shadow .18s ease
 }
 
 .dashboard-month-nav {
@@ -220,7 +198,6 @@
   backdrop-filter: blur(12px);
   cursor: pointer;
   font-weight: 600;
-  transition: transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease
 }
 
 .dashboard-analytics-grid {
@@ -244,4 +221,53 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px
+}
+
+@media (max-width: 700px) {
+  .dashboard-secondary-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .dashboard-fab {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .dashboard-fab-button {
+    width: 52px;
+    height: 52px;
+    font-size: 32px;
+  }
+  .dashboard-analytics-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .chart-card-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .chart-card-header .dashboard-section-title {
+    margin-bottom: 0;
+  }
+
+  .chart-card-filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 8px;
+  }
+
+  .chart-card-filters .dashboard-select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .dashboard-card-full {
+    padding-bottom: 88px;
+  }
+
+  .dashboard-card-chart,
+  .dashboard-card-invoice {
+    min-height: auto;
+  }
 }
