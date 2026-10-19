@@ -5,10 +5,14 @@ body.dark {
   color: #e2e8f0;
 }
 
-/* cards */
+/* Cores globais dos cards no modo escuro */
 body.dark .card {
-  background: #1e293b !important;
   color: #e2e8f0 !important;
+}
+
+/* Fundo uniforme apenas para cards genéricos */
+body.dark .card:not(.dashboard-card):not(.summary-card--hero) {
+  background: #1e293b !important;
 }
 
 /* inputs */
