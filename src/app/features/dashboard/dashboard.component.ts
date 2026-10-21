@@ -367,6 +367,8 @@ export class DashboardComponent implements OnInit {
       tipo:
         'despesa',
 
+      subtipo: 'pagamentoFatura',
+
       descricao:
         `Pagamento fatura ${cartao}`,
 

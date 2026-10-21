@@ -200,36 +200,25 @@ export class DashboardFacade {
                 filtradas
               );
 
-          const categorias =
-            filtradas
-              .filter(
-                t =>
-                  t.tipo ===
-                  'despesa'
-              )
-              .reduce(
-                (acc, t) => {
-
-                  const categoria =
-                    t.categoria ??
-                    'Outros';
-
-                  acc[categoria] =
-                    (
-                      acc[categoria]
-                      ?? 0
-                    )
-                    + Math.abs(t.valor);
-
-                  return acc;
-
-                },
-
-                {} as Record<
-                  string,
-                  number
-                >
+          const gastosPorCategoria =
+            this.dashboard
+              .getGastosPorCategoria(
+                filtradas
               );
+
+          const categorias =
+            gastosPorCategoria.labels.reduce(
+              (acc, categoria, index) => {
+
+                acc[categoria] =
+                  gastosPorCategoria.valores[index]
+                  ?? 0;
+
+                return acc;
+
+              },
+              {} as Record<string, number>
+            );
 
           const topCategoria =
             this.metrics
@@ -287,12 +276,6 @@ export class DashboardFacade {
               scoreFinanceiro
             );
 
-          const etiquettes =
-            Object.keys(categorias);
-
-          const valores =
-            Object.values(categorias);
-
           return {
 
             saldo:
@@ -321,9 +304,11 @@ export class DashboardFacade {
 
             diagnosticoFinanceiro,
 
-            etiquettes,
+            etiquettes:
+              gastosPorCategoria.labels,
 
-            valores
+            valores:
+              gastosPorCategoria.valores
 
           } as DashboardViewModel;
 

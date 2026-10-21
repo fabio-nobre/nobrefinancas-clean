@@ -4,54 +4,23 @@ import { Transaction } from '../models/transaction.model';
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
 
-  calcularSaldo(
-    transactions:
-      Transaction[]
-  ): number {
-
+  calcularSaldo(transactions: Transaction[]): number {
     return transactions
-      .filter(
-        t =>
-
-          t.tipo ===
-          'receita'
-
-          ||
-
-          t.tipo ===
-          'despesa'
-
-          ||
-
-          t.tipo ===
-          'credito'
+      .filter(t =>
+        t.subtipo !== 'pagamentoFatura' &&
+        (
+          t.tipo === 'receita' ||
+          t.tipo === 'despesa' ||
+          t.tipo === 'credito'
+        )
       )
-      .reduce(
-        (acc, t) => {
+      .reduce((acc, t) => {
+        if (t.tipo === 'receita') {
+          return acc + Math.abs(t.valor);
+        }
 
-          if (
-            t.tipo ===
-            'receita'
-          ) {
-
-            return (
-              acc +
-              Math.abs(
-                t.valor
-              )
-            );
-          }
-
-          return (
-            acc -
-            Math.abs(
-              t.valor
-            )
-          );
-
-        },
-        0
-      );
+        return acc - Math.abs(t.valor);
+      }, 0);
   }
 
   calcularEntradas(
@@ -75,41 +44,44 @@ export class DashboardService {
       );
   }
 
-  calcularSaidas(
-    transactions:
-      Transaction[]
-  ): number {
-
+  calcularSaidas(transactions: Transaction[]): number {
     return transactions
-      .filter(
-        t =>
-
-          t.tipo ===
-          'despesa'
-
-          ||
-
-          t.tipo ===
-          'credito'
+      .filter(t =>
+        t.subtipo !== 'pagamentoFatura' &&
+        (
+          t.tipo === 'despesa' ||
+          t.tipo === 'credito'
+        )
       )
       .reduce(
-        (acc, t) =>
-          acc -
-          Math.abs(
-            t.valor
-          ),
+        (acc, t) => acc - Math.abs(t.valor),
         0
       );
   }
 
-  getGastosPorCategoria(transactions: Transaction[]) {
+  getGastosPorCategoria(
+    transactions: Transaction[]
+  ): { labels: string[]; valores: number[] } {
 
     const mapa: Record<string, number> = {};
 
     transactions.forEach(t => {
-      if (t.valor < 0 && t.categoria) {
-        mapa[t.categoria] = (mapa[t.categoria] || 0) + Math.abs(t.valor);
+      const representaGasto =
+        t.tipo === 'despesa' ||
+        t.tipo === 'credito';
+
+      if (
+        !representaGasto ||
+        t.subtipo === 'pagamentoFatura'
+      ) {
+        return;
       }
+
+      const categoria = t.categoria ?? 'Outros';
+
+      mapa[categoria] =
+        (mapa[categoria] ?? 0) +
+        Math.abs(t.valor);
     });
 
     return {

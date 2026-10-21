@@ -14,29 +14,53 @@ export class TransactionService {
   private loadInitial(): Transaction[] {
     const data = localStorage.getItem(this.storageKey);
 
-    if (!data) return [];
+    if (!data) {
+      return [];
+    }
 
-    const parsed = JSON.parse(data);
+    const parsed: Transaction[] = JSON.parse(data);
 
-    // 🔥 MIGRAÇÃO AUTOMÁTICA
-    const normalizado = parsed.map((t: any) => {
+    const normalizado = parsed.map((t: Transaction) => {
+      let transacao: Transaction = { ...t };
 
-      if (typeof t.data === 'string' && t.data.includes('T')) {
-        const d = new Date(t.data);
+      // Normaliza datas antigas que possuem horário.
+      if (
+        typeof transacao.data === 'string' &&
+        transacao.data.includes('T')
+      ) {
+        const d = new Date(transacao.data);
         const yyyy = d.getFullYear();
         const mm = String(d.getMonth() + 1).padStart(2, '0');
         const dd = String(d.getDate()).padStart(2, '0');
 
-        return {
-          ...t,
-          data: `${yyyy}-${mm}-${dd}`
+        transacao.data = `${yyyy}-${mm}-${dd}`;
+      }
+
+      /*
+      * Migração de pagamentos de fatura antigos.
+      * A identificação por descrição é usada apenas
+      * nesta migração, para registros sem subtipo.
+      */
+      const pagamentoFaturaLegado =
+        transacao.tipo === 'despesa' &&
+        !transacao.subtipo &&
+        typeof transacao.descricao === 'string' &&
+        transacao.descricao.startsWith('Pagamento fatura ');
+
+      if (pagamentoFaturaLegado) {
+        transacao = {
+          ...transacao,
+          subtipo: 'pagamentoFatura'
         };
       }
 
-      return t;
+      return transacao;
     });
 
-    localStorage.setItem(this.storageKey, JSON.stringify(normalizado));
+    localStorage.setItem(
+      this.storageKey,
+      JSON.stringify(normalizado)
+    );
 
     return normalizado;
   }
