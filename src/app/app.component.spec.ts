@@ -1,29 +1,39 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
+      providers: [
+        provideRouter([])
+      ]
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  it('deve criar o componente', () => {
+    const fixture =
+      TestBed.createComponent(AppComponent);
+
+    expect(fixture.componentInstance)
+      .toBeTruthy();
   });
 
-  it(`should have the 'nobrefinancas-clean' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('nobrefinancas-clean');
-  });
+  it('deve renderizar o router-outlet', () => {
+    const fixture =
+      TestBed.createComponent(AppComponent);
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, nobrefinancas-clean');
+
+    const elemento =
+      fixture.nativeElement as HTMLElement;
+
+    expect(
+      elemento.querySelector('router-outlet')
+    ).toBeTruthy();
   });
+
 });
