@@ -113,6 +113,32 @@ describe('DashboardService', () => {
     });
   });
 
+  it('deve transferir valor entre contas sem alterar o saldo total', () => {
+    const transferencia: Transaction = {
+      id: 'teste-transferencia',
+      tipo: 'transferencia',
+      descricao: 'TESTE - Transferência entre contas',
+      valor: 40,
+      data: '2026-10-21',
+      conta: 'Banco',
+      contaDestino: 'Carteira'
+    };
+
+    const resultado =
+      service.getSaldoPorConta([transferencia]);
+
+    expect(resultado).toEqual({
+      Banco: -40,
+      Carteira: 40
+    });
+
+    const saldoTotal =
+      Object.values(resultado)
+        .reduce((total, saldo) => total + saldo, 0);
+
+    expect(saldoTotal).toBe(0);
+  });
+
   it('deve considerar apenas compras pendentes na fatura do cartão', () => {
     const compraPaga: Transaction = {
       ...compraCartao,
